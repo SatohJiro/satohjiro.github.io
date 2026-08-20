@@ -14,6 +14,7 @@ import { InteractiveTerminal } from "@/components/sections/InteractiveTerminal";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { PrivacyTelemetryDrawer } from "@/components/analytics/PrivacyTelemetryDrawer";
 import { ResumeModal } from "@/components/resume/ResumeModal";
+import { PixelVersionFloatButton } from "@/components/layout/PixelVersionFloatButton";
 import { telemetry } from "@/lib/telemetry";
 
 export default function HomePage() {
@@ -61,6 +62,9 @@ export default function HomePage() {
         isOpen={isResumeModalOpen}
         onClose={() => setIsResumeModalOpen(false)}
       />
+
+      {/* Floating Launcher to Switch to Pixel RPG Version */}
+      <PixelVersionFloatButton />
     </div>
   );
 }
