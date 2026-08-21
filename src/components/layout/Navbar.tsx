@@ -75,11 +75,10 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-40 transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ${scrolled
           ? "py-2.5 bg-white/90 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-200/80 dark:border-white/10 shadow-lg shadow-black/5"
           : "py-4 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md border-b border-slate-200/50 dark:border-white/5"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
         {/* Brand / Logo */}
@@ -112,11 +111,10 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 key={item.id}
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 shrink-0 ${
-                  isActive
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
                     ? "bg-indigo-600 text-white shadow-sm border border-indigo-500/40"
                     : "text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {iconMap[item.icon]}
                 <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
@@ -135,11 +133,10 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
                 title={item.label[isVi ? "vi" : "en"]}
-                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 ${
-                  isActive
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 ${isActive
                     ? "bg-indigo-600 text-white shadow-sm border border-indigo-500/40"
                     : "text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {iconMap[item.icon]}
                 <span className="text-[11px] whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
@@ -188,11 +185,10 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                   key={item.id}
                   href={item.href}
                   onClick={() => handleNavClick(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-                    isActive
+                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${isActive
                       ? "bg-indigo-600 text-white font-semibold shadow-sm"
                       : "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                  }`}
+                    }`}
                 >
                   {iconMap[item.icon]}
                   <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>

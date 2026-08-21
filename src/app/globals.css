@@ -43,6 +43,8 @@
   html {
     scroll-behavior: smooth;
     color-scheme: light;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
   }
 
   html.dark {
@@ -168,9 +170,12 @@
 
 /* Subtle Ambient Mesh */
 @keyframes floatSlow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0px, 0px);
   }
+
   50% {
     transform: translate(15px, -20px);
   }
@@ -214,7 +219,9 @@
 }
 
 @media print {
-  html, body {
+
+  html,
+  body {
     background: #ffffff !important;
     color: #0f172a !important;
     font-size: 10pt !important;
@@ -254,10 +261,126 @@
     content: none !important;
   }
 
-  .glass-panel, .glass-panel-interactive {
+  .glass-panel,
+  .glass-panel-interactive {
     background: transparent !important;
     backdrop-filter: none !important;
     border: none !important;
     box-shadow: none !important;
   }
+}
+
+/* Circular Ripple View Transitions for Theme Toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+
+.dark::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Water Ripple Wave Animation for Theme Switch */
+@keyframes waterRippleExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.95;
+    border-width: 3.5px;
+  }
+
+  25% {
+    opacity: 0.8;
+    border-width: 3px;
+  }
+
+  55% {
+    opacity: 0.45;
+    border-width: 2px;
+  }
+
+  80% {
+    opacity: 0.2;
+    border-width: 1.5px;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+.water-ripple-layer {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 9999px;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* Switching Dark -> Light (Vibrant, high-contrast luminous sky-blue / aqua crest over dark canvas) */
+.water-ripple-to-light-1 {
+  border: 3px solid rgba(14, 165, 233, 0.95);
+  box-shadow: 0 0 50px rgba(14, 165, 233, 0.8), 0 0 20px rgba(56, 189, 248, 0.9), inset 0 0 35px rgba(14, 165, 233, 0.45);
+  animation: waterRippleExpand 1500ms cubic-bezier(0.32, 0, 0.18, 1) forwards;
+}
+
+.water-ripple-to-light-2 {
+  border: 2px solid rgba(99, 102, 241, 0.85);
+  box-shadow: 0 0 40px rgba(99, 102, 241, 0.65), inset 0 0 25px rgba(99, 102, 241, 0.3);
+  animation: waterRippleExpand 1650ms cubic-bezier(0.32, 0, 0.18, 1) 140ms forwards;
+}
+
+.water-ripple-to-light-3 {
+  border: 1.5px solid rgba(6, 182, 212, 0.75);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+  animation: waterRippleExpand 1800ms cubic-bezier(0.32, 0, 0.18, 1) 280ms forwards;
+}
+
+/* Switching Light -> Dark (Deep luminous electric indigo & purple crest over light canvas) */
+.water-ripple-to-dark-1 {
+  border: 3px solid rgba(99, 102, 241, 0.92);
+  box-shadow: 0 0 50px rgba(99, 102, 241, 0.8), 0 0 20px rgba(129, 140, 248, 0.95), inset 0 0 35px rgba(99, 102, 241, 0.4);
+  animation: waterRippleExpand 1500ms cubic-bezier(0.32, 0, 0.18, 1) forwards;
+}
+
+.water-ripple-to-dark-2 {
+  border: 2px solid rgba(147, 51, 234, 0.85);
+  box-shadow: 0 0 40px rgba(147, 51, 234, 0.6), inset 0 0 25px rgba(147, 51, 234, 0.3);
+  animation: waterRippleExpand 1650ms cubic-bezier(0.32, 0, 0.18, 1) 140ms forwards;
+}
+
+.water-ripple-to-dark-3 {
+  border: 1.5px solid rgba(59, 130, 246, 0.75);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  animation: waterRippleExpand 1800ms cubic-bezier(0.32, 0, 0.18, 1) 280ms forwards;
+}
+
+
+
+
+.water-ripple-to-dark-2 {
+  border: 2px solid rgba(147, 51, 234, 0.85);
+  box-shadow: 0 0 40px rgba(147, 51, 234, 0.6), inset 0 0 25px rgba(147, 51, 234, 0.3);
+  animation: waterRippleExpand 1650ms cubic-bezier(0.32, 0, 0.18, 1) 140ms forwards;
+}
+
+.water-ripple-to-dark-3 {
+  border: 1.5px solid rgba(59, 130, 246, 0.75);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  animation: waterRippleExpand 1800ms cubic-bezier(0.32, 0, 0.18, 1) 280ms forwards;
 }
