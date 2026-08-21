@@ -111,10 +111,11 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 key={item.id}
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
-                    ? "bg-indigo-600 text-white shadow-sm border border-indigo-500/40"
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                  }`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
+                  isActive
+                    ? "bg-indigo-600 text-white shadow-sm border-indigo-500/40"
+                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                }`}
               >
                 {iconMap[item.icon]}
                 <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
@@ -133,10 +134,11 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
                 title={item.label[isVi ? "vi" : "en"]}
-                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 ${isActive
-                    ? "bg-indigo-600 text-white shadow-sm border border-indigo-500/40"
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                  }`}
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
+                  isActive
+                    ? "bg-indigo-600 text-white shadow-sm border-indigo-500/40"
+                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                }`}
               >
                 {iconMap[item.icon]}
                 <span className="text-[11px] whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
@@ -185,10 +187,11 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                   key={item.id}
                   href={item.href}
                   onClick={() => handleNavClick(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${isActive
-                      ? "bg-indigo-600 text-white font-semibold shadow-sm"
-                      : "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                    }`}
+                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 ${
+                    isActive
+                      ? "bg-indigo-600 text-white shadow-sm border-indigo-500/40"
+                      : "border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                  }`}
                 >
                   {iconMap[item.icon]}
                   <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>

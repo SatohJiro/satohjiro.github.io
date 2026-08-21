@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { flushSync } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
@@ -111,54 +111,60 @@ export function ThemeToggle() {
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className="relative p-2 rounded-xl border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/25 bg-slate-100/80 dark:bg-white/5 hover:bg-slate-200/80 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 active:scale-90 transition-all duration-200 cursor-pointer group shadow-xs"
+        className="relative w-9 h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/25 bg-slate-100/80 dark:bg-white/5 hover:bg-slate-200/80 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 transition-colors duration-200 cursor-pointer group shadow-xs overflow-hidden"
         aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
         title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
       >
-        {isDark ? (
-          <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform duration-300" />
-        ) : (
-          <Moon className="w-4 h-4 text-indigo-600 group-hover:-rotate-12 transition-transform duration-300" />
-        )}
+        <div className="w-4 h-4 flex items-center justify-center shrink-0">
+          {isDark ? (
+            <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform duration-300 shrink-0" />
+          ) : (
+            <Moon className="w-4 h-4 text-indigo-600 group-hover:-rotate-12 transition-transform duration-300 shrink-0" />
+          )}
+        </div>
       </button>
 
-      {/* Realistic Concentric Water Ripple Waves with Direction-Aware High Contrast */}
-      {ripples && (
-        <div key={ripples.id} aria-hidden="true" className="pointer-events-none">
-          <div
-            className={`water-ripple-layer ${ripples.targetTheme === "light" ? "water-ripple-to-light-1" : "water-ripple-to-dark-1"
+      {/* Realistic Concentric Water Ripple Waves - Portaled to document.body to prevent any flex container shift */}
+      {ripples &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div key={ripples.id} aria-hidden="true" className="fixed inset-0 pointer-events-none z-[999999] overflow-hidden">
+            <div
+              className={`water-ripple-layer ${
+                ripples.targetTheme === "light" ? "water-ripple-to-light-1" : "water-ripple-to-dark-1"
               }`}
-            style={{
-              left: `${ripples.x}px`,
-              top: `${ripples.y}px`,
-              width: `${ripples.size}px`,
-              height: `${ripples.size}px`,
-            }}
-          />
-          <div
-            className={`water-ripple-layer ${ripples.targetTheme === "light" ? "water-ripple-to-light-2" : "water-ripple-to-dark-2"
+              style={{
+                left: `${ripples.x}px`,
+                top: `${ripples.y}px`,
+                width: `${ripples.size}px`,
+                height: `${ripples.size}px`,
+              }}
+            />
+            <div
+              className={`water-ripple-layer ${
+                ripples.targetTheme === "light" ? "water-ripple-to-light-2" : "water-ripple-to-dark-2"
               }`}
-            style={{
-              left: `${ripples.x}px`,
-              top: `${ripples.y}px`,
-              width: `${ripples.size}px`,
-              height: `${ripples.size}px`,
-            }}
-          />
-          <div
-            className={`water-ripple-layer ${ripples.targetTheme === "light" ? "water-ripple-to-light-3" : "water-ripple-to-dark-3"
+              style={{
+                left: `${ripples.x}px`,
+                top: `${ripples.y}px`,
+                width: `${ripples.size}px`,
+                height: `${ripples.size}px`,
+              }}
+            />
+            <div
+              className={`water-ripple-layer ${
+                ripples.targetTheme === "light" ? "water-ripple-to-light-3" : "water-ripple-to-dark-3"
               }`}
-            style={{
-              left: `${ripples.x}px`,
-              top: `${ripples.y}px`,
-              width: `${ripples.size}px`,
-              height: `${ripples.size}px`,
-            }}
-          />
-        </div>
-      )}
+              style={{
+                left: `${ripples.x}px`,
+                top: `${ripples.y}px`,
+                width: `${ripples.size}px`,
+                height: `${ripples.size}px`,
+              }}
+            />
+          </div>,
+          document.body
+        )}
     </>
   );
 }
-
-
