@@ -13,8 +13,8 @@
   :root {
     --background: #f8fafc;
     --foreground: #0f172a;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --card-border: rgba(15, 23, 42, 0.12);
+    --card-bg: rgba(255, 255, 255, 0.96);
+    --card-border: rgba(15, 23, 42, 0.1);
     --text-muted: #475569;
     --accent-cyan: #0284c7;
     --accent-indigo: #4f46e5;
@@ -26,8 +26,8 @@
   .dark {
     --background: #090d16;
     --foreground: #f8fafc;
-    --card-bg: rgba(15, 23, 42, 0.7);
-    --card-border: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(15, 23, 42, 0.78);
+    --card-border: rgba(255, 255, 255, 0.08);
     --text-muted: #94a3b8;
     --accent-cyan: #06b6d4;
     --accent-indigo: #6366f1;
@@ -60,13 +60,11 @@
   }
 }
 
-/* Subtle, Sleek Glassmorphism Primitives */
+/* High-Performance Glassmorphism Primitives */
 .glass-panel {
   background: var(--card-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--card-border);
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
 }
 
 .dark .glass-panel {
@@ -75,30 +73,28 @@
 
 .glass-panel-interactive {
   background: var(--card-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--card-border);
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
-  transition: border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .glass-panel-interactive:hover {
-  border-color: rgba(15, 23, 42, 0.22);
+  border-color: rgba(15, 23, 42, 0.2);
   background: #ffffff;
-  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.07);
   transform: translateY(-2px);
 }
 
 .dark .glass-panel-interactive:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(15, 23, 42, 0.85);
-  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.92);
+  box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.35);
 }
 
 .glass-button {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.05), rgba(15, 23, 42, 0.02));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--card-border);
   color: var(--foreground);
   transition: all 0.2s ease;
@@ -168,25 +164,36 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle Ambient Mesh */
+/* GPU Performance & Animation Keyframes */
 @keyframes floatSlow {
-
   0%,
   100% {
-    transform: translate(0px, 0px);
+    transform: translate3d(0px, 0px, 0);
   }
 
   50% {
-    transform: translate(15px, -20px);
+    transform: translate3d(12px, -15px, 0);
   }
 }
 
 .animate-float-slow {
-  animation: floatSlow 20s ease-in-out infinite;
+  animation: floatSlow 18s ease-in-out infinite;
 }
 
 .animate-float-reverse {
-  animation: floatSlow 24s ease-in-out infinite reverse;
+  animation: floatSlow 22s ease-in-out infinite reverse;
+}
+
+/* Rendering Optimizations: Offscreen content visibility */
+#about,
+#experience,
+#projects,
+#skills,
+#awards,
+#terminal,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 650px;
 }
 
 /* Custom Scrollbar */
@@ -219,7 +226,6 @@
 }
 
 @media print {
-
   html,
   body {
     background: #ffffff !important;
@@ -336,51 +342,52 @@
 .water-ripple-to-light-1 {
   border: 3px solid rgba(14, 165, 233, 0.95);
   box-shadow: 0 0 50px rgba(14, 165, 233, 0.8), 0 0 20px rgba(56, 189, 248, 0.9), inset 0 0 35px rgba(14, 165, 233, 0.45);
-  animation: waterRippleExpand 1500ms cubic-bezier(0.32, 0, 0.18, 1) forwards;
+  animation: waterRippleExpand 1400ms cubic-bezier(0.32, 0, 0.18, 1) forwards;
 }
 
 .water-ripple-to-light-2 {
   border: 2px solid rgba(99, 102, 241, 0.85);
   box-shadow: 0 0 40px rgba(99, 102, 241, 0.65), inset 0 0 25px rgba(99, 102, 241, 0.3);
-  animation: waterRippleExpand 1650ms cubic-bezier(0.32, 0, 0.18, 1) 140ms forwards;
+  animation: waterRippleExpand 1500ms cubic-bezier(0.32, 0, 0.18, 1) 120ms forwards;
 }
 
 .water-ripple-to-light-3 {
   border: 1.5px solid rgba(6, 182, 212, 0.75);
   box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
-  animation: waterRippleExpand 1800ms cubic-bezier(0.32, 0, 0.18, 1) 280ms forwards;
+  animation: waterRippleExpand 1600ms cubic-bezier(0.32, 0, 0.18, 1) 240ms forwards;
 }
 
 /* Switching Light -> Dark (Deep luminous electric indigo & purple crest over light canvas) */
 .water-ripple-to-dark-1 {
   border: 3px solid rgba(99, 102, 241, 0.92);
   box-shadow: 0 0 50px rgba(99, 102, 241, 0.8), 0 0 20px rgba(129, 140, 248, 0.95), inset 0 0 35px rgba(99, 102, 241, 0.4);
-  animation: waterRippleExpand 1500ms cubic-bezier(0.32, 0, 0.18, 1) forwards;
+  animation: waterRippleExpand 1400ms cubic-bezier(0.32, 0, 0.18, 1) forwards;
 }
 
 .water-ripple-to-dark-2 {
   border: 2px solid rgba(147, 51, 234, 0.85);
   box-shadow: 0 0 40px rgba(147, 51, 234, 0.6), inset 0 0 25px rgba(147, 51, 234, 0.3);
-  animation: waterRippleExpand 1650ms cubic-bezier(0.32, 0, 0.18, 1) 140ms forwards;
+  animation: waterRippleExpand 1500ms cubic-bezier(0.32, 0, 0.18, 1) 120ms forwards;
 }
 
 .water-ripple-to-dark-3 {
   border: 1.5px solid rgba(59, 130, 246, 0.75);
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
-  animation: waterRippleExpand 1800ms cubic-bezier(0.32, 0, 0.18, 1) 280ms forwards;
+  animation: waterRippleExpand 1600ms cubic-bezier(0.32, 0, 0.18, 1) 240ms forwards;
 }
 
-
-
-
-.water-ripple-to-dark-2 {
-  border: 2px solid rgba(147, 51, 234, 0.85);
-  box-shadow: 0 0 40px rgba(147, 51, 234, 0.6), inset 0 0 25px rgba(147, 51, 234, 0.3);
-  animation: waterRippleExpand 1650ms cubic-bezier(0.32, 0, 0.18, 1) 140ms forwards;
-}
-
-.water-ripple-to-dark-3 {
-  border: 1.5px solid rgba(59, 130, 246, 0.75);
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
-  animation: waterRippleExpand 1800ms cubic-bezier(0.32, 0, 0.18, 1) 280ms forwards;
-}
+/* Respect user's reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-float-slow,
+  .animate-float-reverse {
+    animation: none !important;
+  }
+}

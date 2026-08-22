@@ -1,47 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { telemetry } from "@/lib/telemetry";
 
-export function useScrollSpy(sectionIds: string[], offset: number = 120): string {
-  const [activeSection, setActiveSection] = useState<string>(sectionIds[0] || "");
+export function useScrollSpy(sectionIds: string[], defaultSection: string = "home"): string {
+  const [activeSection, setActiveSection] = useState<string>(defaultSection);
+  const lastActiveRef = useRef<string>(defaultSection);
 
   useEffect(() => {
-    let lastActive = "";
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      return;
+    }
 
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + offset;
-
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const sectionId = sectionIds[i];
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            if (lastActive !== sectionId) {
-              lastActive = sectionId;
-              setActiveSection(sectionId);
-              telemetry.track("section_view", sectionId);
-            }
-            return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find visible section with highest intersection ratio
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+        if (visibleEntries.length > 0) {
+          // Sort by intersection ratio or pick the top one
+          visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          const currentId = visibleEntries[0].target.id;
+          if (currentId && currentId !== lastActiveRef.current) {
+            lastActiveRef.current = currentId;
+            setActiveSection(currentId);
+            telemetry.track("section_view", currentId);
           }
         }
+      },
+      {
+        root: null,
+        rootMargin: "-20% 0px -40% 0px",
+        threshold: [0, 0.2, 0.5, 0.8],
       }
+    );
 
-      if (window.scrollY < 100 && sectionIds.length > 0) {
-        if (lastActive !== sectionIds[0]) {
-          lastActive = sectionIds[0];
-          setActiveSection(sectionIds[0]);
-        }
+    const elements: HTMLElement[] = [];
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (el) {
+        elements.push(el);
+        observer.observe(el);
       }
+    }
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [sectionIds, offset]);
+  }, [sectionIds]);
 
   return activeSection;
 }
+

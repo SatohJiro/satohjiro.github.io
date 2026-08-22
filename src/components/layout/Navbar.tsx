@@ -22,6 +22,8 @@ import {
 } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
+import { useScrollSpy } from "@/hooks/useScrollSpy";
+
 interface NavbarProps {
   onOpenResumeModal: () => void;
 }
@@ -30,30 +32,24 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
   const { isVi, isEn } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("home");
+  const navSectionIds = React.useMemo(() => siteConfig.navItems.map((item) => item.id), []);
+  const activeSection = useScrollSpy(navSectionIds, "home");
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      // Section tracking for active state
-      const sections = siteConfig.navItems.map((item) => item.id);
-      const scrollPosition = window.scrollY + 120;
-
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const isPast = window.scrollY > 20;
+          setScrolled((prev) => (prev !== isPast ? isPast : prev));
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

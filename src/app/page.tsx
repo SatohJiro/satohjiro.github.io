@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { GlowSpotlight } from "@/components/glass/GlowSpotlight";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -12,10 +13,19 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 import { AwardsSection } from "@/components/sections/AwardsSection";
 import { InteractiveTerminal } from "@/components/sections/InteractiveTerminal";
 import { ContactSection } from "@/components/sections/ContactSection";
-import { PrivacyTelemetryDrawer } from "@/components/analytics/PrivacyTelemetryDrawer";
-import { ResumeModal } from "@/components/resume/ResumeModal";
 import { PixelVersionFloatButton } from "@/components/layout/PixelVersionFloatButton";
 import { telemetry } from "@/lib/telemetry";
+
+// Code-split heavy modals and drawers to reduce initial bundle and TBT
+const PrivacyTelemetryDrawer = dynamic(
+  () => import("@/components/analytics/PrivacyTelemetryDrawer").then((mod) => mod.PrivacyTelemetryDrawer),
+  { ssr: false }
+);
+
+const ResumeModal = dynamic(
+  () => import("@/components/resume/ResumeModal").then((mod) => mod.ResumeModal),
+  { ssr: false }
+);
 
 export default function HomePage() {
   const [isPrivacyDrawerOpen, setIsPrivacyDrawerOpen] = useState(false);

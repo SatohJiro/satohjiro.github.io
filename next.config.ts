@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   },
   basePath: isGithubPages && repoName ? `/${repoName}` : "",
   trailingSlash: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
 };
 
 export default nextConfig;

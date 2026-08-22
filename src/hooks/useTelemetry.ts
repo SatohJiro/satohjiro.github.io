@@ -8,23 +8,24 @@ export function useTelemetry() {
   const [events, setEvents] = useState<TelemetryEvent[]>([]);
   const [isOptedOut, setIsOptedOut] = useState<boolean>(false);
 
-  const refreshState = useCallback(() => {
-    setEvents(telemetry.getEvents());
-    setIsOptedOut(telemetry.isOptedOut());
-  }, []);
-
   useEffect(() => {
-    refreshState();
+    let isMounted = true;
 
     const handleUpdate = () => {
-      refreshState();
+      if (isMounted) {
+        setEvents(telemetry.getEvents());
+        setIsOptedOut(telemetry.isOptedOut());
+      }
     };
+
+    handleUpdate();
 
     window.addEventListener("satoh-telemetry-update", handleUpdate);
     return () => {
+      isMounted = false;
       window.removeEventListener("satoh-telemetry-update", handleUpdate);
     };
-  }, [refreshState]);
+  }, []);
 
   const track = (
     type: TelemetryEvent["type"],

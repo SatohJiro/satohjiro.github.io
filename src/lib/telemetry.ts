@@ -100,7 +100,9 @@ class PrivacyTelemetryEngine {
 
   private notifySubscribers() {
     if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("satoh-telemetry-update"));
+      queueMicrotask(() => {
+        window.dispatchEvent(new CustomEvent("satoh-telemetry-update"));
+      });
     }
   }
 }

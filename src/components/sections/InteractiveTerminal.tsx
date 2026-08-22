@@ -7,7 +7,6 @@ import {
   CornerDownLeft,
   Trash2,
 } from "lucide-react";
-import confetti from "canvas-confetti";
 import { telemetry } from "@/lib/telemetry";
 
 interface TerminalLine {
@@ -191,15 +190,15 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
       onOpenResumeModal();
     } else if (trimmed === "hire" || trimmed === "sudo hire") {
-      try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
-      } catch {
-        // ignore
-      }
+      import("canvas-confetti")
+        .then((mod) => {
+          mod.default({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+          });
+        })
+        .catch(() => {});
       newLines.push({
         id: `${Date.now()}-out`,
         type: "output",

@@ -66,7 +66,7 @@ export function ThemeToggle() {
     // Clean up water ripple overlay after animation ends
     setTimeout(() => {
       setRipples(null);
-    }, 2200);
+    }, 1700);
 
     // Fallback if View Transitions API is not supported or user prefers reduced motion
     if (

@@ -14,7 +14,6 @@ import {
   PartyPopper,
   Building,
 } from "lucide-react";
-import confetti from "canvas-confetti";
 import { telemetry } from "@/lib/telemetry";
 
 export function AwardsSection() {
@@ -28,15 +27,15 @@ export function AwardsSection() {
 
   const handleCelebrate = (awardName: string) => {
     telemetry.track("click", `celebrate_award_${awardName}`);
-    try {
-      confetti({
-        particleCount: 60,
-        spread: 60,
-        origin: { y: 0.7 },
-      });
-    } catch {
-      // ignore
-    }
+    import("canvas-confetti")
+      .then((mod) => {
+        mod.default({
+          particleCount: 60,
+          spread: 60,
+          origin: { y: 0.7 },
+        });
+      })
+      .catch(() => {});
   };
 
   return (

@@ -7,7 +7,6 @@ import { telemetry } from "@/lib/telemetry";
 
 export function PixelVersionFloatButton() {
   const { isVi } = useLanguage();
-  const [isHovered, setIsHovered] = useState(false);
 
   const pixelUrl = "https://pixel-portfolio-swart.vercel.app/";
 
@@ -22,8 +21,6 @@ export function PixelVersionFloatButton() {
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         className="group relative flex items-center gap-2 p-2.5 sm:p-2 rounded-full bg-slate-900/90 dark:bg-slate-950/90 text-white backdrop-blur-md border border-indigo-500/30 hover:border-indigo-400/80 shadow-[0_8px_30px_rgb(0,0,0,0.35)] hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all duration-300 active:scale-95 select-none"
         aria-label={isVi ? "Trải nghiệm phiên bản Pixel Game RPG" : "Switch to Pixel Game RPG Version"}
       >
