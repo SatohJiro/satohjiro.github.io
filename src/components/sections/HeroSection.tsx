@@ -27,7 +27,7 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -46,7 +46,7 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
 
             {/* Main Headline */}
             <div className="space-y-2">
-              <div className="text-xs font-mono tracking-widest text-cyan-600 dark:text-cyan-400 uppercase font-semibold">
+              <div className="text-xs font-mono tracking-widest text-blue-600 dark:text-blue-400 uppercase font-semibold">
                 {isVi ? "Kỹ sư Phần mềm | Full-Stack & Frontend" : "Software Engineer | Full-Stack & Frontend"}
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
@@ -57,17 +57,17 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
               </h1>
               <div className="text-lg sm:text-xl font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center lg:justify-start gap-2 pt-1">
                 <span>alias:</span>
-                <span className="font-mono text-cyan-700 dark:text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-lg border border-cyan-500/20 text-sm">
+                <span className="font-mono text-blue-700 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg border border-blue-500/20 text-sm">
                   @SatohJiro
                 </span>
               </div>
             </div>
 
-            {/* Description */}
+            {/* Description (Anti-Slop: Under 20 words) */}
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
               {isVi
-                ? "Hơn 3 năm kinh nghiệm phát triển giao diện và ứng dụng Web. Thế mạnh về ReactJS, Next.js, Vue.js, TypeScript, cùng kinh nghiệm thực tế với Micro-frontend (dự án ahamo NTT Docomo), Backend APIs (Spring Boot, FastAPI) và ứng dụng AI (GPT-4)."
-                : "3+ years of professional engineering experience in frontend and web development. Proficient in ReactJS, Next.js, Vue.js, TypeScript, with practical project experience in micro-frontends (ahamo NTT Docomo), backend APIs (Spring Boot, FastAPI), and AI integration (GPT-4)."}
+                ? "Kỹ sư phần mềm hơn 3 năm kinh nghiệm phát triển ứng dụng web, micro-frontend NTT Docomo và tích hợp AI."
+                : "Software Engineer with 3+ years building high-performance web apps, micro-frontends at NTT Docomo, and production AI tools."}
             </p>
 
             {/* Action Buttons */}
@@ -103,7 +103,7 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
                   onClick={() => telemetry.track("click", "hero_open_terminal")}
                   variant="outline"
                   size="md"
-                  icon={<Terminal className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />}
+                  icon={<Terminal className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
                   className="whitespace-nowrap"
                 >
                   Terminal
@@ -122,11 +122,11 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
                 <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Thủ Khoa GPA (NLU)" : "Valedictorian GPA"}</div>
               </div>
               <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-indigo-600 dark:text-cyan-400">{statsData.awardsCount}</div>
+                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{statsData.awardsCount}</div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Giải Thưởng / Vinh Danh" : "Honors & Awards"}</div>
               </div>
               <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-indigo-600 dark:text-indigo-400">{statsData.performanceGain}</div>
+                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{statsData.performanceGain}</div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Tối ưu Render" : "Performance Gain"}</div>
               </div>
             </div>
@@ -138,15 +138,15 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
             <GlassCard className="p-4 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+                  <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
                     <Globe2 className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-[11px] font-mono text-cyan-600 dark:text-cyan-400">Hero Solutions / NTT Docomo</div>
+                    <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400">Hero Solutions / NTT Docomo</div>
                     <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">ahamo Web Platform (Japan)</div>
                   </div>
                 </div>
-                <GlassBadge variant="cyan" size="sm">
+                <GlassBadge variant="blue" size="sm">
                   Active
                 </GlassBadge>
               </div>
@@ -186,15 +186,15 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
             <GlassCard className="p-4 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                  <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
                     <Sparkles className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-[11px] font-mono text-indigo-600 dark:text-indigo-400">AI Got Talent 2023</div>
+                    <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400">AI Got Talent 2023</div>
                     <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">GPT Code Generator</div>
                   </div>
                 </div>
-                <GlassBadge variant="indigo" size="sm">
+                <GlassBadge variant="blue" size="sm">
                   3rd Prize
                 </GlassBadge>
               </div>

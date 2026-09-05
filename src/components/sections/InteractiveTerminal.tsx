@@ -90,7 +90,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
               <div><span className="text-amber-400 font-bold">awards</span> : Academic & hackathon honors</div>
               <div><span className="text-amber-400 font-bold">contact</span> : Email, phone, GitHub, LinkedIn</div>
               <div><span className="text-amber-400 font-bold">resume</span> : Open ATS resume modal</div>
-              <div><span className="text-amber-400 font-bold">hire</span> : Fast-track interview request 🎉</div>
+              <div><span className="text-amber-400 font-bold">hire</span> : Fast-track interview request [Priority]</div>
               <div><span className="text-amber-400 font-bold">clear</span> : Clear console buffer</div>
             </div>
           </div>
@@ -116,7 +116,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-slate-200">
-            <div className="text-indigo-400 font-bold">Technical Skills:</div>
+            <div className="text-blue-400 font-bold">Technical Skills:</div>
             <div>• Frontend Core: ReactJS, Next.js, Vue.js (2/3), TypeScript, JavaScript (ES6+), Tailwind CSS</div>
             <div>• State & Tuning: Redux Toolkit, Zustand, Context API, Re-render reduction (+30%)</div>
             <div>• Architecture & Backend: Micro-frontend (ahamo NTT Docomo), Java Spring Boot, Python FastAPI, NestJS</div>
@@ -163,9 +163,9 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-amber-300">
-            <div>🏆 1st Place — Valedictorian of Class 2019 (Nong Lam University - GPA 3.6/4.0)</div>
-            <div>✨ 3rd Place — AI Got Talent 2023 (TMA Solutions Corporation)</div>
-            <div>🎖️ Rookie of the Year 2024 (Nexus Zone Corporation)</div>
+            <div>[Honor] 1st Place — Valedictorian of Class 2019 (Nong Lam University - GPA 3.6/4.0)</div>
+            <div>[Award] 3rd Place — AI Got Talent 2023 (TMA Solutions Corporation)</div>
+            <div>[Award] Rookie of the Year 2024 (Nexus Zone Corporation)</div>
           </div>
         ),
       });
@@ -204,7 +204,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
         type: "output",
         text: (
           <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono text-xs space-y-1">
-            <div className="font-bold text-white">🎉 Thank you for your interest!</div>
+            <div className="font-bold text-white">[Priority Direct Line] Thank you for your interest!</div>
             <div>Nguyen Tran Anh is ready to contribute to your engineering team.</div>
             <div>Feel free to connect via <a href="mailto:trananhq2345@gmail.com" className="underline font-bold text-cyan-300">trananhq2345@gmail.com</a> or phone <span className="font-bold text-white">(+84) 98 970 2459</span>.</div>
           </div>
@@ -321,7 +321,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
             {lines.map((line) => (
               <div key={line.id} className="leading-relaxed">
                 {line.type === "input" ? (
-                  <span className="text-indigo-300 font-bold">{line.text}</span>
+                  <span className="text-blue-300 font-bold">{line.text}</span>
                 ) : line.type === "system" ? (
                   <span className="text-slate-400 italic">{line.text}</span>
                 ) : line.type === "error" ? (

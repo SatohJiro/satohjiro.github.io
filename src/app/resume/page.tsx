@@ -47,7 +47,7 @@ function ResumeContent() {
             <button
               onClick={() => setLang("en")}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                lang === "en" ? "bg-indigo-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
+                lang === "en" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
               }`}
             >
               English (ATS)
@@ -55,7 +55,7 @@ function ResumeContent() {
             <button
               onClick={() => setLang("vi")}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                lang === "vi" ? "bg-indigo-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
+                lang === "vi" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
               }`}
             >
               Tiếng Việt
@@ -64,7 +64,7 @@ function ResumeContent() {
 
           <button
             onClick={handlePrint}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all cursor-pointer"
           >
             <Printer className="w-4 h-4" />
             <span>{lang === "vi" ? "In / Lưu PDF" : "Print / Save PDF"}</span>

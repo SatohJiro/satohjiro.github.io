@@ -135,7 +135,7 @@ export function PrivacyTelemetryDrawer({ isOpen, onClose }: PrivacyTelemetryDraw
                 </div>
                 {evt.target && (
                   <div className="text-slate-300 text-[11px] truncate">
-                    Target: <span className="text-indigo-300">{evt.target}</span>
+                    Target: <span className="text-blue-400">{evt.target}</span>
                   </div>
                 )}
               </div>

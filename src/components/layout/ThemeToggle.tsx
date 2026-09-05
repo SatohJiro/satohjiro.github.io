@@ -119,7 +119,7 @@ export function ThemeToggle() {
           {isDark ? (
             <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform duration-300 shrink-0" />
           ) : (
-            <Moon className="w-4 h-4 text-indigo-600 group-hover:-rotate-12 transition-transform duration-300 shrink-0" />
+            <Moon className="w-4 h-4 text-blue-600 group-hover:-rotate-12 transition-transform duration-300 shrink-0" />
           )}
         </div>
       </button>

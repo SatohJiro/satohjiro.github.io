@@ -106,7 +106,7 @@ export function ProjectsSection() {
                     {typeof project.year === "string" ? project.year : project.year[isVi ? "vi" : "en"]}
                   </div>
                   {project.badge && (
-                    <GlassBadge variant={project.category === "ai" ? "indigo" : "cyan"} size="sm">
+                    <GlassBadge variant="blue" size="sm">
                       {project.badge[isVi ? "vi" : "en"]}
                     </GlassBadge>
                   )}
@@ -114,7 +114,7 @@ export function ProjectsSection() {
 
                 {/* Project Title */}
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     {project.name[isVi ? "vi" : "en"]}
                   </h3>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-medium">
@@ -163,7 +163,7 @@ export function ProjectsSection() {
                     onClick={() => handleOpenProjectModal(project)}
                     size="sm"
                     variant="outline"
-                    icon={<Workflow className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />}
+                    icon={<Workflow className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />}
                     className="w-full text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white"
                   >
                     {isVi ? "Chi tiết Dự án" : "Details & Architecture"}
@@ -175,7 +175,7 @@ export function ProjectsSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => telemetry.track("click", `project_github_${project.id}`)}
-                      className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-cyan-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
+                      className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-blue-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
                       aria-label="GitHub Repository"
                     >
                       <GithubIcon className="w-4 h-4" />
@@ -208,7 +208,7 @@ export function ProjectsSection() {
           title={
             activeModalProject && (
               <div className="flex items-center gap-2.5 text-slate-900 dark:text-white">
-                <Workflow className="w-5 h-5 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                <Workflow className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0" />
                 <span>{activeModalProject.name[isVi ? "vi" : "en"]}</span>
               </div>
             )
@@ -225,7 +225,7 @@ export function ProjectsSection() {
                   </div>
                 </div>
                 {activeModalProject.badge && (
-                  <GlassBadge variant="indigo" size="md">
+                  <GlassBadge variant="blue" size="md">
                     {activeModalProject.badge[isVi ? "vi" : "en"]}
                   </GlassBadge>
                 )}
@@ -244,11 +244,11 @@ export function ProjectsSection() {
               {/* Architecture Blueprint if available */}
               {activeModalProject.architecture && (
                 <div className="space-y-2">
-                  <div className="text-xs font-bold text-cyan-700 dark:text-cyan-400 flex items-center gap-1.5 uppercase tracking-wide">
+                  <div className="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5 uppercase tracking-wide">
                     <Cpu className="w-3.5 h-3.5" />
                     <span>{isVi ? "Mô Hình / Kiến Trúc Áp Dụng" : "System / Architecture Pipeline"}</span>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-slate-950 border border-cyan-500/30 font-mono text-xs text-cyan-300 leading-relaxed shadow-sm">
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-blue-500/30 font-mono text-xs text-blue-300 leading-relaxed shadow-sm">
                     {activeModalProject.architecture[isVi ? "vi" : "en"]}
                   </div>
                 </div>
@@ -277,7 +277,7 @@ export function ProjectsSection() {
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {activeModalProject.technologies.map((t, idx) => (
-                    <GlassBadge key={idx} variant="cyan" size="sm">
+                    <GlassBadge key={idx} variant="blue" size="sm">
                       {t}
                     </GlassBadge>
                   ))}

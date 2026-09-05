@@ -34,9 +34,6 @@ export function ContactSection() {
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <GlassBadge variant="emerald" size="md">
-            {isVi ? "Thông Tin Liên Hệ" : "Get In Touch"}
-          </GlassBadge>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {isVi ? (
               <>
@@ -61,12 +58,12 @@ export function ContactSection() {
           <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 flex flex-col justify-between" glowColor="none">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
                   <Mail className="w-6 h-6" />
                 </div>
                 <button
                   onClick={() => handleCopy(contactData.email, "email")}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer shadow-xs"
                   title="Copy Email Address"
                 >
                   {copiedKey === "email" ? (
@@ -119,12 +116,12 @@ export function ContactSection() {
           <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 flex flex-col justify-between" glowColor="none">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
                   <Phone className="w-6 h-6" />
                 </div>
                 <button
                   onClick={() => handleCopy(contactData.phone, "phone")}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer shadow-xs"
                   title="Copy Phone Number"
                 >
                   {copiedKey === "phone" ? (
@@ -164,7 +161,7 @@ export function ContactSection() {
                 <GlassButton
                   variant="outline"
                   size="md"
-                  icon={<Phone className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />}
+                  icon={<Phone className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
                   className="w-full text-xs font-semibold text-slate-800 dark:text-slate-200"
                 >
                   {isVi ? "Gọi Điện Thoại" : "Make a Phone Call"}
@@ -195,16 +192,16 @@ export function ContactSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "contact_card_linkedin")}
-                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-indigo-500/50 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/10 transition-all group shadow-xs"
+                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-500/10 transition-all group shadow-xs"
               >
                 <div className="flex items-center gap-3">
-                  <LinkedinIcon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <LinkedinIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <div>
                     <div className="text-xs font-bold text-slate-900 dark:text-white">LinkedIn</div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">/in/satohjiro</div>
                   </div>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
               </a>
 
               <a
@@ -212,16 +209,16 @@ export function ContactSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "contact_card_github")}
-                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-cyan-500/50 hover:bg-cyan-50/50 dark:hover:bg-cyan-500/10 transition-all group shadow-xs"
+                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-500/10 transition-all group shadow-xs"
               >
                 <div className="flex items-center gap-3">
-                  <GithubIcon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                  <GithubIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <div>
                     <div className="text-xs font-bold text-slate-900 dark:text-white">GitHub</div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">/SatohJiro</div>
                   </div>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors" />
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
               </a>
             </div>
           </GlassCard>

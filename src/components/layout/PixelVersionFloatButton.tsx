@@ -21,11 +21,11 @@ export function PixelVersionFloatButton() {
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleClick}
-        className="group relative flex items-center gap-2 p-2.5 sm:p-2 rounded-full bg-slate-900/90 dark:bg-slate-950/90 text-white backdrop-blur-md border border-indigo-500/30 hover:border-indigo-400/80 shadow-[0_8px_30px_rgb(0,0,0,0.35)] hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all duration-300 active:scale-95 select-none"
+        className="group relative flex items-center gap-2 p-2.5 sm:p-2 rounded-full bg-slate-900/90 dark:bg-slate-950/90 text-white backdrop-blur-md border border-blue-500/30 hover:border-blue-400/80 shadow-[0_8px_30px_rgb(0,0,0,0.35)] hover:shadow-[0_0_20px_rgba(37,99,235,0.35)] transition-all duration-300 active:scale-95 select-none"
         aria-label={isVi ? "Trải nghiệm phiên bản Pixel Game RPG" : "Switch to Pixel Game RPG Version"}
       >
         {/* Floating circular icon */}
-        <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 text-white shadow-inner">
+        <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 via-blue-600 to-slate-800 text-white shadow-inner">
           <Gamepad2 className="w-4 h-4 transition-transform group-hover:scale-110 group-hover:rotate-6" />
           
           {/* Subtle live indicator dot */}
@@ -42,7 +42,7 @@ export function PixelVersionFloatButton() {
             <Sparkles className="w-3 h-3 text-amber-400 animate-pulse" />
             <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white transition-colors" />
           </div>
-          <div className="text-[10px] text-indigo-300 font-sans">
+          <div className="text-[10px] text-blue-300 font-sans">
             {isVi ? "Giao diện 8-Bit Retro RPG" : "8-Bit Retro RPG & Audio"}
           </div>
         </div>

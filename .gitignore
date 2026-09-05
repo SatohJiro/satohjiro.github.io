@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -10,44 +10,72 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# Next.js & Build Outputs
 /.next/
 /out/
-
-# production
 /build
+/dist
+.turbo
 
-# misc
-.DS_Store
-*.pem
+# Testing & Coverage
+/coverage
+.vitest
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# Sensitive personal data folder (DO NOT COMMIT TO PUBLIC GITHUB)
-/information/
-information/
-*.private.*
-*sensitive*
-
-# env files (can opt-in for committing if needed)
+# Environment Variables & Secrets (CRITICAL FOR SECURITY)
 .env*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+*.env
+*.key
+*.pem
+*.cert
+*.crt
+*.pfx
+*.p12
+*.pub
+*.asc
+.npmrc
+credentials.json
+service-account*.json
+google-services.json
 
-# vercel & ide
-.vercel
+# Sensitive Personal Data & Prompts Folder (DO NOT COMMIT TO PUBLIC GITHUB)
+/information/
+information/
+agent
+agent/
+*.private.*
+*sensitive*
+
+# Debug & System Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS & Filesystem Metadata
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE, Editors & Agent Tools
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vercel
 
-# typescript
+# TypeScript
 *.tsbuildinfo
 next-env.d.ts

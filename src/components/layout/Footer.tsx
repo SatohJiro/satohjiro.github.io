@@ -25,8 +25,8 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
           {/* Col 1: Identity */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 p-[1px]">
-                <div className="w-full h-full rounded-xl bg-white dark:bg-slate-950 flex items-center justify-center font-bold text-sm text-cyan-600 dark:text-cyan-400">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-slate-700 dark:to-slate-400 p-[1px]">
+                <div className="w-full h-full rounded-xl bg-white dark:bg-slate-950 flex items-center justify-center font-bold text-sm text-blue-600 dark:text-blue-400">
                   NTA
                 </div>
               </div>
@@ -52,7 +52,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "footer_github")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-white hover:border-cyan-500/40 hover:bg-cyan-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
                 aria-label="GitHub Profile"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -62,7 +62,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "footer_linkedin")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white hover:border-indigo-500/40 hover:bg-indigo-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -96,7 +96,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                    className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     {item.label[isVi ? "vi" : "en"]}
                   </Link>
@@ -105,9 +105,9 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               <li>
                 <button
                   onClick={onOpenResumeModal}
-                  className="text-indigo-600 dark:text-indigo-400 hover:underline transition-colors cursor-pointer font-medium"
+                  className="text-blue-600 dark:text-blue-400 hover:underline transition-colors cursor-pointer font-medium"
                 >
-                  {isVi ? "📄 Xem CV Online" : "📄 Online ATS Resume"}
+                  {isVi ? "Xem CV Online" : "Online ATS Resume"}
                 </button>
               </li>
             </ul>
@@ -128,7 +128,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               onClick={onOpenPrivacyDrawer}
               size="sm"
               variant="outline"
-              icon={<Activity className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />}
+              icon={<Activity className="w-3 h-3 text-blue-600 dark:text-blue-400" />}
               className="text-xs"
             >
               {isVi ? "Xem Telemetry Log" : "View Telemetry"}

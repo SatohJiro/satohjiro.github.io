@@ -32,9 +32,6 @@ export function ExperienceSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <GlassBadge variant="indigo" size="md">
-            {isVi ? "Hành Trình Sự Nghiệp" : "Career Path"}
-          </GlassBadge>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {isVi ? (
               <>
@@ -66,7 +63,7 @@ export function ExperienceSection() {
                   onClick={() => handleSelectExp(exp)}
                   className={`w-full text-left p-4 rounded-2xl transition-all duration-200 border cursor-pointer ${
                     isSelected
-                      ? "bg-white dark:bg-slate-900/90 border-indigo-500/50 shadow-md ring-1 ring-indigo-500/20"
+                      ? "bg-white dark:bg-slate-900/90 border-blue-500/50 shadow-md ring-1 ring-blue-500/20"
                       : "bg-slate-50/70 dark:bg-white/[0.03] border-slate-200/80 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/15 hover:bg-white/80 dark:hover:bg-white/[0.06]"
                   }`}
                 >
@@ -81,13 +78,13 @@ export function ExperienceSection() {
                     )}
                   </div>
 
-                  <div className="text-xs text-indigo-600 dark:text-indigo-300 font-medium mt-1">
+                  <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">
                     {exp.title[isVi ? "vi" : "en"]}
                   </div>
 
                   <div className="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200/60 dark:border-white/5">
                     <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
+                      <Calendar className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                       {exp.duration[isVi ? "vi" : "en"]}
                     </span>
                     <span className="flex items-center gap-1">
@@ -109,7 +106,7 @@ export function ExperienceSection() {
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                     {activeExp.title[isVi ? "vi" : "en"]}
                   </h3>
-                  <div className="text-xs sm:text-sm font-semibold text-cyan-600 dark:text-cyan-400 mt-1">
+                  <div className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">
                     {activeExp.company} • {typeof activeExp.location === "string" ? activeExp.location : activeExp.location[isVi ? "vi" : "en"]}
                   </div>
                 </div>
@@ -126,7 +123,7 @@ export function ExperienceSection() {
                   <div key={pIdx} className="space-y-3.5 p-4 sm:p-5 rounded-2xl bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/70 dark:border-white/5">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                       <h4 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                        <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                         <span>{proj.name}</span>
                       </h4>
                       {proj.client && (
@@ -148,7 +145,7 @@ export function ExperienceSection() {
                       <ul className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
                         {proj.responsibilities[isVi ? "vi" : "en"].map((r, rIdx) => (
                           <li key={rIdx} className="flex items-start gap-2">
-                            <span className="w-1 h-1 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                            <span className="w-1 h-1 rounded-full bg-blue-600 mt-1.5 shrink-0" />
                             <span className="leading-relaxed">{r}</span>
                           </li>
                         ))}
@@ -171,7 +168,7 @@ export function ExperienceSection() {
                     {/* Tech Stack Badges */}
                     <div className="pt-1 flex flex-wrap gap-1.5">
                       {proj.technologies.map((t, tIdx) => (
-                        <GlassBadge key={tIdx} variant="indigo" size="sm">
+                        <GlassBadge key={tIdx} variant="blue" size="sm">
                           {t}
                         </GlassBadge>
                       ))}

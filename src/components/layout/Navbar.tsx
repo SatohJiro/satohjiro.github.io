@@ -83,8 +83,8 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
           onClick={() => handleNavClick("home")}
           className="flex items-center gap-2.5 group cursor-pointer shrink-0"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-[1px] shadow-sm group-hover:scale-105 transition-transform duration-200">
-            <div className="w-full h-full rounded-xl bg-white dark:bg-slate-950/90 flex items-center justify-center font-bold text-xs text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-500 dark:from-indigo-400 dark:to-cyan-400">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-slate-700 dark:to-slate-400 p-[1px] shadow-sm group-hover:scale-105 transition-transform duration-200">
+            <div className="w-full h-full rounded-xl bg-white dark:bg-slate-950/90 flex items-center justify-center font-bold text-xs text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
               NTA
             </div>
           </div>
@@ -109,7 +109,7 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 onClick={() => handleNavClick(item.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
                   isActive
-                    ? "bg-indigo-600 text-white shadow-sm border-indigo-500/40"
+                    ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
                     : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
               >
@@ -132,7 +132,7 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 title={item.label[isVi ? "vi" : "en"]}
                 className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
                   isActive
-                    ? "bg-indigo-600 text-white shadow-sm border-indigo-500/40"
+                    ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
                     : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
               >
@@ -185,7 +185,7 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                   onClick={() => handleNavClick(item.id)}
                   className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 ${
                     isActive
-                      ? "bg-indigo-600 text-white shadow-sm border-indigo-500/40"
+                      ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
                       : "border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >

@@ -282,7 +282,7 @@ export const skillsData: StrengthCategory[] = [
       },
       {
         name: "Figma & Adobe XD",
-        category: "tools",
+        category: "devops",
         tag: { en: "UI Translation", vi: "Thiết kế UI" },
         description: {
           en: "Translating UI/UX design mockups into responsive web components",

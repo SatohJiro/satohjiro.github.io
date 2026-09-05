@@ -12,7 +12,7 @@ export function LanguageToggle() {
         onClick={() => setLanguage("vi")}
         className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
           isVi
-            ? "bg-indigo-600 text-white shadow-xs"
+            ? "bg-blue-600 text-white shadow-xs"
             : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
         }`}
         aria-label="Chuyển sang Tiếng Việt"
@@ -23,7 +23,7 @@ export function LanguageToggle() {
         onClick={() => setLanguage("en")}
         className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
           isEn
-            ? "bg-indigo-600 text-white shadow-xs"
+            ? "bg-blue-600 text-white shadow-xs"
             : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
         }`}
         aria-label="Switch to English"

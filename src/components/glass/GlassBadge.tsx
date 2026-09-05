@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 interface GlassBadgeProps {
   children: ReactNode;
-  variant?: "default" | "cyan" | "indigo" | "emerald" | "amber" | "rose" | "purple";
+  variant?: "default" | "cyan" | "indigo" | "blue" | "emerald" | "amber" | "rose" | "purple";
   size?: "sm" | "md";
   className?: string;
   dot?: boolean;
@@ -24,7 +24,9 @@ export function GlassBadge({
     cyan:
       "bg-cyan-50 text-cyan-800 border-cyan-300 hover:border-cyan-400 dark:bg-cyan-500/10 dark:text-cyan-300 dark:border-cyan-500/20 dark:hover:border-cyan-500/40",
     indigo:
-      "bg-indigo-50 text-indigo-800 border-indigo-300 hover:border-indigo-400 dark:bg-indigo-500/10 dark:text-indigo-300 dark:border-indigo-500/20 dark:hover:border-indigo-500/40",
+      "bg-blue-50 text-blue-800 border-blue-300 hover:border-blue-400 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/20 dark:hover:border-blue-500/40",
+    blue:
+      "bg-blue-50 text-blue-800 border-blue-300 hover:border-blue-400 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/20 dark:hover:border-blue-500/40",
     emerald:
       "bg-emerald-50 text-emerald-800 border-emerald-300 hover:border-emerald-400 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20 dark:hover:border-emerald-500/40",
     amber:
@@ -32,17 +34,18 @@ export function GlassBadge({
     rose:
       "bg-rose-50 text-rose-800 border-rose-300 hover:border-rose-400 dark:bg-rose-500/10 dark:text-rose-300 dark:border-rose-500/20 dark:hover:border-rose-500/40",
     purple:
-      "bg-purple-50 text-purple-800 border-purple-300 hover:border-purple-400 dark:bg-purple-500/10 dark:text-purple-300 dark:border-purple-500/20 dark:hover:border-purple-500/40",
+      "bg-slate-100 text-slate-800 border-slate-300 hover:border-slate-400 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/20 dark:hover:border-blue-500/40",
   };
 
   const dotColors = {
     default: "bg-slate-500 dark:bg-slate-400",
     cyan: "bg-cyan-600 dark:bg-cyan-400 dark:shadow-[0_0_8px_#22d3ee]",
-    indigo: "bg-indigo-600 dark:bg-indigo-400 dark:shadow-[0_0_8px_#818cf8]",
+    indigo: "bg-blue-600 dark:bg-blue-400 dark:shadow-[0_0_8px_#3b82f6]",
+    blue: "bg-blue-600 dark:bg-blue-400 dark:shadow-[0_0_8px_#3b82f6]",
     emerald: "bg-emerald-600 dark:bg-emerald-400 dark:shadow-[0_0_8px_#34d399]",
     amber: "bg-amber-600 dark:bg-amber-400 dark:shadow-[0_0_8px_#fbbf24]",
     rose: "bg-rose-600 dark:bg-rose-400 dark:shadow-[0_0_8px_#fb7185]",
-    purple: "bg-purple-600 dark:bg-purple-400 dark:shadow-[0_0_8px_#c084fc]",
+    purple: "bg-blue-600 dark:bg-blue-400 dark:shadow-[0_0_8px_#3b82f6]",
   };
 
   const sizeStyles = {

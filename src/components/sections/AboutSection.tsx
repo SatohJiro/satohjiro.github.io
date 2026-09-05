@@ -20,7 +20,7 @@ export function AboutSection() {
 
   const engineeringPillars = [
     {
-      icon: <Layers className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />,
+      icon: <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
       title: {
         en: "Frontend Engineering",
         vi: "Kỹ Thuật Frontend",
@@ -31,7 +31,7 @@ export function AboutSection() {
       },
     },
     {
-      icon: <Zap className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />,
+      icon: <Zap className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
       title: {
         en: "State & Performance",
         vi: "Quản Lý State & Hiệu Năng",
@@ -70,9 +70,6 @@ export function AboutSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <GlassBadge variant="indigo" size="md">
-            {isVi ? "Giới Thiệu & Học Vấn" : "About & Academic Background"}
-          </GlassBadge>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {isVi ? (
               <>
@@ -96,7 +93,7 @@ export function AboutSection() {
           {/* Main Story Narrative */}
           <GlassCard className="lg:col-span-7 p-6 sm:p-8 space-y-6 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
                 <Target className="w-5 h-5" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -173,7 +170,7 @@ export function AboutSection() {
               <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                 {(isVi ? educationData.highlights.vi : educationData.highlights.en).map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}

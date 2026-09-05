@@ -22,7 +22,7 @@ export function SkillsSection() {
 
   const categoryIcons: Record<string, React.ReactNode> = {
     frontend: <Code className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />,
-    state: <Layers className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />,
+    state: <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />,
     backend: <Cpu className="w-4 h-4 text-amber-600 dark:text-amber-400" />,
     ai: <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />,
     devops: <Database className="w-4 h-4 text-rose-600 dark:text-rose-400" />,
@@ -55,9 +55,6 @@ export function SkillsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <GlassBadge variant="cyan" size="md">
-            {isVi ? "Kỹ Năng & Năng Lực" : "Technical Skills & Competencies"}
-          </GlassBadge>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {isVi ? (
               <>
@@ -84,7 +81,7 @@ export function SkillsSection() {
               onClick={() => handleCategorySelect("all")}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                 selectedCategory === "all"
-                  ? "bg-indigo-600 text-white shadow-xs border border-indigo-500/40"
+                  ? "bg-blue-600 text-white shadow-xs border border-blue-500/40"
                   : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
               }`}
             >
@@ -98,7 +95,7 @@ export function SkillsSection() {
                   onClick={() => handleCategorySelect(cat.id)}
                   className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? "bg-indigo-600 text-white shadow-xs border border-indigo-500/40"
+                      ? "bg-blue-600 text-white shadow-xs border border-blue-500/40"
                       : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
                   }`}
                 >
@@ -117,7 +114,7 @@ export function SkillsSection() {
               placeholder={isVi ? "Tìm kiếm kỹ năng..." : "Search skills..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500/50 backdrop-blur-md"
+              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-500/50 backdrop-blur-md"
             />
           </div>
         </div>
@@ -156,7 +153,7 @@ export function SkillsSection() {
                         <span
                           className={`text-[10px] font-medium px-2 py-0.5 rounded-md border ${
                             skill.highlight
-                              ? "bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/30"
+                              ? "bg-blue-50 dark:bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30"
                               : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-white/10"
                           }`}
                         >

@@ -8,7 +8,7 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   enableTilt?: boolean;
   interactive?: boolean;
-  glowColor?: "cyan" | "indigo" | "emerald" | "amber" | "rose" | "none";
+  glowColor?: "cyan" | "indigo" | "blue" | "emerald" | "amber" | "rose" | "none";
 }
 
 export function GlassCard({
@@ -21,7 +21,8 @@ export function GlassCard({
 }: GlassCardProps) {
   const subtleGlowStyles = {
     cyan: "hover:border-cyan-500/25",
-    indigo: "hover:border-indigo-500/25",
+    indigo: "hover:border-blue-500/25",
+    blue: "hover:border-blue-500/25",
     emerald: "hover:border-emerald-500/25",
     amber: "hover:border-amber-500/25",
     rose: "hover:border-rose-500/25",

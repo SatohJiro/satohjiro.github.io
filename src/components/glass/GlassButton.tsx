@@ -31,17 +31,17 @@ export function GlassButton({
   const variantStyles = {
     primary: "glass-button-primary font-semibold",
     glass: "glass-button text-slate-800 dark:text-slate-100 hover:text-slate-950 dark:hover:text-white font-medium",
-    outline: "border border-indigo-500/30 text-slate-800 dark:text-slate-100 hover:border-indigo-500 hover:bg-indigo-500/10 font-medium",
+    outline: "border border-blue-500/30 text-slate-800 dark:text-slate-100 hover:border-blue-500 hover:bg-blue-500/10 font-medium",
     ghost: "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 border-transparent font-medium",
   };
 
   return (
     <button
       className={cn(
-        "relative inline-flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]",
+        "relative inline-flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none",
         sizeStyles[size],
         variantStyles[variant],
-        glow && "shadow-[0_0_20px_rgba(99,102,241,0.4)]",
+        glow && "shadow-[0_0_20px_rgba(37,99,235,0.35)]",
         className
       )}
       {...props}

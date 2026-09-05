@@ -103,7 +103,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
       maxWidth="2xl"
       title={
         <div className="flex items-center gap-2.5">
-          <FileDown className="w-5 h-5 text-indigo-500" />
+          <FileDown className="w-5 h-5 text-blue-600 dark:text-blue-400" />
           <span>{isVi ? "Hồ Sơ Năng Lực / ATS Resume" : "Curriculum Vitae / ATS Resume"}</span>
         </div>
       }
@@ -121,7 +121,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 onClick={() => setResumeLang("en")}
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                   resumeLang === "en"
-                    ? "bg-indigo-600 text-white shadow-xs"
+                    ? "bg-blue-600 text-white shadow-xs"
                     : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
                 }`}
               >
@@ -131,7 +131,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 onClick={() => setResumeLang("vi")}
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                   resumeLang === "vi"
-                    ? "bg-indigo-600 text-white shadow-xs"
+                    ? "bg-blue-600 text-white shadow-xs"
                     : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
                 }`}
               >
@@ -315,7 +315,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           <Link
             href={`/resume?lang=${resumeLang}`}
             target="_blank"
-            className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium inline-flex items-center gap-1"
+            className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1"
           >
             <span>{isVi ? "Mở toàn màn hình trang in Resume chuyên biệt" : "Open standalone printable resume page"}</span>
             <ExternalLink className="w-3.5 h-3.5" />

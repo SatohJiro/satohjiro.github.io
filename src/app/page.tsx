@@ -37,7 +37,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen selection:bg-indigo-500 selection:text-white">
+    <div className="relative min-h-screen selection:bg-blue-600 selection:text-white">
       {/* Background Ambient Glow Spotlight & Mesh */}
       <GlowSpotlight />
 
