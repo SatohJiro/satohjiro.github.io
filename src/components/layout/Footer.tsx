@@ -26,10 +26,8 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
           {/* Col 1: Identity */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-slate-700 dark:to-slate-400 p-[1px]">
-                <div className="w-full h-full rounded-xl bg-white dark:bg-slate-950 flex items-center justify-center font-bold text-sm text-blue-600 dark:text-blue-400">
-                  NTA
-                </div>
+              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 shrink-0">
+                NTA
               </div>
               <div>
                 <div className="font-bold text-base text-slate-900 dark:text-white">

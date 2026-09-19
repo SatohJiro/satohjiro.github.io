@@ -83,10 +83,8 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
           onClick={() => handleNavClick("home")}
           className="flex items-center gap-2.5 group cursor-pointer shrink-0"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-slate-700 dark:to-slate-400 p-[1px] shadow-sm group-hover:scale-105 transition-transform duration-200">
-            <div className="w-full h-full rounded-xl bg-white dark:bg-slate-950/90 flex items-center justify-center font-bold text-xs text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
-              NTA
-            </div>
+          <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 group-hover:scale-105 transition-all">
+            NTA
           </div>
           <div className="hidden sm:block text-left">
             <div className="font-bold text-sm tracking-tight text-slate-900 dark:text-white whitespace-nowrap leading-tight">
