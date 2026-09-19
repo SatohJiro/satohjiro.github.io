@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/hooks/useLanguage";
+import { resolveLocale } from "@/lib/locale";
 import { Mail, Phone, ShieldCheck, Heart, Activity } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { GlassButton } from "../glass/GlassButton";
@@ -98,7 +99,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                     href={item.href}
                     className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
-                    {item.label[isVi ? "vi" : "en"]}
+                    {resolveLocale(item.label, isVi)}
                   </Link>
                 </li>
               ))}

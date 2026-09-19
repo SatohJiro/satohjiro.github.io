@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { contactData } from "@/data/portfolio-content";
 import { siteConfig } from "@/config/site";
+import { resolveLocale } from "@/lib/locale";
 import { GlassCard } from "../glass/GlassCard";
-import { GlassBadge } from "../glass/GlassBadge";
 import { GlassButton } from "../glass/GlassButton";
 import {
   Mail,
@@ -19,7 +19,7 @@ import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { telemetry } from "@/lib/telemetry";
 
 export function ContactSection() {
-  const { isVi, isEn } = useLanguage();
+  const { isVi } = useLanguage();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const handleCopy = (text: string, key: string) => {
@@ -58,8 +58,9 @@ export function ContactSection() {
           <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 flex flex-col justify-between" glowColor="none">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                  <Mail className="w-6 h-6" />
+                <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                  <Mail className="w-4 h-4" />
+                  <span>[Primary Email]</span>
                 </div>
                 <button
                   onClick={() => handleCopy(contactData.email, "email")}
@@ -81,7 +82,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <div className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">Email Address</div>
+                <div className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">Direct Inbox</div>
                 <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5 select-all">
                   {contactData.email}
                 </div>
@@ -116,8 +117,9 @@ export function ContactSection() {
           <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 flex flex-col justify-between" glowColor="none">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                  <Phone className="w-6 h-6" />
+                <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  <Phone className="w-4 h-4" />
+                  <span>[Direct Line]</span>
                 </div>
                 <button
                   onClick={() => handleCopy(contactData.phone, "phone")}
@@ -230,8 +232,8 @@ export function ContactSection() {
                 {isVi ? "Khu Vực Làm Việc" : "Location & Availability"}
               </div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-rose-500" />
-                <span>{contactData.location[isVi ? "vi" : "en"]}</span>
+                <MapPin className="w-4 h-4 text-slate-400" />
+                <span>{resolveLocale(contactData.location, isVi)}</span>
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 {isVi
@@ -241,11 +243,12 @@ export function ContactSection() {
             </div>
 
             <div className="flex flex-wrap gap-2 pt-1">
-              <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300">
-                ✓ {isVi ? "Sẵn sàng nhận việc" : "Available to Join"}
+              <span className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
+                {isVi ? "Sẵn sàng nhận việc" : "Available to Join"}
               </span>
               <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-300">
-                {isVi ? "On-site / Hybrid / Remote" : "On-site / Hybrid / Remote"}
+                On-site / Hybrid / Remote
               </span>
             </div>
           </GlassCard>

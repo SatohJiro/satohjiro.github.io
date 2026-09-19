@@ -10,10 +10,6 @@ import { GlassCard } from "../glass/GlassCard";
 import {
   FileDown,
   ArrowRight,
-  Terminal,
-  Trophy,
-  Sparkles,
-  Globe2,
 } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
@@ -103,7 +99,6 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
                   onClick={() => telemetry.track("click", "hero_open_terminal")}
                   variant="outline"
                   size="md"
-                  icon={<Terminal className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
                   className="whitespace-nowrap"
                 >
                   Terminal
@@ -132,25 +127,24 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
             </div>
           </div>
 
-          {/* Right Column: Key Focus Cards */}
+          {/* Right Column: Key Focus Cards (Executive Technical Cards, No AI Slop) */}
           <div className="lg:col-span-5 relative space-y-3.5">
             {/* Card 1: ahamo */}
-            <GlassCard className="p-4 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
+            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                    <Globe2 className="w-4 h-4" />
+                <div>
+                  <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400 font-semibold tracking-wider uppercase">
+                    Enterprise Platform
                   </div>
-                  <div>
-                    <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400">Hero Solutions / NTT Docomo</div>
-                    <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">ahamo Web Platform (Japan)</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
+                    ahamo Web Platform (NTT Docomo)
                   </div>
                 </div>
                 <GlassBadge variant="blue" size="sm">
                   Active
                 </GlassBadge>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 line-clamp-2">
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 line-clamp-2 leading-relaxed">
                 {isVi
                   ? "Kinh nghiệm phát triển giao diện Micro-frontend, Vue.js, ReactJS và CMS Webrelease cho thị trường Nhật Bản."
                   : "Frontend development on micro-frontends with Vue.js, ReactJS, and CMS Webrelease for Japanese platform."}
@@ -158,47 +152,43 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
             </GlassCard>
 
             {/* Card 2: Valedictorian Honor */}
-            <GlassCard className="p-4 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
+            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                    <Trophy className="w-4 h-4" />
+                <div>
+                  <div className="text-[11px] font-mono text-amber-600 dark:text-amber-400 font-semibold tracking-wider uppercase">
+                    Academic Distinction
                   </div>
-                  <div>
-                    <div className="text-[11px] font-mono text-amber-600 dark:text-amber-400">Nong Lam University</div>
-                    <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                      {isVi ? "Thủ Khoa Toàn Khóa 2019" : "Class Valedictorian 2019"}
-                    </div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
+                    {isVi ? "Thủ Khoa Toàn Khóa (NLU 2019)" : "Class Valedictorian (NLU 2019)"}
                   </div>
                 </div>
                 <GlassBadge variant="amber" size="sm">
                   Top 1
                 </GlassBadge>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2">
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
                 {isVi
                   ? "Bằng Kỹ sư CNTT loại Xuất sắc (GPA 3.6/4.0). Nhận Giấy khen của Hiệu trưởng Nhà trường."
                   : "Degree of Engineer in IT with Excellent rating (GPA 3.6/4.0). Certificate of Merit by University President."}
               </p>
             </GlassCard>
 
-            {/* Card 3: AI GPT-4 */}
-            <GlassCard className="p-4 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
+            {/* Card 3: AI Tool */}
+            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                    <Sparkles className="w-4 h-4" />
+                <div>
+                  <div className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold tracking-wider uppercase">
+                    AI Engineering
                   </div>
-                  <div>
-                    <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400">AI Got Talent 2023</div>
-                    <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">GPT Code Generator</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
+                    GPT Code Generator & Pipeline
                   </div>
                 </div>
-                <GlassBadge variant="blue" size="sm">
+                <GlassBadge variant="emerald" size="sm">
                   3rd Prize
                 </GlassBadge>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2">
+              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
                 {isVi
                   ? "Dự án ứng dụng OpenAI GPT-4 sinh mã nguồn web, kết hợp FastAPI, RabbitMQ & Next.js."
                   : "AI application converting natural language to web code with GPT-4, FastAPI, RabbitMQ & Next.js."}

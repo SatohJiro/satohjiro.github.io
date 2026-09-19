@@ -11,12 +11,14 @@ import {
   projectsData,
   awardsData,
 } from "@/data/portfolio-content";
+import { resolveLocale, resolveLocaleArray } from "@/lib/locale";
 import { Printer, ArrowLeft, Info } from "lucide-react";
 
 function ResumeContent() {
   const searchParams = useSearchParams();
   const initialLang = (searchParams.get("lang") as "en" | "vi") || "en";
   const [lang, setLang] = useState<"en" | "vi">(initialLang);
+  const isVi = lang === "vi";
 
   useEffect(() => {
     const urlLang = searchParams.get("lang") as "en" | "vi";
@@ -38,7 +40,7 @@ function ResumeContent() {
           className="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>{lang === "vi" ? "Trở về Portfolio" : "Back to Portfolio"}</span>
+          <span>{isVi ? "Trở về Portfolio" : "Back to Portfolio"}</span>
         </Link>
 
         <div className="flex items-center gap-3">
@@ -47,7 +49,7 @@ function ResumeContent() {
             <button
               onClick={() => setLang("en")}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                lang === "en" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
+                !isVi ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
               }`}
             >
               English (ATS)
@@ -55,7 +57,7 @@ function ResumeContent() {
             <button
               onClick={() => setLang("vi")}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                lang === "vi" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
+                isVi ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
               }`}
             >
               Tiếng Việt
@@ -67,7 +69,7 @@ function ResumeContent() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all cursor-pointer"
           >
             <Printer className="w-4 h-4" />
-            <span>{lang === "vi" ? "In / Lưu PDF" : "Print / Save PDF"}</span>
+            <span>{isVi ? "In / Lưu PDF" : "Print / Save PDF"}</span>
           </button>
         </div>
       </div>
@@ -76,7 +78,7 @@ function ResumeContent() {
       <div className="no-print max-w-4xl mx-auto mb-4 flex items-center gap-2 p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 text-xs text-blue-900 dark:text-blue-200 shadow-xs">
         <Info className="w-4 h-4 shrink-0 text-blue-600 dark:text-blue-400" />
         <span>
-          {lang === "vi"
+          {isVi
             ? "Mẹo in PDF chuẩn đẹp: Trong hộp thoại Print của trình duyệt, chọn khổ giấy A4, lề Default, và bỏ chọn mục 'Headers and footers' (Tiêu đề và chân trang) để không bị in kèm URL trang web."
             : "Print Tip: In the browser print dialog, select Paper size: A4, Margins: Default, and UNCHECK 'Headers and footers' to remove browser URLs."}
         </span>
@@ -90,14 +92,14 @@ function ResumeContent() {
             NGUYEN TRAN ANH
           </h1>
           <div className="text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wide">
-            {lang === "en"
-              ? "Software Engineer | Full-Stack & Frontend Developer"
-              : "Kỹ sư Phần mềm | Lập trình viên Full-Stack & Frontend"}
+            {isVi
+              ? "Kỹ sư Phần mềm | Lập trình viên Full-Stack & Frontend"
+              : "Software Engineer | Full-Stack & Frontend Developer"}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600">
-            <span>{contactData.location[lang]}</span>
+            <span>{resolveLocale(contactData.location, isVi)}</span>
             <span>•</span>
-            <span>{lang === "en" ? "Phone:" : "Điện thoại:"} {contactData.phone}</span>
+            <span>{isVi ? "Điện thoại:" : "Phone:"} {contactData.phone}</span>
             <span>•</span>
             <span>Email: {contactData.email}</span>
           </div>
@@ -113,29 +115,29 @@ function ResumeContent() {
         {/* Section 1: Professional Summary */}
         <section className="resume-section space-y-1">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-950 border-b border-slate-400 pb-0.5">
-            {lang === "en" ? "PROFESSIONAL SUMMARY" : "TỔNG QUAN NĂNG LỰC"}
+            {isVi ? "TỔNG QUAN NĂNG LỰC" : "PROFESSIONAL SUMMARY"}
           </h2>
           <div className="text-xs text-slate-800 space-y-1 leading-normal">
-            <p>{lang === "en" ? summaryData.en[0] : summaryData.vi[0]}</p>
-            <p>{lang === "en" ? summaryData.en[1] : summaryData.vi[1]}</p>
+            <p>{isVi ? summaryData.vi[0] : summaryData.en[0]}</p>
+            <p>{isVi ? summaryData.vi[1] : summaryData.en[1]}</p>
           </div>
         </section>
 
         {/* Section 2: Education (Clean 2-line structure) */}
         <section className="resume-section space-y-1">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-950 border-b border-slate-400 pb-0.5">
-            {lang === "en" ? "EDUCATION" : "HỌC VẤN"}
+            {isVi ? "HỌC VẤN" : "EDUCATION"}
           </h2>
           <div className="resume-item space-y-0.5 text-xs text-slate-800">
             <div className="flex justify-between items-baseline font-bold text-slate-950">
-              <span>{educationData.school[lang]}</span>
+              <span>{resolveLocale(educationData.school, isVi)}</span>
               <span className="font-normal text-slate-700">
-                {typeof educationData.duration === "string" ? educationData.duration : educationData.duration[lang]}
+                {resolveLocale(educationData.duration, isVi)}
               </span>
             </div>
             <div className="flex justify-between items-baseline">
-              <span>{educationData.degree[lang]} — {educationData.major[lang]}</span>
-              <span className="font-semibold text-slate-950">GPA: {educationData.gpa[lang]}</span>
+              <span>{resolveLocale(educationData.degree, isVi)} — {resolveLocale(educationData.major, isVi)}</span>
+              <span className="font-semibold text-slate-950">GPA: {resolveLocale(educationData.gpa, isVi)}</span>
             </div>
           </div>
         </section>
@@ -143,23 +145,23 @@ function ResumeContent() {
         {/* Section 3: Technical Skills */}
         <section className="resume-section space-y-1">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-950 border-b border-slate-400 pb-0.5">
-            {lang === "en" ? "TECHNICAL SKILLS" : "KỸ NĂNG CHUYÊN MÔN"}
+            {isVi ? "KỸ NĂNG CHUYÊN MÔN" : "TECHNICAL SKILLS"}
           </h2>
           <div className="resume-item grid grid-cols-1 gap-1 text-xs text-slate-800">
             <div>
-              <strong className="text-slate-950">{lang === "en" ? "Core Frontend:" : "Frontend Nòng Cốt:"}</strong> ReactJS, Next.js (App Router), Vue.js (Vue 2/3), TypeScript, JavaScript (ES6+), HTML5/CSS3/SCSS, Tailwind CSS.
+              <strong className="text-slate-950">{isVi ? "Frontend Nòng Cốt:" : "Core Frontend:"}</strong> ReactJS, Next.js (App Router), Vue.js (Vue 2/3), TypeScript, JavaScript (ES6+), HTML5/CSS3/SCSS, Tailwind CSS.
             </div>
             <div>
-              <strong className="text-slate-950">{lang === "en" ? "State & Performance:" : "Quản Lý State & Hiệu Năng:"}</strong> Redux Toolkit, Zustand, Context API, Performance Profiling.
+              <strong className="text-slate-950">{isVi ? "Quản Lý State & Hiệu Năng:" : "State & Performance:"}</strong> Redux Toolkit, Zustand, Context API, Performance Profiling.
             </div>
             <div>
-              <strong className="text-slate-950">{lang === "en" ? "Architecture & Backend:" : "Kiến Trúc & Backend:"}</strong> Micro-frontend Architecture, Java Spring Boot, Python (FastAPI), Node.js (NestJS, Express), Firebase, Supabase, RESTful APIs.
+              <strong className="text-slate-950">{isVi ? "Kiến Trúc & Backend:" : "Architecture & Backend:"}</strong> Micro-frontend Architecture, Java Spring Boot, Python (FastAPI), Node.js (NestJS, Express), Firebase, Supabase, RESTful APIs.
             </div>
             <div>
-              <strong className="text-slate-950">{lang === "en" ? "AI & Messaging:" : "Tích Hợp AI & Hàng Đợi:"}</strong> OpenAI GPT-4 API Integration, Prompt Engineering, Doc2Vec NLP, RabbitMQ message queues.
+              <strong className="text-slate-950">{isVi ? "Tích Hợp AI & Hàng Đợi:" : "AI & Messaging:"}</strong> OpenAI GPT-4 API Integration, Prompt Engineering, Doc2Vec NLP, RabbitMQ message queues.
             </div>
             <div>
-              <strong className="text-slate-950">{lang === "en" ? "Databases & DevOps:" : "Cơ Sở Dữ Liệu & DevOps:"}</strong> PostgreSQL, MySQL, MongoDB, Docker, Git/GitHub, CMS Webrelease, Figma.
+              <strong className="text-slate-950">{isVi ? "Cơ Sở Dữ Liệu & DevOps:" : "Databases & DevOps:"}</strong> PostgreSQL, MySQL, MongoDB, Docker, Git/GitHub, CMS Webrelease, Figma.
             </div>
           </div>
         </section>
@@ -167,33 +169,33 @@ function ResumeContent() {
         {/* Section 4: Work Experience */}
         <section className="resume-section space-y-2.5">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-950 border-b border-slate-400 pb-0.5">
-            {lang === "en" ? "WORK EXPERIENCE" : "KINH NGHIỆM LÀM VIỆC"}
+            {isVi ? "KINH NGHIỆM LÀM VIỆC" : "WORK EXPERIENCE"}
           </h2>
 
           {experienceData.map((exp) => (
             <div key={exp.id} className="resume-item space-y-1 text-xs">
               <div className="flex justify-between items-baseline font-bold text-slate-950">
                 <span>
-                  {exp.title[lang]} — {exp.company} ({typeof exp.location === "string" ? exp.location : exp.location[lang]})
+                  {resolveLocale(exp.title, isVi)} — {exp.company} ({resolveLocale(exp.location, isVi)})
                 </span>
-                <span className="font-normal text-slate-700">{exp.duration[lang]}</span>
+                <span className="font-normal text-slate-700">{resolveLocale(exp.duration, isVi)}</span>
               </div>
               {exp.projectHighlights.map((p, idx) => (
                 <div key={idx} className="space-y-0.5 pl-2.5 border-l border-slate-300">
                   <div className="font-semibold text-slate-900">
                     {p.name} {p.client && (
                       <span className="text-slate-600 font-normal">
-                        ({typeof p.client === "string" ? p.client : p.client[lang]})
+                        ({resolveLocale(p.client, isVi)})
                       </span>
                     )}
                   </div>
                   <ul className="list-disc pl-4 space-y-0.5 text-slate-800">
-                    {p.responsibilities[lang].map((r, rIdx) => (
+                    {resolveLocaleArray(p.responsibilities, isVi).map((r, rIdx) => (
                       <li key={rIdx}>{r}</li>
                     ))}
                   </ul>
                   <div className="text-[11px] text-slate-600 pt-0.5">
-                    <strong>{lang === "en" ? "Tech:" : "Công nghệ:"}</strong> {p.technologies.join(", ")}
+                    <strong>{isVi ? "Công nghệ:" : "Tech:"}</strong> {p.technologies.join(", ")}
                   </div>
                 </div>
               ))}
@@ -204,36 +206,43 @@ function ResumeContent() {
         {/* Section 5: Key Projects */}
         <section className="resume-section space-y-2">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-950 border-b border-slate-400 pb-0.5">
-            {lang === "en" ? "KEY PROJECTS" : "DỰ ÁN TIÊU BIỂU"}
+            {isVi ? "DỰ ÁN TIÊU BIỂU" : "KEY PROJECTS"}
           </h2>
           <div className="space-y-1.5 text-xs text-slate-800">
             {projectsData.slice(0, 3).map((proj) => (
               <div key={proj.id} className="resume-item space-y-0.5">
                 <div className="flex justify-between items-baseline font-bold text-slate-950">
-                  <span>{proj.name[lang]} {proj.badge && <span className="font-normal text-slate-700">({proj.badge[lang]})</span>}</span>
+                  <span>
+                    {resolveLocale(proj.name, isVi)}{" "}
+                    {proj.badge && (
+                      <span className="font-normal text-slate-700">
+                        ({resolveLocale(proj.badge, isVi)})
+                      </span>
+                    )}
+                  </span>
                   <span className="font-normal text-slate-700">
-                    {typeof proj.year === "string" ? proj.year : proj.year[lang]}
+                    {resolveLocale(proj.year, isVi)}
                   </span>
                 </div>
-                <p className="text-slate-800">{proj.description[lang]}</p>
+                <p className="text-slate-800">{resolveLocale(proj.description, isVi)}</p>
                 <div className="text-[11px] text-slate-600">
-                  <strong>{lang === "en" ? "Stack:" : "Công nghệ:"}</strong> {proj.technologies.join(", ")}
+                  <strong>{isVi ? "Công nghệ:" : "Stack:"}</strong> {proj.technologies.join(", ")}
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Section 6: Honors & Awards (Separate section) */}
+        {/* Section 6: Honors & Awards */}
         <section className="resume-section space-y-1">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-950 border-b border-slate-400 pb-0.5">
-            {lang === "en" ? "HONORS & AWARDS" : "GIẢI THƯỞNG & VINH DANH"}
+            {isVi ? "GIẢI THƯỞNG & VINH DANH" : "HONORS & AWARDS"}
           </h2>
           <div className="resume-item space-y-1 text-xs text-slate-800">
             {awardsData.map((award) => (
               <div key={award.id} className="flex justify-between items-baseline">
                 <span>
-                  <strong className="text-slate-950">{award.title[lang]}</strong> — {award.organization[lang]}
+                  <strong className="text-slate-950">{resolveLocale(award.title, isVi)}</strong> — {resolveLocale(award.organization, isVi)}
                 </span>
                 <span className="font-normal text-slate-700">{award.year}</span>
               </div>

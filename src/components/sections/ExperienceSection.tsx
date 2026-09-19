@@ -3,16 +3,11 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { experienceData } from "@/data/portfolio-content";
+import { resolveLocale } from "@/lib/locale";
 import { WorkExperience } from "@/types";
 import { GlassCard } from "../glass/GlassCard";
 import { GlassBadge } from "../glass/GlassBadge";
-import {
-  Briefcase,
-  Calendar,
-  MapPin,
-  TrendingUp,
-  Sparkles,
-} from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
 export function ExperienceSection() {
@@ -56,7 +51,7 @@ export function ExperienceSection() {
           <div className="lg:col-span-4 space-y-3">
             {experienceData.map((exp) => {
               const isSelected = exp.id === activeExpId;
-              const locationStr = typeof exp.location === "string" ? exp.location : exp.location[isVi ? "vi" : "en"];
+              const locationStr = resolveLocale(exp.location, isVi);
               return (
                 <button
                   key={exp.id}
@@ -72,25 +67,20 @@ export function ExperienceSection() {
                       {exp.company}
                     </div>
                     {exp.current && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/30">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/30 font-mono">
                         {isVi ? "Hiện tại" : "Current"}
                       </span>
                     )}
                   </div>
 
                   <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">
-                    {exp.title[isVi ? "vi" : "en"]}
+                    {resolveLocale(exp.title, isVi)}
                   </div>
 
-                  <div className="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200/60 dark:border-white/5">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-                      {exp.duration[isVi ? "vi" : "en"]}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-rose-500 dark:text-rose-400" />
-                      {locationStr.split(",")[0]}
-                    </span>
+                  <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200/60 dark:border-white/5">
+                    <span>{resolveLocale(exp.duration, isVi)}</span>
+                    <span>·</span>
+                    <span>{locationStr.split(",")[0]}</span>
                   </div>
                 </button>
               );
@@ -104,15 +94,15 @@ export function ExperienceSection() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200/80 dark:border-white/10">
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                    {activeExp.title[isVi ? "vi" : "en"]}
+                    {resolveLocale(activeExp.title, isVi)}
                   </h3>
                   <div className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">
-                    {activeExp.company} • {typeof activeExp.location === "string" ? activeExp.location : activeExp.location[isVi ? "vi" : "en"]}
+                    {activeExp.company} • {resolveLocale(activeExp.location, isVi)}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs px-3 py-1 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 font-mono">
-                    {activeExp.duration[isVi ? "vi" : "en"]}
+                    {resolveLocale(activeExp.duration, isVi)}
                   </span>
                 </div>
               </div>
@@ -122,19 +112,18 @@ export function ExperienceSection() {
                 {activeExp.projectHighlights.map((proj, pIdx) => (
                   <div key={pIdx} className="space-y-3.5 p-4 sm:p-5 rounded-2xl bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/70 dark:border-white/5">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                      <h4 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                        <span>{proj.name}</span>
+                      <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                        {proj.name}
                       </h4>
                       {proj.client && (
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-mono italic">
-                          {typeof proj.client === "string" ? proj.client : proj.client[isVi ? "vi" : "en"]}
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                          {resolveLocale(proj.client, isVi)}
                         </span>
                       )}
                     </div>
 
                     <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                      {proj.description[isVi ? "vi" : "en"]}
+                      {resolveLocale(proj.description, isVi)}
                     </p>
 
                     {/* Key Responsibilities */}

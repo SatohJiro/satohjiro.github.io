@@ -3,25 +3,24 @@
 import React from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { awardsData } from "@/data/portfolio-content";
+import { resolveLocale } from "@/lib/locale";
 import { GlassCard } from "../glass/GlassCard";
 import { GlassBadge } from "../glass/GlassBadge";
 import { GlassButton } from "../glass/GlassButton";
 import {
   Trophy,
-  Sparkles,
   Medal,
   Award,
   PartyPopper,
-  Building,
 } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
 export function AwardsSection() {
-  const { isVi, isEn } = useLanguage();
+  const { isVi } = useLanguage();
 
   const awardIcons: Record<string, React.ReactNode> = {
     Trophy: <Trophy className="w-6 h-6 text-amber-500" />,
-    Sparkles: <Sparkles className="w-6 h-6 text-blue-500" />,
+    Sparkles: <Award className="w-6 h-6 text-blue-500" />,
     Medal: <Medal className="w-6 h-6 text-blue-500" />,
   };
 
@@ -83,23 +82,21 @@ export function AwardsSection() {
                 {/* Title */}
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    {award.title[isVi ? "vi" : "en"]}
+                    {resolveLocale(award.title, isVi)}
                   </h3>
-                  <div className="text-xs font-semibold text-amber-700 dark:text-amber-400 mt-1 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>{award.badgeText[isVi ? "vi" : "en"]}</span>
+                  <div className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 mt-1">
+                    {resolveLocale(award.badgeText, isVi)}
                   </div>
                 </div>
 
                 {/* Organization */}
-                <div className="text-xs text-slate-600 dark:text-slate-400 font-medium flex items-center gap-1.5 pt-1">
-                  <Building className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-                  <span>{award.organization[isVi ? "vi" : "en"]}</span>
+                <div className="text-xs text-slate-600 dark:text-slate-400 font-medium pt-1">
+                  <span>{resolveLocale(award.organization, isVi)}</span>
                 </div>
 
                 {/* Description */}
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
-                  {award.description[isVi ? "vi" : "en"]}
+                  {resolveLocale(award.description, isVi)}
                 </p>
               </div>
 
@@ -122,3 +119,4 @@ export function AwardsSection() {
     </section>
   );
 }
+

@@ -98,8 +98,8 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
           </div>
         </Link>
 
-        {/* Desktop Nav Items */}
-        <nav className="hidden xl:flex items-center gap-1 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 backdrop-blur-xl shadow-inner">
+        {/* Unified Desktop Nav Items (Clean Text Navigation, Anti-Slop) */}
+        <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 backdrop-blur-xl shadow-inner">
           {siteConfig.navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
@@ -107,37 +107,13 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 key={item.id}
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
+                    ? "bg-blue-600 text-white shadow-xs border-blue-500/40"
                     : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
               >
-                {iconMap[item.icon]}
                 <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Compact Nav for Medium screens (lg to xl) */}
-        <nav className="hidden lg:flex xl:hidden items-center gap-0.5 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 backdrop-blur-xl">
-          {siteConfig.navItems.map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => handleNavClick(item.id)}
-                title={item.label[isVi ? "vi" : "en"]}
-                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
-                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                }`}
-              >
-                {iconMap[item.icon]}
-                <span className="text-[11px] whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
               </Link>
             );
           })}
