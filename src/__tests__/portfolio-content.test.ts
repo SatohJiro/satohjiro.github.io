@@ -30,7 +30,7 @@ describe("portfolio-content data integrity", () => {
   it("validates statsData metrics", () => {
     expect(statsData.yearsExperience).toBe("3+");
     expect(statsData.gpa).toBe("3.6/4.0");
-    expect(statsData.valedictorianRank).toBe("#1 Top");
+    expect(statsData.valedictorianRank).toBe("Rank #1");
     expect(Number(statsData.awardsCount)).toBeGreaterThanOrEqual(3);
   });
 

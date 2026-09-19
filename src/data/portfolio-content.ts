@@ -24,17 +24,19 @@ export const summaryData: SummaryInfo = {
   en: [
     "Software Engineer holding a Bachelor of Engineering Degree in Information Technology from Nong Lam University, graduating with an Excellent rating (GPA 3.6/4.0) as the Class Valedictorian.",
     "Over 3 years of professional engineering experience in frontend and web application development. Proficient in ReactJS, Next.js, Vue.js, TypeScript, state management (Redux, Zustand), with practical project experience in micro-frontend architecture (ahamo NTT Docomo), backend APIs (Java Spring Boot, Python FastAPI), and AI integration (GPT-4).",
+    "Committed to clean architecture, measurable web performance optimization, and rigorous delivery standards. Constantly expanding domain expertise across scalable frontend platforms, modern cloud-native APIs, and AI-assisted engineering.",
   ],
   vi: [
     "Kỹ sư Công nghệ Thông tin tốt nghiệp loại Xuất sắc (GPA 3.6/4.0) và đạt danh hiệu Thủ khoa tốt nghiệp toàn khóa 2019 tại Trường Đại học Nông Lâm TP.HCM.",
     "Hơn 3 năm kinh nghiệm thực tế phát triển giao diện và ứng dụng Web. Thế mạnh về ReactJS, Next.js, Vue.js, TypeScript, quản lý State (Redux, Zustand), cùng kinh nghiệm làm việc thực tế với kiến trúc Micro-frontend (dự án ahamo NTT Docomo), Backend APIs (Java Spring Boot, Python FastAPI) và ứng dụng AI (GPT-4).",
+    "Đề cao tư duy kiến trúc sạch (clean architecture), tối ưu hóa hiệu năng có thể đo lường và kỷ luật kiểm thử chất lượng cao. Định hướng phát triển chuyên sâu về các hệ thống web quy mô lớn và ứng dụng AI thực tiễn.",
   ],
 };
 
 export const statsData = {
   yearsExperience: "3+",
   gpa: "3.6/4.0",
-  valedictorianRank: "#1 Top",
+  valedictorianRank: "Rank #1",
   awardsCount: "3",
   performanceGain: "+30%",
 };
@@ -681,7 +683,7 @@ export const projectsData: ProjectItem[] = [
         "Digitized graduation thesis workflows",
       ],
       vi: [
-        "Ứng dụng Doc2Vec phát phát hiện tương đồng ngữ nghĩa",
+        "Ứng dụng Doc2Vec phát hiện tương đồng ngữ nghĩa",
         "Phân quyền người dùng đa vai trò (RBAC)",
         "Số hóa toàn diện quy trình quản lý khóa luận",
       ],

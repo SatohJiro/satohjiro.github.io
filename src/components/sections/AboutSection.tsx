@@ -94,15 +94,9 @@ export function AboutSection() {
             </div>
 
             <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p>
-                {isVi ? summaryData.vi[0] : summaryData.en[0]}
-              </p>
-              <p>
-                {isVi ? summaryData.vi[1] : summaryData.en[1]}
-              </p>
-              <p>
-                {isVi ? summaryData.vi[2] : summaryData.en[2]}
-              </p>
+              {(isVi ? summaryData.vi : summaryData.en).map((para, pIdx) => (
+                <p key={pIdx}>{para}</p>
+              ))}
             </div>
 
             {/* Quick Principles */}
@@ -125,7 +119,7 @@ export function AboutSection() {
                 {isVi ? "Học Vấn Chính Quy" : "Academic Background"}
               </div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
-                {isVi ? educationData.school.vi : educationData.school.en}
+                {resolveLocale(educationData.school, isVi)}
               </h3>
             </div>
 
@@ -137,10 +131,10 @@ export function AboutSection() {
                 <GlassBadge variant="amber" size="sm">GPA 3.6 / 4.0</GlassBadge>
               </div>
               <div className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-                {isVi ? educationData.major.vi : educationData.major.en} • {resolveLocale(educationData.duration, isVi)}
+                {resolveLocale(educationData.major, isVi)} • {resolveLocale(educationData.duration, isVi)}
               </div>
               <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 pt-1">
-                {isVi ? educationData.honors.vi : educationData.honors.en}
+                {resolveLocale(educationData.honors, isVi)}
               </div>
             </div>
 
@@ -175,10 +169,10 @@ export function AboutSection() {
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 transition-colors" />
               </div>
               <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                {pillar.title[isVi ? "vi" : "en"]}
+                {resolveLocale(pillar.title, isVi)}
               </h4>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                {pillar.desc[isVi ? "vi" : "en"]}
+                {resolveLocale(pillar.desc, isVi)}
               </p>
             </GlassCard>
           ))}
