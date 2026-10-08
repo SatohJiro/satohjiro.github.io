@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { JourneyBackground } from "@/components/journey/JourneyBackground";
+import { JourneyCanvas } from "@/components/journey3d/JourneyCanvas";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -38,8 +38,8 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Scroll-driven journey: countryside -> Saigon -> world -> space */}
-      <JourneyBackground />
+      {/* Real-time 3D journey: countryside -> Saigon -> world -> space */}
+      <JourneyCanvas />
 
       {/* Floating Navbar */}
       <Navbar onOpenResumeModal={() => setIsResumeModalOpen(true)} />
