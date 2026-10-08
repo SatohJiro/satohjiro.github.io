@@ -64,8 +64,8 @@ export function GlassModal({
         {/* Modal Card */}
         <div
           className={cn(
-            "relative w-full rounded-2xl sm:rounded-3xl p-5 sm:p-7 my-6 z-10 text-left",
-            "bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/15 shadow-2xl",
+            "relative w-full p-5 sm:p-7 my-6 z-10 text-left",
+            "bg-white border-[3px] border-[#111] shadow-[8px_8px_0_#111]",
             "max-h-[88vh] flex flex-col animate-in zoom-in-95 duration-200",
             maxWidthStyles[maxWidth],
             className
@@ -74,13 +74,13 @@ export function GlassModal({
           aria-modal="true"
         >
           {/* Fixed Header */}
-          <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 dark:border-white/10 shrink-0">
-            <div className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white pr-4">
+          <div className="flex items-center justify-between pb-4 border-b-[3px] border-[#111] shrink-0">
+            <div className="font-display text-lg sm:text-xl font-black uppercase pr-4">
               {title}
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 rounded-xl text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+              className="border-[3px] border-[#111] bg-white p-1.5 hover:bg-[#ff3d00] hover:text-white transition-colors cursor-pointer shrink-0"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -88,7 +88,7 @@ export function GlassModal({
           </div>
 
           {/* Scrollable Body */}
-          <div className="overflow-y-auto py-4 pr-1 text-slate-700 dark:text-slate-300">
+          <div className="overflow-y-auto py-4 pr-1">
             {children}
           </div>
         </div>

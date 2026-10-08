@@ -4,24 +4,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/hooks/useLanguage";
-import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
-import { GlassButton } from "../glass/GlassButton";
-import {
-  FileDown,
-  Menu,
-  X,
-  Home,
-  User,
-  Briefcase,
-  Layers,
-  Cpu,
-  Trophy,
-  Terminal,
-  Mail,
-} from "lucide-react";
+import { FileDown, Menu, X } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
-
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
 interface NavbarProps {
@@ -29,75 +14,43 @@ interface NavbarProps {
 }
 
 export function Navbar({ onOpenResumeModal }: NavbarProps) {
-  const { isVi, isEn } = useLanguage();
-  const [scrolled, setScrolled] = useState(false);
+  const { isVi } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navSectionIds = React.useMemo(() => siteConfig.navItems.map((item) => item.id), []);
   const activeSection = useScrollSpy(navSectionIds, "home");
 
   useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const isPast = window.scrollY > 20;
-          setScrolled((prev) => (prev !== isPast ? isPast : prev));
-          ticking = false;
-        });
-        ticking = true;
-      }
+    document.documentElement.style.overflowY = mobileMenuOpen ? "hidden" : "";
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflowY = "";
+      document.body.style.overflow = "";
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [mobileMenuOpen]);
 
   const handleNavClick = (id: string) => {
     telemetry.track("click", `nav_${id}`);
     setMobileMenuOpen(false);
   };
 
-  const iconMap: Record<string, React.ReactNode> = {
-    Home: <Home className="w-3.5 h-3.5" />,
-    User: <User className="w-3.5 h-3.5" />,
-    Briefcase: <Briefcase className="w-3.5 h-3.5" />,
-    Layers: <Layers className="w-3.5 h-3.5" />,
-    Cpu: <Cpu className="w-3.5 h-3.5" />,
-    Trophy: <Trophy className="w-3.5 h-3.5" />,
-    Terminal: <Terminal className="w-3.5 h-3.5" />,
-    Mail: <Mail className="w-3.5 h-3.5" />,
-  };
-
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ${scrolled
-          ? "py-2.5 bg-white/90 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-200/80 dark:border-white/10 shadow-lg shadow-black/5"
-          : "py-4 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md border-b border-slate-200/50 dark:border-white/5"
-        }`}
-    >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
-        {/* Brand / Logo */}
-        <Link
-          href="#home"
-          onClick={() => handleNavClick("home")}
-          className="flex items-center gap-2.5 group cursor-pointer shrink-0"
-        >
-          <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 group-hover:scale-105 transition-all">
-            NTA
+    <header className="fixed inset-x-0 top-0 z-40 border-b-[3px] border-[#111] bg-[#f4f1ea]">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6">
+        <Link href="#home" onClick={() => handleNavClick("home")} className="flex shrink-0 items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center border-[3px] border-[#111] bg-[#ff3d00] font-display text-lg font-black text-white shadow-[3px_3px_0_#111]">
+            N
           </div>
-          <div className="hidden sm:block text-left">
-            <div className="font-bold text-sm tracking-tight text-slate-900 dark:text-white whitespace-nowrap leading-tight">
-              {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
+          <div className="hidden sm:block">
+            <div className="font-display text-sm font-black tracking-tight uppercase">
+              Nguyen Tran Anh
             </div>
-            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono tracking-wider leading-tight">
+            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#111]/60">
               @SatohJiro
             </div>
           </div>
         </Link>
 
-        {/* Unified Desktop Nav Items (Clean Text Navigation, Anti-Slop) */}
-        <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 backdrop-blur-xl shadow-inner">
+        <nav className="hidden items-center gap-1 lg:flex">
           {siteConfig.navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
@@ -105,85 +58,55 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
                 key={item.id}
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
+                className={`border-2 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-colors ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-xs border-blue-500/40"
-                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                    ? "border-[#111] bg-[#111] text-white"
+                    : "border-transparent text-[#111] hover:border-[#111] hover:bg-white"
                 }`}
               >
-                <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
+                {item.label[isVi ? "vi" : "en"]}
               </Link>
             );
           })}
         </nav>
 
-        {/* Actions (Language, Theme, Download CV, Mobile Toggle) */}
-        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <div className="flex shrink-0 items-center gap-2">
           <LanguageToggle />
-          <ThemeToggle />
-
-          <GlassButton
+          <button
             onClick={() => {
               telemetry.track("download_cv", "navbar_cta");
               onOpenResumeModal();
             }}
-            variant="primary"
-            size="sm"
-            icon={<FileDown className="w-3.5 h-3.5" />}
-            className="hidden sm:inline-flex whitespace-nowrap shrink-0"
+            className="brut-btn hidden !px-4 !py-2 !text-xs sm:inline-flex"
           >
-            {isVi ? "Tải CV / In" : "Get Resume"}
-          </GlassButton>
-
-          {/* Mobile Menu Trigger */}
+            <FileDown className="h-3.5 w-3.5" />
+            {isVi ? "CV" : "Resume"}
+          </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 text-slate-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
-            aria-label="Toggle Navigation Menu"
+            className="border-[3px] border-[#111] bg-white p-2 shadow-[3px_3px_0_#111] lg:hidden cursor-pointer"
+            aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-slate-200/80 dark:border-white/10 bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top duration-200">
+        <div className="border-t-[3px] border-[#111] bg-[#f4f1ea] px-4 py-4 lg:hidden">
           <div className="grid grid-cols-2 gap-2">
-            {siteConfig.navItems.map((item) => {
-              const isActive = activeSection === item.id;
-              return (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 ${
-                    isActive
-                      ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
-                      : "border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                  }`}
-                >
-                  {iconMap[item.icon]}
-                  <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="pt-3 border-t border-slate-200 dark:border-white/10 flex justify-center">
-            <GlassButton
-              onClick={() => {
-                telemetry.track("download_cv", "mobile_nav_cta");
-                setMobileMenuOpen(false);
-                onOpenResumeModal();
-              }}
-              variant="primary"
-              size="md"
-              icon={<FileDown className="w-4 h-4" />}
-              className="w-full whitespace-nowrap"
-            >
-              {isVi ? "Xem & Tải CV (PDF)" : "View & Download CV (PDF)"}
-            </GlassButton>
+            {siteConfig.navItems.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                onClick={() => handleNavClick(item.id)}
+                className={`border-2 border-[#111] px-3 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.1em] ${
+                  activeSection === item.id ? "bg-[#111] text-white" : "bg-white"
+                }`}
+              >
+                {item.label[isVi ? "vi" : "en"]}
+              </Link>
+            ))}
           </div>
         </div>
       )}

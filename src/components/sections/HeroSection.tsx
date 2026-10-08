@@ -4,198 +4,122 @@ import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/hooks/useLanguage";
 import { statsData } from "@/data/portfolio-content";
-import { GlassButton } from "../glass/GlassButton";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassCard } from "../glass/GlassCard";
-import {
-  FileDown,
-  ArrowRight,
-} from "lucide-react";
+import { FileDown, ArrowDown } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
 interface HeroSectionProps {
   onOpenResumeModal: () => void;
 }
 
+const MARQUEE_ITEMS = [
+  "Software Engineer",
+  "React",
+  "TypeScript",
+  "Next.js",
+  "Open to Work",
+  "SaaS",
+  "AI Integration",
+  "Micro-Frontend",
+];
+
+export function Marquee({ items = MARQUEE_ITEMS }: { items?: string[] }) {
+  const row = [...items, ...items];
+  return (
+    <div className="overflow-hidden border-y-[3px] border-[#111] bg-[#111] py-3">
+      <div className="brut-marquee-track gap-8">
+        {row.map((item, i) => (
+          <span key={i} className="flex items-center gap-8 whitespace-nowrap">
+            <span className="font-display text-lg font-black uppercase tracking-tight text-white">
+              {item}
+            </span>
+            <span className="inline-block h-3 w-3 bg-[#ff3d00]" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
   const { isVi } = useLanguage();
 
   return (
-    <section
-      id="home"
-      className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          {/* Left Column: Hero Text & Call to Actions */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/10 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-medium text-emerald-800 dark:text-emerald-300">
-                {isVi ? "Sẵn sàng đón nhận cơ hội nghề nghiệp mới" : "Open for new software engineering opportunities"}
-              </span>
-            </div>
+    <section id="home" className="relative pt-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="border-x-[3px] border-[#111] bg-white px-6 py-16 sm:px-12 sm:py-20">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="brut-tag brut-tag-accent">
+              {isVi ? "Sẵn sàng nhận việc" : "Open to work"}
+            </span>
+            <span className="brut-eyebrow text-[#111]/60">
+              {isVi ? "TP. Hồ Chí Minh, Việt Nam" : "Ho Chi Minh City, Vietnam"}
+            </span>
+          </div>
 
-            {/* Main Headline */}
-            <div className="space-y-2">
-              <div className="text-xs font-mono tracking-widest text-blue-600 dark:text-blue-400 uppercase font-semibold">
-                {isVi ? "Kỹ sư Phần mềm | Full-Stack & Frontend" : "Software Engineer | Full-Stack & Frontend"}
-              </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-                {isVi ? "Xin chào, tôi là " : "Hi, I'm "}
-                <span className="text-gradient">
-                  {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
-                </span>
-              </h1>
-              <div className="text-lg sm:text-xl font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center lg:justify-start gap-2 pt-1">
-                <span>alias:</span>
-                <span className="font-mono text-blue-700 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg border border-blue-500/20 text-sm">
-                  @SatohJiro
-                </span>
-              </div>
-            </div>
+          <h1 className="mt-8 font-display font-black uppercase leading-[0.92] tracking-tight">
+            <span className="block text-[clamp(3rem,10vw,8.5rem)]">Nguyen</span>
+            <span className="block text-[clamp(3rem,10vw,8.5rem)]">
+              Tran <span className="text-[#ff3d00]">Anh</span>
+            </span>
+          </h1>
 
-            {/* Description (Anti-Slop: Under 20 words) */}
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+          <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <p className="max-w-xl border-l-[4px] border-[#ff3d00] pl-5 text-lg font-medium leading-relaxed">
               {isVi
-                ? "Kỹ sư phần mềm hơn 3 năm kinh nghiệm phát triển ứng dụng web, micro-frontend NTT Docomo và tích hợp AI."
-                : "Software Engineer with 3+ years building high-performance web apps, micro-frontends at NTT Docomo, and production AI tools."}
+                ? "Kỹ sư Phần mềm với hơn 3 năm kinh nghiệm. Tôi xây dựng web app nhanh, sạch và mở rộng được — từ SaaS CRM đến tích hợp AI."
+                : "Software Engineer with 3+ years of experience. I build fast, clean, scalable web apps — from SaaS CRM to AI integrations."}
             </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-              <GlassButton
+            <div className="flex flex-wrap gap-3">
+              <button
                 onClick={() => {
                   telemetry.track("download_cv", "hero_main_button");
                   onOpenResumeModal();
                 }}
-                variant="primary"
-                size="md"
-                icon={<FileDown className="w-4 h-4" />}
-                className="whitespace-nowrap"
+                className="brut-btn"
               >
-                {isVi ? "Tải CV & Xem Resume" : "Download CV / Resume"}
-              </GlassButton>
-
-              <Link href="#projects">
-                <GlassButton
-                  onClick={() => telemetry.track("click", "hero_explore_projects")}
-                  variant="glass"
-                  size="md"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                  iconPosition="right"
-                  className="whitespace-nowrap"
-                >
-                  {isVi ? "Xem Dự Án" : "View Projects"}
-                </GlassButton>
+                <FileDown className="h-4 w-4" />
+                {isVi ? "Xem CV" : "View Resume"}
+              </button>
+              <Link href="#projects" className="brut-btn brut-btn-outline">
+                {isVi ? "Dự án" : "Projects"}
               </Link>
-
-              <Link href="#terminal">
-                <GlassButton
-                  onClick={() => telemetry.track("click", "hero_open_terminal")}
-                  variant="outline"
-                  size="md"
-                  className="whitespace-nowrap"
-                >
-                  Terminal
-                </GlassButton>
-              </Link>
-            </div>
-
-            {/* Quick Metrics Bar */}
-            <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-gradient-emerald">{statsData.yearsExperience}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Năm Kinh nghiệm" : "Years Experience"}</div>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-gradient-amber">{statsData.gpa}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Thủ Khoa GPA (NLU)" : "Valedictorian GPA"}</div>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{statsData.awardsCount}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Giải Thưởng / Vinh Danh" : "Honors & Awards"}</div>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{statsData.performanceGain}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Tối ưu Render" : "Performance Gain"}</div>
-              </div>
             </div>
           </div>
 
-          {/* Right Column: Key Focus Cards (Executive Technical Cards, No AI Slop) */}
-          <div className="lg:col-span-5 relative space-y-3.5">
-            {/* Card 1: ahamo */}
-            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400 font-semibold tracking-wider uppercase">
-                    Enterprise Platform
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
-                    ahamo Web Platform (NTT Docomo)
-                  </div>
-                </div>
-                <GlassBadge variant="blue" size="sm">
-                  Active
-                </GlassBadge>
+          {/* Stats */}
+          <div className="mt-12 grid grid-cols-2 border-[3px] border-[#111] bg-white sm:grid-cols-4">
+            {[
+              { v: statsData.yearsExperience, en: "Years exp.", vi: "Năm KN" },
+              { v: statsData.gpa, en: "GPA Valedictorian", vi: "GPA Thủ khoa" },
+              { v: statsData.awardsCount, en: "Awards", vi: "Giải thưởng" },
+              { v: statsData.performanceGain, en: "Perf. gain", vi: "Tối ưu" },
+            ].map((s, i) => (
+              <div
+                key={s.en}
+                className={`px-5 py-6 ${i > 0 ? "border-l-[3px] border-[#111]" : ""} ${
+                  i >= 2 ? "max-sm:border-t-[3px] max-sm:border-[#111]" : ""
+                } ${i === 2 ? "max-sm:border-l-0" : ""}`}
+              >
+                <div className="font-display text-3xl font-black sm:text-4xl">{s.v}</div>
+                <div className="brut-eyebrow mt-2 text-[#111]/55">{isVi ? s.vi : s.en}</div>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 line-clamp-2 leading-relaxed">
-                {isVi
-                  ? "Kinh nghiệm phát triển giao diện Micro-frontend, Vue.js, ReactJS và CMS Webrelease cho thị trường Nhật Bản."
-                  : "Frontend development on micro-frontends with Vue.js, ReactJS, and CMS Webrelease for Japanese platform."}
-              </p>
-            </GlassCard>
-
-            {/* Card 2: Valedictorian Honor */}
-            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[11px] font-mono text-amber-600 dark:text-amber-400 font-semibold tracking-wider uppercase">
-                    Academic Distinction
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
-                    {isVi ? "Thủ Khoa Toàn Khóa (NLU 2019)" : "Class Valedictorian (NLU 2019)"}
-                  </div>
-                </div>
-                <GlassBadge variant="amber" size="sm">
-                  Top 1
-                </GlassBadge>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-                {isVi
-                  ? "Bằng Kỹ sư CNTT loại Xuất sắc (GPA 3.6/4.0). Nhận Giấy khen của Hiệu trưởng Nhà trường."
-                  : "Degree of Engineer in IT with Excellent rating (GPA 3.6/4.0). Certificate of Merit by University President."}
-              </p>
-            </GlassCard>
-
-            {/* Card 3: AI Tool */}
-            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold tracking-wider uppercase">
-                    AI Engineering
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
-                    GPT Code Generator & Pipeline
-                  </div>
-                </div>
-                <GlassBadge variant="emerald" size="sm">
-                  3rd Prize
-                </GlassBadge>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-                {isVi
-                  ? "Dự án ứng dụng OpenAI GPT-4 sinh mã nguồn web, kết hợp FastAPI, RabbitMQ & Next.js."
-                  : "AI application converting natural language to web code with GPT-4, FastAPI, RabbitMQ & Next.js."}
-              </p>
-            </GlassCard>
+            ))}
           </div>
         </div>
+      </div>
+
+      <div className="mt-0">
+        <Marquee />
+      </div>
+
+      <div className="mx-auto flex max-w-7xl justify-center px-4 py-10">
+        <button
+          onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+          className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.2em] cursor-pointer hover:text-[#ff3d00]"
+        >
+          {isVi ? "Cuộn xuống" : "Scroll"}
+          <ArrowDown className="h-4 w-4 animate-bounce" />
+        </button>
       </div>
     </section>
   );

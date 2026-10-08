@@ -5,11 +5,9 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { projectsData } from "@/data/portfolio-content";
 import { resolveLocale, resolveLocaleArray } from "@/lib/locale";
 import { ProjectItem } from "@/types";
-import { GlassCard } from "../glass/GlassCard";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassButton } from "../glass/GlassButton";
+import { SectionHeader } from "./SectionHeader";
 import { ProjectDetailModal } from "./ProjectDetailModal";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { GithubIcon } from "../icons/BrandIcons";
 import { telemetry } from "@/lib/telemetry";
 
@@ -19,190 +17,138 @@ export function ProjectsSection() {
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
 
   const categories = [
-    { id: "all", label: { en: "All Projects", vi: "Tất Cả Dự Án" } },
-    { id: "web", label: { en: "Web Platforms", vi: "Dự Án Web" } },
-    { id: "ai", label: { en: "AI Tools", vi: "Ứng Dụng AI" } },
-    { id: "academic", label: { en: "Academic & Algorithms", vi: "Học Thuật & Thuật Toán" } },
+    { id: "all", label: { en: "All", vi: "Tất cả" } },
+    { id: "web", label: { en: "Web", vi: "Web" } },
+    { id: "ai", label: { en: "AI", vi: "AI" } },
+    { id: "academic", label: { en: "Academic", vi: "Học thuật" } },
   ];
 
-  const filteredProjects = projectsData.filter((proj) => {
-    if (filter === "all") return true;
-    return proj.category === filter;
-  });
-
-  const handleFilterChange = (id: string) => {
-    setFilter(id);
-    telemetry.track("click", `filter_projects_${id}`);
-  };
-
-  const handleOpenProjectModal = (project: ProjectItem) => {
-    setActiveModalProject(project);
-    telemetry.track("click", `view_project_modal_${project.id}`, { name: project.name.en });
-  };
+  const filteredProjects = projectsData.filter(
+    (proj) => filter === "all" || proj.category === filter
+  );
 
   return (
-    <section id="projects" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <GlassBadge variant="emerald" size="md">
-            {isVi ? "Dự Án Tiêu Biểu" : "Featured Projects"}
-          </GlassBadge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Dự Án Tiêu Biểu & <span className="text-gradient-emerald">Sản Phẩm Đã Làm</span>
-              </>
-            ) : (
-              <>
-                Featured Works & <span className="text-gradient-emerald">Projects Delivered</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            {isVi
-              ? "Tổng hợp các dự án thực tế từ sản phẩm ứng dụng AI đến các nền tảng web và phần mềm học thuật."
-              : "Curated collection of production web platforms, AI tools, and algorithm research projects."}
-          </p>
-        </div>
+    <section id="projects" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+      <SectionHeader
+        num="03"
+        eyebrow={isVi ? "Dự án" : "Projects"}
+        title={isVi ? "Việc đã làm" : "Selected Work"}
+        desc={
+          isVi
+            ? "Từ sản phẩm AI đến nền tảng web production và nghiên cứu thuật toán."
+            : "From AI products to production web platforms and algorithm research."
+        }
+      />
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {categories.map((cat) => {
-            const isSelected = filter === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => handleFilterChange(cat.id)}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? "bg-emerald-600 text-white shadow-xs border border-emerald-500/40"
-                    : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
-                }`}
-              >
-                {cat.label[isVi ? "vi" : "en"]}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <GlassCard
-              key={project.id}
-              className="flex flex-col justify-between p-6 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70"
-              glowColor="none"
+      <div className="mb-8 flex flex-wrap gap-3">
+        {categories.map((cat) => {
+          const isActive = filter === cat.id;
+          return (
+            <button
+              key={cat.id}
+              onClick={() => {
+                setFilter(cat.id);
+                telemetry.track("click", `filter_projects_${cat.id}`);
+              }}
+              className={`border-[3px] border-[#111] px-5 py-2 font-mono text-xs font-bold uppercase tracking-[0.1em] cursor-pointer ${
+                isActive ? "bg-[#111] text-white" : "bg-white hover:bg-[#ff3d00] hover:text-white"
+              }`}
             >
-              <div className="space-y-4">
-                {/* Top Badge & Year */}
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400">
-                    {resolveLocale(project.year, isVi)}
-                  </div>
-                  {project.badge && (
-                    <GlassBadge variant="blue" size="sm">
-                      {resolveLocale(project.badge, isVi)}
-                    </GlassBadge>
-                  )}
-                </div>
-
-                {/* Project Title */}
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    {resolveLocale(project.name, isVi)}
-                  </h3>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-medium">
-                    {resolveLocale(project.organization, isVi)}
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-3">
-                  {resolveLocale(project.description, isVi)}
-                </p>
-
-                {/* Highlights preview */}
-                <div className="space-y-1.5 pt-1">
-                  {resolveLocaleArray(project.highlights, isVi).slice(0, 2).map((h: string, hIdx: number) => (
-                    <div key={hIdx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold shrink-0 mt-0.5">—</span>
-                      <span className="line-clamp-1">{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Footer: Tech Stack & Actions */}
-              <div className="space-y-4 pt-4 border-t border-slate-200/80 dark:border-white/10">
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.slice(0, 4).map((tech, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-300 font-mono font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium">
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
-                </div>
-
-                {/* Buttons */}
-                <div className="flex items-center justify-between gap-2 pt-1">
-                  <GlassButton
-                    onClick={() => handleOpenProjectModal(project)}
-                    size="sm"
-                    variant="outline"
-                    className="w-full text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white"
-                  >
-                    {isVi ? "Chi tiết Dự án" : "Details & Architecture"}
-                  </GlassButton>
-
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => telemetry.track("click", `project_github_${project.id}`)}
-                      className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-blue-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
-                      aria-label="GitHub Repository"
-                    >
-                      <GithubIcon className="w-4 h-4" />
-                    </a>
-                  )}
-
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => telemetry.track("click", `project_live_${project.id}`)}
-                      className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-emerald-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
-                      aria-label="Live Demo Link"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </GlassCard>
-          ))}
-        </div>
-
-        {/* Decoupled Project Detail Modal */}
-        <ProjectDetailModal
-          project={activeModalProject}
-          isOpen={!!activeModalProject}
-          onClose={() => setActiveModalProject(null)}
-          isVi={isVi}
-        />
+              {cat.label[isVi ? "vi" : "en"]}
+            </button>
+          );
+        })}
       </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredProjects.map((project, i) => (
+          <article key={project.id} className="brut-card brut-card-hover flex flex-col">
+            <div className="flex items-center justify-between border-b-[3px] border-[#111] px-5 py-3">
+              <span className="font-mono text-xs font-bold">
+                {String(i + 1).padStart(2, "0")} / {resolveLocale(project.year, isVi)}
+              </span>
+              {project.badge && (
+                <span className="brut-tag brut-tag-accent !text-[10px]">
+                  {resolveLocale(project.badge, isVi)}
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
+              <h3 className="font-display text-xl font-black uppercase leading-tight">
+                {resolveLocale(project.name, isVi)}
+              </h3>
+              <div className="mt-1 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[#111]/55">
+                {resolveLocale(project.organization, isVi)}
+              </div>
+              <p className="mt-3 line-clamp-3 text-sm font-medium leading-relaxed text-[#111]/75">
+                {resolveLocale(project.description, isVi)}
+              </p>
+
+              <ul className="mt-4 space-y-1.5">
+                {resolveLocaleArray(project.highlights, isVi)
+                  .slice(0, 2)
+                  .map((h: string, hi: number) => (
+                    <li key={hi} className="flex gap-2 text-[13px] font-bold">
+                      <span className="text-[#ff3d00]">▸</span>
+                      <span className="line-clamp-1">{h}</span>
+                    </li>
+                  ))}
+              </ul>
+
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {project.technologies.slice(0, 4).map((t, ti) => (
+                  <span key={ti} className="brut-tag !text-[10px] !py-1">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-5 flex items-center gap-2 border-t-[3px] border-[#111] pt-4">
+                <button
+                  onClick={() => {
+                    setActiveModalProject(project);
+                    telemetry.track("click", `view_project_modal_${project.id}`);
+                  }}
+                  className="flex flex-1 items-center justify-center gap-1 border-[3px] border-[#111] bg-[#111] px-3 py-2 font-mono text-xs font-bold uppercase tracking-[0.08em] text-white cursor-pointer hover:bg-[#ff3d00]"
+                >
+                  {isVi ? "Chi tiết" : "Details"}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </button>
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                    className="border-[3px] border-[#111] bg-white p-2 cursor-pointer hover:bg-[#ff3d00] hover:text-white"
+                  >
+                    <GithubIcon className="h-4 w-4" />
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Live demo"
+                    className="border-[3px] border-[#111] bg-white p-2 cursor-pointer hover:bg-[#ff3d00] hover:text-white"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <ProjectDetailModal
+        project={activeModalProject}
+        isOpen={!!activeModalProject}
+        onClose={() => setActiveModalProject(null)}
+        isVi={isVi}
+      />
     </section>
   );
 }
-
