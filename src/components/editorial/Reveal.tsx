@@ -6,21 +6,22 @@ interface RevealProps {
   children: ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "article" | "section";
+  as?: "div" | "article" | "section" | "li";
 }
 
 /** Fade-and-rise scroll reveal. Respects prefers-reduced-motion. */
 export function Reveal({ children, className = "", delay = 0, as = "div" }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [shown, setShown] = useState(false);
+  // Reduced-motion users see content immediately — no setState-in-effect needed.
+  const [shown, setShown] = useState<boolean>(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(true);
-      return;
-    }
+    if (!el || shown) return;
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
@@ -32,7 +33,7 @@ export function Reveal({ children, className = "", delay = 0, as = "div" }: Reve
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [shown]);
 
   const Tag = as as "div";
 

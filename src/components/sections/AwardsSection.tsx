@@ -1,108 +1,95 @@
 "use client";
 
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { awardsData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
-import { GlassCard } from "../glass/GlassCard";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassButton } from "../glass/GlassButton";
-import {
-  Trophy,
-  Medal,
-  Award,
-  PartyPopper,
-} from "lucide-react";
-import { telemetry } from "@/lib/telemetry";
 import { ChapterHeader } from "../editorial/ChapterHeader";
 import { Reveal } from "../editorial/Reveal";
+import { telemetry } from "@/lib/telemetry";
 
 export function AwardsSection() {
   const { isVi } = useLanguage();
 
-  const awardIcons: Record<string, React.ReactNode> = {
-    Trophy: <Trophy className="w-6 h-6 text-amber-500" />,
-    Sparkles: <Award className="w-6 h-6 text-blue-500" />,
-    Medal: <Medal className="w-6 h-6 text-blue-500" />,
-  };
-
-  const handleCelebrate = (awardName: string) => {
-    telemetry.track("click", `celebrate_award_${awardName}`);
-    import("canvas-confetti")
-      .then((mod) => {
-        mod.default({
-          particleCount: 60,
-          spread: 60,
-          origin: { y: 0.7 },
-        });
-      })
-      .catch(() => {});
+  const handleRowClick = (awardId: string) => {
+    telemetry.track("click", `award_row_${awardId}`);
   };
 
   return (
     <section id="awards" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[92rem] mx-auto space-y-12">
+      <div className="mx-auto max-w-[92rem]">
         <Reveal>
           <ChapterHeader id="awards" />
         </Reveal>
 
-        {/* Awards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {awardsData.map((award) => (
-            <GlassCard
-              key={award.id}
-              className="flex flex-col justify-between p-6 sm:p-7 space-y-6 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70"
-              glowColor="none"
-            >
-              <div className="space-y-4">
-                {/* Header Icon & Year */}
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shadow-xs">
-                    {awardIcons[award.iconName] || <Award className="w-6 h-6 text-amber-500 dark:text-amber-400" />}
-                  </div>
-                  <GlassBadge variant={award.id === "valedictorian" ? "amber" : "blue"} size="sm">
-                    {award.year}
-                  </GlassBadge>
-                </div>
+        {/* Honors ledger */}
+        <div className="mt-10">
+          {/* Ledger column labels */}
+          <div
+            aria-hidden="true"
+            className="hidden border-b border-[var(--ed-hairline)] pb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ed-muted)] md:grid md:grid-cols-[110px_1fr_auto] md:gap-8"
+          >
+            <span>{isVi ? "Năm" : "Year"}</span>
+            <span>{isVi ? "Vinh danh" : "Honor"}</span>
+            <span className="text-right">{isVi ? "Đơn vị" : "Organization"}</span>
+          </div>
 
-                {/* Title */}
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    {resolveLocale(award.title, isVi)}
-                  </h3>
-                  <div className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 mt-1">
-                    {resolveLocale(award.badgeText, isVi)}
-                  </div>
-                </div>
+          <ol>
+            {awardsData.map((award, i) => {
+              const isTop = award.id === "valedictorian";
+              return (
+                <Reveal as="li" key={award.id} delay={Math.min(i, 2) * 70}>
+                  <article
+                    onClick={() => handleRowClick(award.id)}
+                    className={`group grid cursor-default gap-3 border-b border-[var(--ed-hairline)] py-7 transition-colors hover:bg-blue-500/[0.04] md:grid-cols-[110px_1fr_auto] md:gap-8 md:py-8 ${
+                      isTop ? "border-l-2 border-l-blue-600 pl-4 md:pl-6" : ""
+                    }`}
+                  >
+                    {/* Year + index */}
+                    <div className="flex items-baseline gap-3 md:block">
+                      <div className="font-display text-2xl font-bold tracking-tight text-[var(--ed-ink)] md:text-3xl">
+                        {award.year}
+                      </div>
+                      <div className="font-mono text-xs text-[var(--ed-muted)]">
+                        {String(i + 1).padStart(2, "0")}
+                      </div>
+                    </div>
 
-                {/* Organization */}
-                <div className="text-xs text-slate-600 dark:text-slate-400 font-medium pt-1">
-                  <span>{resolveLocale(award.organization, isVi)}</span>
-                </div>
+                    {/* Honor */}
+                    <div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                        <h3 className="font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400 md:text-2xl">
+                          {resolveLocale(award.title, isVi)}
+                        </h3>
+                        {isTop && (
+                          <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">
+                            {isVi ? "Vinh dự cao nhất" : "Highest distinction"}
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-1.5 font-mono text-xs text-blue-600 dark:text-blue-400">
+                        {resolveLocale(award.badgeText, isVi)}
+                      </div>
+                      <p className="mt-2.5 max-w-3xl text-sm leading-relaxed text-[var(--ed-muted)]">
+                        {resolveLocale(award.description, isVi)}
+                      </p>
+                    </div>
 
-                {/* Description */}
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
-                  {resolveLocale(award.description, isVi)}
-                </p>
-              </div>
-
-              {/* Celebrate Button */}
-              <div className="pt-4 border-t border-slate-200/80 dark:border-white/10">
-                <GlassButton
-                  onClick={() => handleCelebrate(award.title.en)}
-                  variant="outline"
-                  size="sm"
-                  icon={<PartyPopper className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
-                  className="w-full text-xs text-slate-800 dark:text-slate-200"
-                >
-                  {isVi ? "Chúc Mừng Thành Tích" : "Celebrate Honor"}
-                </GlassButton>
-              </div>
-            </GlassCard>
-          ))}
+                    {/* Organization */}
+                    <div className="flex items-start justify-between gap-4 md:flex-col md:items-end md:justify-start md:text-right">
+                      <span className="max-w-[220px] font-mono text-xs leading-relaxed text-[var(--ed-muted)]">
+                        {resolveLocale(award.organization, isVi)}
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--ed-muted)] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:text-blue-600 group-hover:opacity-100" />
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </ol>
         </div>
       </div>
     </section>
   );
 }
-
