@@ -2,150 +2,66 @@
 
 import React from "react";
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/hooks/useLanguage";
-import { resolveLocale } from "@/lib/locale";
-import { Mail, Phone, ShieldCheck, Heart, Activity } from "lucide-react";
+import { siteConfig } from "@/config/site";
 import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
-import { GlassButton } from "../glass/GlassButton";
+import { ArrowUp } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
-interface FooterProps {
-  onOpenPrivacyDrawer: () => void;
-  onOpenResumeModal: () => void;
-}
-
-export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) {
-  const { isVi, isEn } = useLanguage();
-  const currentYear = new Date().getFullYear();
+export function Footer() {
+  const { isVi } = useLanguage();
 
   return (
-    <footer className="relative z-10 border-t border-slate-200/80 dark:border-white/10 bg-slate-50/90 dark:bg-slate-950/60 backdrop-blur-2xl py-12 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-200/80 dark:border-white/10">
-          {/* Col 1: Identity */}
-          <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 shrink-0">
-                NTA
-              </div>
-              <div>
-                <div className="font-bold text-base text-slate-900 dark:text-white">
-                  {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
-                </div>
-                <div className="text-xs text-slate-600 dark:text-slate-400">
-                  {isVi ? "Kỹ sư Phần mềm | Thủ khoa ĐH Nông Lâm" : "Software Engineer | Valedictorian"}
-                </div>
-              </div>
+    <footer className="border-t-2 border-[#0a0a0a] bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-6">
+            <div className="text-3xl font-extrabold tracking-tight">
+              N.Tran Anh<span className="text-[#e30613]">.</span>
             </div>
-
-            <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
-              {isVi
-                ? "Phát triển các ứng dụng Web chất lượng cao với Next.js, React, Vue.js, Spring Boot, FastAPI và ứng dụng AI GPT-4."
-                : "Building responsive web applications with Next.js, React, Vue.js, Spring Boot, FastAPI, and GPT-4 AI."}
+            <p className="swiss-label mt-3">
+              {isVi ? "Kỹ sư phần mềm — TP.HCM" : "Software Engineer — HCMC"}
             </p>
-
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => telemetry.track("click", "footer_github")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="GitHub Profile"
-              >
-                <GithubIcon className="w-4 h-4" />
-              </a>
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => telemetry.track("click", "footer_linkedin")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="LinkedIn Profile"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
-                href={siteConfig.links.email}
-                onClick={() => telemetry.track("click", "footer_email")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-white hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="Send Email"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-              <a
-                href={siteConfig.links.phone}
-                onClick={() => telemetry.track("click", "footer_phone")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white hover:border-amber-500/40 hover:bg-amber-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="Call Phone"
-              >
-                <Phone className="w-4 h-4" />
-              </a>
-            </div>
           </div>
-
-          {/* Col 2: Navigation */}
-          <div className="space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {isVi ? "Điều hướng nhanh" : "Quick Links"}
-            </div>
-            <ul className="space-y-2 text-xs">
-              {siteConfig.navItems.slice(0, 5).map((item) => (
+          <div className="md:col-span-3">
+            <div className="swiss-label mb-4">{isVi ? "Mục lục" : "Index"}</div>
+            <ul className="space-y-2">
+              {siteConfig.navItems.map((item, i) => (
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    onClick={() => telemetry.track("click", `footer_nav_${item.id}`)}
+                    className="swiss-label hover:text-[#e30613]"
                   >
-                    {resolveLocale(item.label, isVi)}
+                    <span className="mr-2 text-[#e30613]">{String(i + 1).padStart(2, "0")}</span>
+                    {item.label[isVi ? "vi" : "en"]}
                   </Link>
                 </li>
               ))}
-              <li>
-                <button
-                  onClick={onOpenResumeModal}
-                  className="text-blue-600 dark:text-blue-400 hover:underline transition-colors cursor-pointer font-medium"
-                >
-                  {isVi ? "Xem CV Online" : "Online ATS Resume"}
-                </button>
-              </li>
             </ul>
           </div>
-
-          {/* Col 3: Privacy & Telemetry */}
-          <div className="space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>{isVi ? "Quyền riêng tư" : "Privacy by Design"}</span>
+          <div className="md:col-span-3">
+            <div className="swiss-label mb-4">{isVi ? "Khác" : "Elsewhere"}</div>
+            <div className="flex gap-4">
+              <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:text-[#e30613]">
+                <GithubIcon className="h-5 w-5" />
+              </a>
+              <a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-[#e30613]">
+                <LinkedinIcon className="h-5 w-5" />
+              </a>
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                aria-label="Back to top"
+                className="hover:text-[#e30613] cursor-pointer"
+              >
+                <ArrowUp className="h-5 w-5" />
+              </button>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              {isVi
-                ? "Website tuân thủ GDPR/CCPA. 100% không dùng Cookie bên thứ 3, không thu thập IP và không lưu dữ liệu cá nhân."
-                : "GDPR/CCPA compliant. 100% cookie-free, no IP logging, and zero personal data stored."}
-            </p>
-            <GlassButton
-              onClick={onOpenPrivacyDrawer}
-              size="sm"
-              variant="outline"
-              icon={<Activity className="w-3 h-3 text-blue-600 dark:text-blue-400" />}
-              className="text-xs"
-            >
-              {isVi ? "Xem Telemetry Log" : "View Telemetry"}
-            </GlassButton>
           </div>
         </div>
-
-        {/* Bottom bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-4">
-          <div>
-            © {currentYear} Nguyen Tran Anh (SatohJiro). All rights reserved.
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              Built with <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> Next.js & Glassmorphism
-            </span>
-            <span className="font-mono">v1.0.0</span>
-          </div>
+        <div className="mt-12 flex flex-wrap justify-between gap-3 border-t border-[#e2e2e2] pt-6">
+          <span className="swiss-label">© {new Date().getFullYear()} Nguyen Tran Anh</span>
+          <span className="swiss-label">Set in Inter — Grid 12 col.</span>
         </div>
       </div>
     </footer>

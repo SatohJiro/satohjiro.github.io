@@ -6,28 +6,18 @@ import { useLanguage } from "@/hooks/useLanguage";
 export function LanguageToggle() {
   const { setLanguage, isEn, isVi } = useLanguage();
 
+  const btn = (active: boolean) =>
+    `swiss-label cursor-pointer px-2 py-1 transition-colors ${
+      active ? "text-[#e30613]" : "hover:text-[#0a0a0a]"
+    }`;
+
   return (
-    <div className="inline-flex items-center rounded-xl p-0.5 border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 backdrop-blur-md shadow-xs">
-      <button
-        onClick={() => setLanguage("vi")}
-        className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
-          isVi
-            ? "bg-blue-600 text-white shadow-xs"
-            : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
-        }`}
-        aria-label="Chuyển sang Tiếng Việt"
-      >
+    <div className="flex items-center border-l border-[#e2e2e2] pl-3">
+      <button onClick={() => setLanguage("vi")} className={btn(isVi)} aria-label="Tiếng Việt">
         VI
       </button>
-      <button
-        onClick={() => setLanguage("en")}
-        className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
-          isEn
-            ? "bg-blue-600 text-white shadow-xs"
-            : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
-        }`}
-        aria-label="Switch to English"
-      >
+      <span className="mx-1 text-[#e2e2e2]">/</span>
+      <button onClick={() => setLanguage("en")} className={btn(isEn)} aria-label="English">
         EN
       </button>
     </div>
