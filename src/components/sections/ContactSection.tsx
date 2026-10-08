@@ -59,19 +59,19 @@ export function ContactSection() {
  <GlassCard className="p-6 sm:p-7 space-y-5 border-[#1e1e2a]/10 bg-white flex flex-col justify-between" glowColor="none">
  <div className="space-y-4">
  <div className="flex items-center justify-between">
- <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-blue-600">
+ <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#2b4fc4]">
  <Mail className="w-4 h-4" />
- <span>[Primary Email]</span>
+ <span>Primary Email</span>
  </div>
  <button
  onClick={() => handleCopy(contactData.email, "email")}
- className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#1e1e2a]/10 hover:border-blue-400 hover:bg-blue-50:bg-blue-500/10 text-xs font-semibold text-[#3f3f4c] hover:text-slate-950:text-white transition-all cursor-pointer shadow-xs"
+ className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#1e1e2a]/10 hover:border-blue-400 hover:bg-[#d8e4ff] text-xs font-semibold text-[#3f3f4c] hover:text-[#1e1e2a] transition-all cursor-pointer shadow-xs"
  title="Copy Email Address"
  >
  {copiedKey === "email" ? (
  <>
- <Check className="w-3.5 h-3.5 text-emerald-600" />
- <span className="text-emerald-700 font-bold">{isVi ? "Đã sao chép" : "Copied"}</span>
+ <Check className="w-3.5 h-3.5 text-[#157a3d]" />
+ <span className="text-[#157a3d] font-bold">{isVi ? "Đã sao chép" : "Copied"}</span>
  </>
  ) : (
  <>
@@ -118,19 +118,19 @@ export function ContactSection() {
  <GlassCard className="p-6 sm:p-7 space-y-5 border-[#1e1e2a]/10 bg-white flex flex-col justify-between" glowColor="none">
  <div className="space-y-4">
  <div className="flex items-center justify-between">
- <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600">
+ <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#157a3d]">
  <Phone className="w-4 h-4" />
- <span>[Direct Line]</span>
+ <span>Direct Line</span>
  </div>
  <button
  onClick={() => handleCopy(contactData.phone, "phone")}
- className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#1e1e2a]/10 hover:border-blue-400 hover:bg-blue-50:bg-blue-500/10 text-xs font-semibold text-[#3f3f4c] hover:text-slate-950:text-white transition-all cursor-pointer shadow-xs"
+ className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#1e1e2a]/10 hover:border-blue-400 hover:bg-[#d8e4ff] text-xs font-semibold text-[#3f3f4c] hover:text-[#1e1e2a] transition-all cursor-pointer shadow-xs"
  title="Copy Phone Number"
  >
  {copiedKey === "phone" ? (
  <>
- <Check className="w-3.5 h-3.5 text-emerald-600" />
- <span className="text-emerald-700 font-bold">{isVi ? "Đã sao chép" : "Copied"}</span>
+ <Check className="w-3.5 h-3.5 text-[#157a3d]" />
+ <span className="text-[#157a3d] font-bold">{isVi ? "Đã sao chép" : "Copied"}</span>
  </>
  ) : (
  <>
@@ -164,8 +164,8 @@ export function ContactSection() {
  <GlassButton
  variant="outline"
  size="md"
- icon={<Phone className="w-4 h-4 text-blue-600" />}
- className="w-full text-xs font-semibold text-slate-800"
+ icon={<Phone className="w-4 h-4 text-[#2b4fc4]" />}
+ className="w-full text-xs font-semibold text-[#1e1e2a]"
  >
  {isVi ? "Gọi Điện Thoại" : "Make a Phone Call"}
  </GlassButton>
@@ -195,16 +195,16 @@ export function ContactSection() {
  target="_blank"
  rel="noopener noreferrer"
  onClick={() => telemetry.track("click", "contact_card_linkedin")}
- className="flex items-center justify-between p-3.5 rounded-xl border border-[#1e1e2a]/10 bg-slate-50 hover:border-blue-500/50 hover:bg-blue-50/50:bg-blue-500/10 transition-all group shadow-xs"
+ className="flex items-center justify-between p-3.5 rounded-xl border border-[#1e1e2a]/10 bg-[#fffdf8] hover:border-blue-500/50 hover:bg-[#d8e4ff]/60 transition-all group shadow-xs"
  >
  <div className="flex items-center gap-3">
- <LinkedinIcon className="w-5 h-5 text-blue-600" />
+ <LinkedinIcon className="w-5 h-5 text-[#2b4fc4]" />
  <div>
  <div className="text-xs font-bold text-[#1e1e2a]">LinkedIn</div>
  <div className="text-[11px] text-[#6e6e7e] font-mono">/in/satohjiro</div>
  </div>
  </div>
- <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600:text-blue-400 transition-colors" />
+ <ExternalLink className="w-3.5 h-3.5 text-[#6e6e7e] group-hover:text-[#2b4fc4] transition-colors" />
  </a>
 
  <a
@@ -212,16 +212,16 @@ export function ContactSection() {
  target="_blank"
  rel="noopener noreferrer"
  onClick={() => telemetry.track("click", "contact_card_github")}
- className="flex items-center justify-between p-3.5 rounded-xl border border-[#1e1e2a]/10 bg-slate-50 hover:border-blue-500/50 hover:bg-blue-50/50:bg-blue-500/10 transition-all group shadow-xs"
+ className="flex items-center justify-between p-3.5 rounded-xl border border-[#1e1e2a]/10 bg-[#fffdf8] hover:border-blue-500/50 hover:bg-[#d8e4ff]/60 transition-all group shadow-xs"
  >
  <div className="flex items-center gap-3">
- <GithubIcon className="w-5 h-5 text-blue-600" />
+ <GithubIcon className="w-5 h-5 text-[#2b4fc4]" />
  <div>
  <div className="text-xs font-bold text-[#1e1e2a]">GitHub</div>
  <div className="text-[11px] text-[#6e6e7e] font-mono">/SatohJiro</div>
  </div>
  </div>
- <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600:text-blue-400 transition-colors" />
+ <ExternalLink className="w-3.5 h-3.5 text-[#6e6e7e] group-hover:text-[#2b4fc4] transition-colors" />
  </a>
  </div>
  </GlassCard>
@@ -233,7 +233,7 @@ export function ContactSection() {
  {isVi ? "Khu Vực Làm Việc" : "Location & Availability"}
  </div>
  <h3 className="text-lg font-bold text-[#1e1e2a] flex items-center gap-2">
- <MapPin className="w-4 h-4 text-slate-400" />
+ <MapPin className="w-4 h-4 text-[#6e6e7e]" />
  <span>{resolveLocale(contactData.location, isVi)}</span>
  </h3>
  <p className="text-xs text-[#55555f] leading-relaxed">
@@ -244,11 +244,11 @@ export function ContactSection() {
  </div>
 
  <div className="flex flex-wrap gap-2 pt-1">
- <span className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-800">
+ <span className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 border border-emerald-300 text-[#157a3d]">
  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
  {isVi ? "Sẵn sàng nhận việc" : "Available to Join"}
  </span>
- <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-[#1e1e2a]/[.04] border border-[#1e1e2a]/10 text-slate-800">
+ <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-[#1e1e2a]/[.04] border border-[#1e1e2a]/10 text-[#1e1e2a]">
  On-site / Hybrid / Remote
  </span>
  </div>

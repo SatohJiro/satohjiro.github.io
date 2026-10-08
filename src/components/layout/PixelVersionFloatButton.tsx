@@ -21,11 +21,11 @@ export function PixelVersionFloatButton() {
  target="_blank"
  rel="noopener noreferrer"
  onClick={handleClick}
- className="group relative flex items-center gap-2 p-2.5 sm:p-2 rounded-full bg-slate-900/90 text-white backdrop-blur-md border border-blue-500/30 hover:border-blue-400/80 shadow-[0_8px_30px_rgb(0,0,0,0.35)] hover:shadow-[0_0_20px_rgba(37,99,235,0.35)] transition-all duration-300 active:scale-95 select-none"
+ className="group relative flex items-center gap-2 p-2.5 sm:p-2 rounded-full bg-[#ffb627] text-[#1e1e2a] border-2 border-[#1e1e2a] shadow-[4px_4px_0_0_#1e1e2a] transition-all duration-300 active:scale-95 select-none"
  aria-label={isVi ? "Trải nghiệm phiên bản Pixel Game RPG" : "Switch to Pixel Game RPG Version"}
  >
  {/* Floating circular icon */}
- <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-blue-700 via-blue-600 to-slate-800 text-white shadow-inner">
+ <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[#1e1e2a] text-[#ffb627]">
  <Gamepad2 className="w-4 h-4 transition-transform group-hover:scale-110 group-hover:rotate-6" />
  
  {/* Subtle live indicator dot */}
@@ -37,10 +37,10 @@ export function PixelVersionFloatButton() {
 
  {/* Expandable Label on Desktop or Hover */}
  <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-xs opacity-0 group-hover:opacity-100 whitespace-nowrap pr-2">
- <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-100">
+ <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-[#1e1e2a]">
  <span>{isVi ? "Pixel Game Mode" : "Pixel Game Version"}</span>
  <Sparkles className="w-3 h-3 text-amber-400 animate-pulse" />
- <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white transition-colors" />
+ <ExternalLink className="w-3 h-3 text-[#1e1e2a]/60 transition-colors" />
  </div>
  <div className="text-[10px] text-blue-300 font-sans">
  {isVi ? "Giao diện 8-Bit Retro RPG" : "8-Bit Retro RPG & Audio"}

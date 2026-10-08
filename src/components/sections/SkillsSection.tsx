@@ -5,35 +5,21 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { skillsData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
 import { GlassCard } from "../glass/GlassCard";
-import { Search } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
 export function SkillsSection() {
  const { isVi } = useLanguage();
  const [selectedCategory, setSelectedCategory] = useState<string>("all");
- const [searchQuery, setSearchQuery] = useState<string>("");
 
  const handleCategorySelect = (id: string) => {
  setSelectedCategory(id);
  telemetry.track("click", `filter_skills_${id}`);
  };
 
- const displayedCategories = skillsData
- .filter((cat) => {
+ const displayedCategories = skillsData.filter((cat) => {
  if (selectedCategory === "all") return true;
  return cat.id === selectedCategory;
- })
- .map((cat) => {
- if (!searchQuery.trim()) return cat;
- const q = searchQuery.toLowerCase();
- const filteredSkills = cat.skills.filter(
- (s) =>
- s.name.toLowerCase().includes(q) ||
- resolveLocale(s.description, isVi).toLowerCase().includes(q)
- );
- return { ...cat, skills: filteredSkills };
- })
- .filter((cat) => cat.skills.length > 0);
+ });
 
  return (
  <section id="skills" className="relative py-20 px-4 sm:px-6 lg:px-8">
@@ -59,10 +45,8 @@ export function SkillsSection() {
  </p>
  </div>
 
- {/* Filter & Search Controls */}
- <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
- {/* Category Tabs (Clean Text Pills, Anti-Slop) */}
- <div className="flex flex-wrap items-center gap-2">
+ {/* Filter Tabs */}
+ <div className="flex flex-wrap items-center justify-center gap-2">
  <button
  onClick={() => handleCategorySelect("all")}
  className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
@@ -91,19 +75,6 @@ export function SkillsSection() {
  })}
  </div>
 
- {/* Search Box */}
- <div className="relative w-full sm:w-64">
- <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
- <input
- type="text"
- placeholder={isVi ? "Tìm kiếm kỹ năng..." : "Search skills..."}
- value={searchQuery}
- onChange={(e) => setSearchQuery(e.target.value)}
- className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white border border-[#1e1e2a]/10 text-[#1e1e2a] placeholder:text-slate-400 focus:outline-none focus:border-blue-500/50 backdrop-blur-md"
- />
- </div>
- </div>
-
  {/* Categorized Skills Grid */}
  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
  {displayedCategories.map((category) => (
@@ -127,7 +98,7 @@ export function SkillsSection() {
  {category.skills.map((skill, sIdx) => (
  <div
  key={sIdx}
- className="p-3 rounded-xl bg-slate-50/80 border border-[#1e1e2a]/10 space-y-1.5 hover:border-[#1e1e2a]/25 transition-colors"
+ className="p-3 rounded-xl bg-[#fffdf8]/80 border border-[#1e1e2a]/10 space-y-1.5 hover:border-[#1e1e2a]/25 transition-colors"
  >
  <div className="flex items-center justify-between">
  <span className="font-semibold text-xs text-[#1e1e2a]">
@@ -137,7 +108,7 @@ export function SkillsSection() {
  <span
  className={`text-[10px] font-mono font-medium px-2 py-0.5 rounded-md border ${
  skill.highlight
- ? "bg-blue-50 text-blue-700 border-blue-200"
+ ? "bg-blue-50 text-[#2b4fc4] border-blue-200"
  : "bg-[#1e1e2a]/[.04] text-[#55555f] border-[#1e1e2a]/10"
  }`}
  >

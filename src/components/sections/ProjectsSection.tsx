@@ -86,17 +86,23 @@ export function ProjectsSection() {
 
  {/* Projects Grid */}
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
- {filteredProjects.map((project) => (
+ {filteredProjects.map((project, pIdx) => {
+ const accents = ["#ff5ca8", "#4d7cfe", "#ffb627", "#2ecc71", "#8b5cf6", "#ff7a45"];
+ const accent = accents[pIdx % accents.length];
+ return (
  <GlassCard
  key={project.id}
  className="flex flex-col justify-between p-6 space-y-5 border-[#1e1e2a]/10 bg-white"
  glowColor="none"
  >
  <div className="space-y-4">
- {/* Top Badge & Year */}
+ {/* Top: colored bar + year & badge */}
  <div className="flex items-center justify-between gap-2">
- <div className="text-xs font-mono font-medium text-[#55555f]">
+ <div className="flex items-center gap-2">
+ <span className="h-2.5 w-8 rounded-full" style={{ backgroundColor: accent }} />
+ <span className="text-xs font-mono font-bold text-[#6e6e7e]">
  {resolveLocale(project.year, isVi)}
+ </span>
  </div>
  {project.badge && (
  <GlassBadge variant="blue" size="sm">
@@ -107,7 +113,7 @@ export function ProjectsSection() {
 
  {/* Project Title */}
  <div>
- <h3 className="text-base sm:text-lg font-bold text-[#1e1e2a] hover:text-blue-600:text-blue-400 transition-colors">
+ <h3 className="text-base sm:text-lg font-bold text-[#1e1e2a] hover:text-[#2b4fc4] transition-colors">
  {resolveLocale(project.name, isVi)}
  </h3>
  <div className="text-xs text-[#55555f] mt-1 font-medium">
@@ -124,7 +130,7 @@ export function ProjectsSection() {
  <div className="space-y-1.5 pt-1">
  {resolveLocaleArray(project.highlights, isVi).slice(0, 2).map((h: string, hIdx: number) => (
  <div key={hIdx} className="flex items-start gap-2 text-xs text-[#3f3f4c]">
- <span className="font-mono text-emerald-600 font-bold shrink-0 mt-0.5">—</span>
+ <span className="font-mono text-[#157a3d] font-bold shrink-0 mt-0.5">—</span>
  <span className="line-clamp-1">{h}</span>
  </div>
  ))}
@@ -138,7 +144,7 @@ export function ProjectsSection() {
  {project.technologies.slice(0, 4).map((tech, tIdx) => (
  <span
  key={tIdx}
- className="text-[10px] px-2 py-0.5 rounded-md bg-[#1e1e2a]/[.04] border border-[#1e1e2a]/10 text-slate-800 font-mono font-medium"
+ className="text-[10px] px-2 py-0.5 rounded-md bg-[#1e1e2a]/[.04] border border-[#1e1e2a]/10 text-[#1e1e2a] font-mono font-medium"
  >
  {tech}
  </span>
@@ -156,7 +162,7 @@ export function ProjectsSection() {
  onClick={() => handleOpenProjectModal(project)}
  size="sm"
  variant="outline"
- className="w-full text-xs font-semibold text-slate-800 hover:text-slate-950:text-white"
+ className="w-full text-xs font-semibold text-[#1e1e2a]"
  >
  {isVi ? "Chi tiết Dự án" : "Details & Architecture"}
  </GlassButton>
@@ -167,7 +173,7 @@ export function ProjectsSection() {
  target="_blank"
  rel="noopener noreferrer"
  onClick={() => telemetry.track("click", `project_github_${project.id}`)}
- className="p-2 rounded-xl border border-[#1e1e2a]/10 bg-slate-100/80 text-[#3f3f4c] hover:text-slate-950:text-white hover:border-blue-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
+ className="p-2 rounded-xl border border-[#1e1e2a]/10 bg-[#fffdf8] text-[#3f3f4c] hover:border-[#2b4fc4]/50 transition-all shrink-0 cursor-pointer shadow-xs"
  aria-label="GitHub Repository"
  >
  <GithubIcon className="w-4 h-4" />
@@ -180,7 +186,7 @@ export function ProjectsSection() {
  target="_blank"
  rel="noopener noreferrer"
  onClick={() => telemetry.track("click", `project_live_${project.id}`)}
- className="p-2 rounded-xl border border-[#1e1e2a]/10 bg-slate-100/80 text-[#3f3f4c] hover:text-slate-950:text-white hover:border-emerald-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
+ className="p-2 rounded-xl border border-[#1e1e2a]/10 bg-[#fffdf8] text-[#3f3f4c] hover:border-[#157a3d]/50 transition-all shrink-0 cursor-pointer shadow-xs"
  aria-label="Live Demo Link"
  >
  <ExternalLink className="w-4 h-4" />
@@ -189,7 +195,8 @@ export function ProjectsSection() {
  </div>
  </div>
  </GlassCard>
- ))}
+ );
+ })}
  </div>
 
  {/* Decoupled Project Detail Modal */}

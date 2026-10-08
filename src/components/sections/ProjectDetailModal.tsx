@@ -28,7 +28,7 @@ export function ProjectDetailModal({
  maxWidth="xl"
  title={
  <div className="text-[#1e1e2a]">
- <div className="text-[10px] font-mono text-blue-600 uppercase tracking-wider font-semibold">
+ <div className="text-[10px] font-mono text-[#2b4fc4] uppercase tracking-wider font-semibold">
  {isVi ? "Kiến Trúc & Chi Tiết Kỹ Thuật" : "Architecture & Technical Deep-Dive"}
  </div>
  <div className="text-base sm:text-lg font-bold mt-0.5">
@@ -39,7 +39,7 @@ export function ProjectDetailModal({
  >
  <div className="space-y-6 text-[#1e1e2a]">
  {/* Organization & Year */}
- <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-2xl bg-slate-50 border border-[#1e1e2a]/10">
+ <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-2xl bg-[#fffdf8] border border-[#1e1e2a]/10">
  <div>
  <div className="text-xs text-[#6e6e7e]">
  {isVi ? "Đơn vị / Bối cảnh" : "Organization / Context"}
@@ -68,10 +68,10 @@ export function ProjectDetailModal({
  {/* Architecture Blueprint if available */}
  {project.architecture && (
  <div className="space-y-2">
- <div className="text-xs font-mono font-bold text-blue-700 uppercase tracking-wider">
- {isVi ? "[Kiến Trúc Triển Khai]" : "[System Architecture]"}
+ <div className="text-xs font-mono font-bold text-[#2b4fc4] uppercase tracking-wider">
+ {isVi ? "Kiến trúc triển khai" : "System Architecture"}
  </div>
- <div className="p-3.5 rounded-xl bg-slate-950 border border-blue-500/30 font-mono text-xs text-blue-300 leading-relaxed shadow-xs">
+ <div className="p-3.5 rounded-2xl bg-[#d8e4ff]/50 border-2 border-[#2b4fc4]/25 font-mono text-xs text-[#1e1e2a] leading-relaxed">
  {resolveLocale(project.architecture, isVi)}
  </div>
  </div>
@@ -86,7 +86,7 @@ export function ProjectDetailModal({
  {resolveLocaleArray(project.challengesSolved, isVi).map((c: string, idx: number) => (
  <li
  key={idx}
- className="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+ className="flex items-start gap-2.5 p-2.5 rounded-xl bg-[#fffdf8] border border-[#1e1e2a]/10"
  >
  <span className="font-mono text-amber-600 font-bold mt-0.5">•</span>
  <span className="leading-relaxed">{c}</span>

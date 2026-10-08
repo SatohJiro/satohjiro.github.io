@@ -6,35 +6,25 @@ import { awardsData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
 import { GlassCard } from "../glass/GlassCard";
 import { GlassBadge } from "../glass/GlassBadge";
-import { GlassButton } from "../glass/GlassButton";
 import {
  Trophy,
  Medal,
  Award,
- PartyPopper,
 } from "lucide-react";
-import { telemetry } from "@/lib/telemetry";
+
+const cardStyles = [
+  { bg: "bg-[#ffedb8]", border: "border-[#d99400]", iconBg: "bg-[#ffb627]", rotate: "-1deg" },
+  { bg: "bg-[#d8e4ff]", border: "border-[#2b4fc4]", iconBg: "bg-[#4d7cfe]", rotate: "0.8deg" },
+  { bg: "bg-[#ffd9ea]", border: "border-[#c22a72]", iconBg: "bg-[#ff5ca8]", rotate: "-0.6deg" },
+];
 
 export function AwardsSection() {
  const { isVi } = useLanguage();
 
  const awardIcons: Record<string, React.ReactNode> = {
- Trophy: <Trophy className="w-6 h-6 text-amber-500" />,
- Sparkles: <Award className="w-6 h-6 text-blue-500" />,
- Medal: <Medal className="w-6 h-6 text-blue-500" />,
- };
-
- const handleCelebrate = (awardName: string) => {
- telemetry.track("click", `celebrate_award_${awardName}`);
- import("canvas-confetti")
- .then((mod) => {
- mod.default({
- particleCount: 60,
- spread: 60,
- origin: { y: 0.7 },
- });
- })
- .catch(() => {});
+ Trophy: <Trophy className="w-6 h-6 text-white" />,
+ Sparkles: <Award className="w-6 h-6 text-white" />,
+ Medal: <Medal className="w-6 h-6 text-white" />,
  };
 
  return (
@@ -63,17 +53,19 @@ export function AwardsSection() {
 
  {/* Awards Grid */}
  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
- {awardsData.map((award) => (
+ {awardsData.map((award, idx) => {
+ const style = cardStyles[idx % cardStyles.length];
+ return (
  <GlassCard
  key={award.id}
- className="flex flex-col justify-between p-6 sm:p-7 space-y-6 border-[#1e1e2a]/10 bg-white"
+ className={`flex flex-col justify-between p-6 sm:p-7 space-y-5 ${style.bg} !border-2 ${style.border}`}
  glowColor="none"
  >
- <div className="space-y-4">
+ <div className="space-y-4" style={{ transform: `rotate(${style.rotate})` }}>
  {/* Header Icon & Year */}
  <div className="flex items-center justify-between">
- <div className="w-12 h-12 rounded-2xl bg-[#1e1e2a]/[.04] border border-[#1e1e2a]/10 flex items-center justify-center shadow-xs">
- {awardIcons[award.iconName] || <Award className="w-6 h-6 text-amber-500" />}
+ <div className={`w-12 h-12 rounded-2xl ${style.iconBg} border-2 border-[#1e1e2a] flex items-center justify-center shadow-[3px_3px_0_0_#1e1e2a]`}>
+ {awardIcons[award.iconName] || <Award className="w-6 h-6 text-white" />}
  </div>
  <GlassBadge variant={award.id === "valedictorian" ? "amber" : "blue"} size="sm">
  {award.year}
@@ -82,39 +74,27 @@ export function AwardsSection() {
 
  {/* Title */}
  <div>
- <h3 className="text-lg font-bold text-[#1e1e2a]">
+ <h3 className="font-display text-lg font-extrabold text-[#1e1e2a] tracking-tight">
  {resolveLocale(award.title, isVi)}
  </h3>
- <div className="text-xs font-mono font-semibold text-amber-700 mt-1">
+ <div className="text-xs font-mono font-bold text-[#1e1e2a]/70 mt-1">
  {resolveLocale(award.badgeText, isVi)}
  </div>
  </div>
 
  {/* Organization */}
- <div className="text-xs text-[#55555f] font-medium pt-1">
- <span>{resolveLocale(award.organization, isVi)}</span>
+ <div className="text-xs text-[#1e1e2a]/70 font-bold">
+ {resolveLocale(award.organization, isVi)}
  </div>
 
  {/* Description */}
- <p className="text-xs text-[#55555f] leading-relaxed pt-1">
+ <p className="text-[13px] text-[#1e1e2a]/80 leading-relaxed font-medium">
  {resolveLocale(award.description, isVi)}
  </p>
  </div>
-
- {/* Celebrate Button */}
- <div className="pt-4 border-t border-[#1e1e2a]/10">
- <GlassButton
- onClick={() => handleCelebrate(award.title.en)}
- variant="outline"
- size="sm"
- icon={<PartyPopper className="w-3.5 h-3.5 text-amber-600" />}
- className="w-full text-xs text-slate-800"
- >
- {isVi ? "Chúc Mừng Thành Tích" : "Celebrate Honor"}
- </GlassButton>
- </div>
  </GlassCard>
- ))}
+ );
+ })}
  </div>
  </div>
  </section>

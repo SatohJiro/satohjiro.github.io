@@ -21,6 +21,9 @@ export function AboutSection() {
  en: "Modular component architecture with ReactJS, Next.js, and Vue.js.",
  vi: "Kiến trúc component module hóa với ReactJS, Next.js và Vue.js.",
  },
+ color: "play-eyebrow-blue",
+ bg: "bg-[#d8e4ff]/50",
+ rotate: "0.6deg",
  },
  {
  index: "02",
@@ -32,6 +35,9 @@ export function AboutSection() {
  en: "Scalable store management with Redux Toolkit and Zustand, +30% boost.",
  vi: "Tối ưu hóa state với Redux Toolkit và Zustand, tăng hơn 30% tốc độ.",
  },
+ color: "play-eyebrow-green",
+ bg: "bg-[#cdf5dd]/50",
+ rotate: "-0.7deg",
  },
  {
  index: "03",
@@ -43,6 +49,9 @@ export function AboutSection() {
  en: "Experience with micro-frontends (ahamo NTT Docomo) and backend APIs.",
  vi: "Kinh nghiệm thực tế với Micro-frontend (ahamo NTT Docomo) và API backend.",
  },
+ color: "play-eyebrow-yellow",
+ bg: "bg-[#ffedb8]/50",
+ rotate: "0.5deg",
  },
  {
  index: "04",
@@ -54,6 +63,9 @@ export function AboutSection() {
  en: "Integrated OpenAI GPT-4 with Python FastAPI and RabbitMQ queues.",
  vi: "Tích hợp OpenAI GPT-4 với FastAPI và hàng đợi RabbitMQ.",
  },
+ color: "play-eyebrow-pink",
+ bg: "bg-[#ffd9ea]/50",
+ rotate: "-0.5deg",
  },
  ];
 
@@ -86,7 +98,7 @@ export function AboutSection() {
  {/* Main Story Narrative */}
  <GlassCard className="lg:col-span-7 p-6 sm:p-8 space-y-6 border-[#1e1e2a]/10 bg-white" glowColor="none">
  <div className="border-b border-[#1e1e2a]/10 pb-4">
- <div className="text-[11px] font-mono uppercase tracking-wider text-blue-600 font-semibold">
+ <div className="text-[11px] font-mono uppercase tracking-wider text-[#2b4fc4] font-semibold">
  {isVi ? "Hồ Sơ Năng Lực" : "Engineering Profile"}
  </div>
  <h3 className="text-xl font-bold text-[#1e1e2a] mt-1">
@@ -102,12 +114,12 @@ export function AboutSection() {
 
  {/* Quick Principles */}
  <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#3f3f4c]">
- <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-[#1e1e2a]/10">
- <span className="font-mono text-blue-600 font-bold">—</span>
+ <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#fffdf8] border border-[#1e1e2a]/10">
+ <span className="font-mono text-[#2b4fc4] font-bold">—</span>
  <span>{isVi ? "Ưu tiên Performance & Clean Code" : "Performance & Clean Code first"}</span>
  </div>
- <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-[#1e1e2a]/10">
- <span className="font-mono text-emerald-600 font-bold">—</span>
+ <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#fffdf8] border border-[#1e1e2a]/10">
+ <span className="font-mono text-[#157a3d] font-bold">—</span>
  <span>{isVi ? "Khả năng tự học & thích ứng nhanh" : "Rapid self-learning & adaptation"}</span>
  </div>
  </div>
@@ -134,7 +146,7 @@ export function AboutSection() {
  <div className="text-xs text-[#3f3f4c] font-medium">
  {resolveLocale(educationData.major, isVi)} • {resolveLocale(educationData.duration, isVi)}
  </div>
- <div className="text-xs font-semibold text-emerald-700 pt-1">
+ <div className="text-xs font-semibold text-[#157a3d] pt-1">
  {resolveLocale(educationData.honors, isVi)}
  </div>
  </div>
@@ -155,26 +167,25 @@ export function AboutSection() {
  </GlassCard>
  </div>
 
- {/* 4 Pillars (Minimalist Technical Cards) */}
+ {/* 4 Pillars — each with its own color */}
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
  {engineeringPillars.map((pillar, idx) => (
  <GlassCard
  key={idx}
- className="p-5 space-y-3 border-[#1e1e2a]/10 bg-white relative overflow-hidden group"
+ className={`p-5 space-y-3 ${pillar.bg} !border-2 !border-[#1e1e2a]/15`}
  glowColor="none"
  >
- <div className="flex items-center justify-between">
- <span className="font-mono text-xs font-bold text-blue-600 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+ <div style={{ transform: `rotate(${pillar.rotate})` }} className="space-y-3">
+ <span className={`play-eyebrow ${pillar.color} !text-[10px] !px-2 !py-0.5`}>
  {pillar.index}
  </span>
- <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors" />
- </div>
- <h4 className="text-xs sm:text-sm font-bold text-[#1e1e2a]">
+ <h4 className="font-display text-[15px] font-extrabold text-[#1e1e2a] tracking-tight">
  {resolveLocale(pillar.title, isVi)}
  </h4>
- <p className="text-xs text-[#55555f] leading-relaxed">
+ <p className="text-xs text-[#1e1e2a]/70 leading-relaxed font-medium">
  {resolveLocale(pillar.desc, isVi)}
  </p>
+ </div>
  </GlassCard>
  ))}
  </div>
