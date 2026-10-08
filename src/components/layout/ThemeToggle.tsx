@@ -34,7 +34,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 animate-pulse" />
+      <div className="w-9 h-9 rounded-xl border border-[#1e1e2a]/10 bg-[#1e1e2a]/[.04] animate-pulse" />
     );
   }
 
@@ -111,7 +111,7 @@ export function ThemeToggle() {
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className="relative w-9 h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/25 bg-slate-100/80 dark:bg-white/5 hover:bg-slate-200/80 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 transition-colors duration-200 cursor-pointer group shadow-xs overflow-hidden"
+        className="relative w-9 h-9 shrink-0 flex items-center justify-center rounded-xl border border-[#1e1e2a]/10 hover:border-slate-300 dark:hover:border-white/25 bg-slate-100/80 dark:bg-white/5 hover:bg-slate-200/80 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 transition-colors duration-200 cursor-pointer group shadow-xs overflow-hidden"
         aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
         title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
       >
