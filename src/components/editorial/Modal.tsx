@@ -59,10 +59,10 @@ export function Modal({
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
+      <div className="flex min-h-full justify-center p-4 sm:p-6">
         <div
           className={cn(
-            "ed-palette-pop relative z-10 my-6 flex max-h-[88vh] w-full flex-col overflow-hidden",
+            "ed-palette-pop relative z-10 m-auto flex max-h-[calc(100dvh-3rem)] w-full flex-col overflow-hidden",
             "border border-[var(--ed-hairline)] bg-[var(--ed-paper)] shadow-2xl",
             maxWidthStyles[maxWidth],
             className
