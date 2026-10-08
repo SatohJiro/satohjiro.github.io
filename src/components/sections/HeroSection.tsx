@@ -27,7 +27,7 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
           {isVi ? "Chặng 01 — Đồng quê Việt Nam" : "Chapter 01 — Vietnamese Countryside"}
         </div>
 
-        <h1 className="journey-text font-display text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl">
+        <h1 className="journey-text journey-hero-title font-display text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl">
           {isVi ? (
             <>
               Từ đồng quê,
@@ -43,7 +43,7 @@ export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
           )}
         </h1>
 
-        <p className="journey-muted mx-auto mt-6 max-w-xl text-base leading-relaxed sm:text-lg">
+        <p className="journey-muted journey-hero-sub mx-auto mt-6 max-w-xl text-base leading-relaxed sm:text-lg">
           {isVi
             ? "Tôi là Nguyễn Trần Anh — Kỹ sư Phần mềm. Cuộn xuống để đi cùng tôi: từ cánh đồng quê hương, lên Sài Gòn hoa lệ, vươn ra thế giới, rồi bay vào không gian."
             : "I'm Nguyen Tran Anh — Software Engineer. Scroll to ride with me: from homeland rice fields, up to vibrant Saigon, out to the world, then into space."}
