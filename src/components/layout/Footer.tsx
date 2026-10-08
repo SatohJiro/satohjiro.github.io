@@ -20,26 +20,26 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-slate-200/80 dark:border-white/10 bg-slate-50/90 dark:bg-slate-950/60 backdrop-blur-2xl py-12 mt-20">
+    <footer className="relative z-10 border-t border-slate-200/80 dark: bg-slate-50/90 dark:journey-card/60 backdrop-blur-2xl py-12 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-200/80 dark:border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-200/80 dark:">
           {/* Col 1: Identity */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs journey-text tracking-wider shadow-sm shadow-blue-500/20 shrink-0">
                 NTA
               </div>
               <div>
-                <div className="font-bold text-base text-slate-900 dark:text-white">
+                <div className="font-bold text-base text-slate-900 dark:journey-text">
                   {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
                 </div>
-                <div className="text-xs text-slate-600 dark:text-slate-400">
+                <div className="text-xs text-slate-600 dark:journey-muted">
                   {isVi ? "Kỹ sư Phần mềm | Thủ khoa ĐH Nông Lâm" : "Software Engineer | Valedictorian"}
                 </div>
               </div>
             </div>
 
-            <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
+            <p className="text-xs text-slate-600 dark:journey-muted max-w-md leading-relaxed">
               {isVi
                 ? "Phát triển các ứng dụng Web chất lượng cao với Next.js, React, Vue.js, Spring Boot, FastAPI và ứng dụng AI GPT-4."
                 : "Building responsive web applications with Next.js, React, Vue.js, Spring Boot, FastAPI, and GPT-4 AI."}
@@ -51,7 +51,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "footer_github")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-slate-200 dark: bg-white dark:bg-white/5 text-slate-700 dark:journey-muted hover:text-blue-600 dark:hover:journey-text hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
                 aria-label="GitHub Profile"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -61,7 +61,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "footer_linkedin")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-slate-200 dark: bg-white dark:bg-white/5 text-slate-700 dark:journey-muted hover:text-blue-600 dark:hover:journey-text hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -69,7 +69,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               <a
                 href={siteConfig.links.email}
                 onClick={() => telemetry.track("click", "footer_email")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-white hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-slate-200 dark: bg-white dark:bg-white/5 text-slate-700 dark:journey-muted hover:text-emerald-600 dark:hover:journey-text hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-xs"
                 aria-label="Send Email"
               >
                 <Mail className="w-4 h-4" />
@@ -77,7 +77,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               <a
                 href={siteConfig.links.phone}
                 onClick={() => telemetry.track("click", "footer_phone")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white hover:border-amber-500/40 hover:bg-amber-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-slate-200 dark: bg-white dark:bg-white/5 text-slate-700 dark:journey-muted hover:text-amber-600 dark:hover:journey-text hover:border-amber-500/40 hover:bg-amber-500/10 transition-all cursor-pointer shadow-xs"
                 aria-label="Call Phone"
               >
                 <Phone className="w-4 h-4" />
@@ -87,7 +87,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
 
           {/* Col 2: Navigation */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:journey-muted">
               {isVi ? "Điều hướng nhanh" : "Quick Links"}
             </div>
             <ul className="space-y-2 text-xs">
@@ -95,7 +95,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="text-slate-600 dark:journey-muted hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     {resolveLocale(item.label, isVi)}
                   </Link>
@@ -114,11 +114,11 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
 
           {/* Col 3: Privacy & Telemetry */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:journey-muted flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>{isVi ? "Quyền riêng tư" : "Privacy by Design"}</span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:journey-muted leading-relaxed">
               {isVi
                 ? "Website tuân thủ GDPR/CCPA. 100% không dùng Cookie bên thứ 3, không thu thập IP và không lưu dữ liệu cá nhân."
                 : "GDPR/CCPA compliant. 100% cookie-free, no IP logging, and zero personal data stored."}
@@ -136,7 +136,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-4">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:journey-muted gap-4">
           <div>
             © {currentYear} Nguyen Tran Anh (SatohJiro). All rights reserved.
           </div>

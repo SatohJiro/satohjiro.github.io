@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { GlowSpotlight } from "@/components/glass/GlowSpotlight";
+import { JourneyBackground } from "@/components/journey/JourneyBackground";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -11,7 +11,7 @@ import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { AwardsSection } from "@/components/sections/AwardsSection";
-import { InteractiveTerminal } from "@/components/sections/InteractiveTerminal";
+
 import { ContactSection } from "@/components/sections/ContactSection";
 import { PixelVersionFloatButton } from "@/components/layout/PixelVersionFloatButton";
 import { telemetry } from "@/lib/telemetry";
@@ -37,9 +37,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen selection:bg-blue-600 selection:text-white">
-      {/* Background Ambient Glow Spotlight & Mesh */}
-      <GlowSpotlight />
+    <div className="relative min-h-screen">
+      {/* Scroll-driven journey: countryside -> Saigon -> world -> space */}
+      <JourneyBackground />
 
       {/* Floating Navbar */}
       <Navbar onOpenResumeModal={() => setIsResumeModalOpen(true)} />
@@ -52,7 +52,6 @@ export default function HomePage() {
         <ProjectsSection />
         <SkillsSection />
         <AwardsSection />
-        <InteractiveTerminal onOpenResumeModal={() => setIsResumeModalOpen(true)} />
         <ContactSection />
       </main>
 

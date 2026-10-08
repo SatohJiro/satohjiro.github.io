@@ -42,18 +42,19 @@ export function AwardsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="journey-eyebrow">{isVi ? "Cột mốc" : "Milestones"}</div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold journey-text tracking-tight">
             {isVi ? (
               <>
-                Giải Thưởng & <span className="text-gradient-amber">Ghi Nhận Đóng Góp</span>
+                Giải Thưởng & <span className="journey-accent">Ghi Nhận Đóng Góp</span>
               </>
             ) : (
               <>
-                Honors & <span className="text-gradient-amber">Key Recognitions</span>
+                Honors & <span className="journey-accent">Key Recognitions</span>
               </>
             )}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+          <p className="text-sm sm:text-base journey-muted">
             {isVi
               ? "Sự ghi nhận từ nhà trường và công ty cho thành tích học tập xuất sắc và đóng góp phát triển sản phẩm."
               : "Recognitions from university leadership and company teams for academic performance and project contributions."}
@@ -81,7 +82,7 @@ export function AwardsSection() {
 
                 {/* Title */}
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-lg font-bold journey-text">
                     {resolveLocale(award.title, isVi)}
                   </h3>
                   <div className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 mt-1">
@@ -90,12 +91,12 @@ export function AwardsSection() {
                 </div>
 
                 {/* Organization */}
-                <div className="text-xs text-slate-600 dark:text-slate-400 font-medium pt-1">
+                <div className="text-xs journey-muted font-medium pt-1">
                   <span>{resolveLocale(award.organization, isVi)}</span>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
+                <p className="text-xs journey-muted leading-relaxed pt-1">
                   {resolveLocale(award.description, isVi)}
                 </p>
               </div>

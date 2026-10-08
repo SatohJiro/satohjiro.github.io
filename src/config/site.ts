@@ -28,7 +28,6 @@ export const siteConfig = {
     { id: "projects", href: "#projects", label: { en: "Projects", vi: "Dự án" }, icon: "Layers" },
     { id: "skills", href: "#skills", label: { en: "Skills", vi: "Kỹ năng" }, icon: "Cpu" },
     { id: "awards", href: "#awards", label: { en: "Honors", vi: "Vinh danh" }, icon: "Award" },
-    { id: "terminal", href: "#terminal", label: { en: "Terminal", vi: "Terminal" }, icon: "Terminal" },
     { id: "contact", href: "#contact", label: { en: "Contact", vi: "Liên hệ" }, icon: "Mail" },
   ],
 };

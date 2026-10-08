@@ -27,7 +27,8 @@ export function ExperienceSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="journey-eyebrow">{isVi ? "Chặng 03 — Sài Gòn" : "Chapter 03 — Saigon"}</div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold journey-text tracking-tight">
             {isVi ? (
               <>
                 Kinh Nghiệm & <span className="text-gradient">Dấu Ấn Kỹ Thuật</span>
@@ -38,7 +39,7 @@ export function ExperienceSection() {
               </>
             )}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+          <p className="text-sm sm:text-base journey-muted">
             {isVi
               ? "Hơn 3 năm kinh nghiệm lập trình thực tế qua các môi trường doanh nghiệp Nhật Bản, SaaS CRM và dự án AI."
               : "Over 3 years of software development experience across enterprise Japanese clients, SaaS platforms, and AI tools."}
@@ -63,7 +64,7 @@ export function ExperienceSection() {
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <div className="font-bold text-sm text-slate-900 dark:text-white">
+                    <div className="font-bold text-sm journey-text">
                       {exp.company}
                     </div>
                     {exp.current && (
@@ -73,11 +74,11 @@ export function ExperienceSection() {
                     )}
                   </div>
 
-                  <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mt-1">
+                  <div className="text-xs journey-accent font-medium mt-1">
                     {resolveLocale(exp.title, isVi)}
                   </div>
 
-                  <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200/60 dark:border-white/5">
+                  <div className="flex items-center gap-2 text-[11px] font-mono journey-faint mt-2.5 pt-2 border-t border-slate-200/60 dark:border-white/5">
                     <span>{resolveLocale(exp.duration, isVi)}</span>
                     <span>·</span>
                     <span>{locationStr.split(",")[0]}</span>
@@ -93,15 +94,15 @@ export function ExperienceSection() {
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200/80 dark:border-white/10">
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-xl sm:text-2xl font-bold journey-text">
                     {resolveLocale(activeExp.title, isVi)}
                   </h3>
-                  <div className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">
+                  <div className="text-xs sm:text-sm font-semibold journey-accent mt-1">
                     {activeExp.company} • {resolveLocale(activeExp.location, isVi)}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs px-3 py-1 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 font-mono">
+                  <span className="text-xs px-3 py-1 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 journey-muted font-mono">
                     {resolveLocale(activeExp.duration, isVi)}
                   </span>
                 </div>
@@ -112,26 +113,26 @@ export function ExperienceSection() {
                 {activeExp.projectHighlights.map((proj, pIdx) => (
                   <div key={pIdx} className="space-y-3.5 p-4 sm:p-5 rounded-2xl bg-slate-50/80 dark:bg-white/[0.02] border border-slate-200/70 dark:border-white/5">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                      <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                      <h4 className="text-base font-bold journey-text">
                         {proj.name}
                       </h4>
                       {proj.client && (
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                        <span className="text-xs journey-faint font-mono">
                           {resolveLocale(proj.client, isVi)}
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm journey-muted leading-relaxed">
                       {resolveLocale(proj.description, isVi)}
                     </p>
 
                     {/* Key Responsibilities */}
                     <div className="space-y-1.5">
-                      <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                      <div className="text-xs font-semibold journey-faint">
                         {isVi ? "Trách nhiệm chính:" : "Responsibilities:"}
                       </div>
-                      <ul className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
+                      <ul className="space-y-1 text-xs journey-muted">
                         {proj.responsibilities[isVi ? "vi" : "en"].map((r, rIdx) => (
                           <li key={rIdx} className="flex items-start gap-2">
                             <span className="w-1 h-1 rounded-full bg-blue-600 mt-1.5 shrink-0" />
@@ -147,7 +148,7 @@ export function ExperienceSection() {
                         <TrendingUp className="w-3 h-3" />
                         <span>{isVi ? "Kết quả đạt được:" : "Impact & Result:"}</span>
                       </div>
-                      <ul className="text-xs text-slate-700 dark:text-slate-200 space-y-0.5 pl-4 list-disc">
+                      <ul className="text-xs journey-muted space-y-0.5 pl-4 list-disc">
                         {proj.impacts[isVi ? "vi" : "en"].map((imp, impIdx) => (
                           <li key={impIdx}>{imp}</li>
                         ))}

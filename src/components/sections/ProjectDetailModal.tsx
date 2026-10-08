@@ -27,8 +27,8 @@ export function ProjectDetailModal({
       onClose={onClose}
       maxWidth="xl"
       title={
-        <div className="text-slate-900 dark:text-white">
-          <div className="text-[10px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider font-semibold">
+        <div className="journey-text">
+          <div className="text-[10px] font-mono journey-accent uppercase tracking-wider font-semibold">
             {isVi ? "Kiến Trúc & Chi Tiết Kỹ Thuật" : "Architecture & Technical Deep-Dive"}
           </div>
           <div className="text-base sm:text-lg font-bold mt-0.5">
@@ -37,14 +37,14 @@ export function ProjectDetailModal({
         </div>
       }
     >
-      <div className="space-y-6 text-slate-800 dark:text-slate-100">
+      <div className="space-y-6 journey-text">
         {/* Organization & Year */}
         <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10">
           <div>
-            <div className="text-xs text-slate-500 dark:text-slate-400">
+            <div className="text-xs journey-faint">
               {isVi ? "Đơn vị / Bối cảnh" : "Organization / Context"}
             </div>
-            <div className="text-sm font-bold text-slate-900 dark:text-white">
+            <div className="text-sm font-bold journey-text">
               {resolveLocale(project.organization, isVi)}
             </div>
           </div>
@@ -57,10 +57,10 @@ export function ProjectDetailModal({
 
         {/* Description */}
         <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+          <div className="text-xs font-mono font-bold journey-text uppercase tracking-wider">
             {isVi ? "Mô Tả & Mục Tiêu Dự Án" : "Project Summary & Mission"}
           </div>
-          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p className="text-xs sm:text-sm journey-muted leading-relaxed">
             {resolveLocale(project.description, isVi)}
           </p>
         </div>
@@ -82,7 +82,7 @@ export function ProjectDetailModal({
           <div className="text-xs font-mono font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider">
             {isVi ? "[Vấn Đề Kỹ Thuật & Giải Pháp]" : "[Technical Challenges & Solutions]"}
           </div>
-          <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+          <ul className="space-y-2 text-xs journey-muted">
             {resolveLocaleArray(project.challengesSolved, isVi).map((c: string, idx: number) => (
               <li
                 key={idx}
@@ -97,7 +97,7 @@ export function ProjectDetailModal({
 
         {/* All Technologies */}
         <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+          <div className="text-xs font-mono font-bold journey-text uppercase tracking-wider">
             {isVi ? "Công Nghệ Sử Dụng" : "Technologies Used"}
           </div>
           <div className="flex flex-wrap gap-1.5">

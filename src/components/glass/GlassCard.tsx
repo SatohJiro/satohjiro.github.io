@@ -16,25 +16,16 @@ export function GlassCard({
   className,
   enableTilt = false,
   interactive = true,
-  glowColor = "none",
+  glowColor: _glowColor,
   ...props
 }: GlassCardProps) {
-  const subtleGlowStyles = {
-    cyan: "hover:border-cyan-500/25",
-    indigo: "hover:border-blue-500/25",
-    blue: "hover:border-blue-500/25",
-    emerald: "hover:border-emerald-500/25",
-    amber: "hover:border-amber-500/25",
-    rose: "hover:border-rose-500/25",
-    none: "",
-  };
-
+  void enableTilt;
+  void _glowColor;
   return (
     <div
       className={cn(
-        "relative rounded-2xl p-6 transition-all duration-200 overflow-hidden",
-        interactive ? "glass-panel-interactive" : "glass-panel",
-        subtleGlowStyles[glowColor],
+        "journey-card relative p-6 transition-all duration-200",
+        interactive && "hover:-translate-y-0.5",
         className
       )}
       {...props}

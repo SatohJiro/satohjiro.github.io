@@ -40,7 +40,8 @@ export function SkillsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="journey-eyebrow">{isVi ? "Hành trang" : "The Toolkit"}</div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold journey-text tracking-tight">
             {isVi ? (
               <>
                 Kỹ Năng Kỹ Thuật & <span className="text-gradient">Kinh Nghiệm Thực Tế</span>
@@ -51,7 +52,7 @@ export function SkillsSection() {
               </>
             )}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+          <p className="text-sm sm:text-base journey-muted">
             {isVi
               ? "Thế mạnh nòng cốt về Frontend & tối ưu hiệu năng, kết hợp kinh nghiệm thực tế với các kiến trúc Micro-frontend, Backend APIs và tích hợp AI."
               : "Core expertise in frontend engineering and performance optimization, supported by applied experience in micro-frontends, backend APIs, and AI integrations."}
@@ -67,7 +68,7 @@ export function SkillsSection() {
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                 selectedCategory === "all"
                   ? "bg-blue-600 text-white shadow-xs border border-blue-500/40"
-                  : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+                  : "glass-button journey-muted hover:text-slate-950 dark:hover:text-white"
               }`}
             >
               {isVi ? "Tất Cả" : "All Categories"}
@@ -81,7 +82,7 @@ export function SkillsSection() {
                   className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                     isSelected
                       ? "bg-blue-600 text-white shadow-xs border border-blue-500/40"
-                      : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+                      : "glass-button journey-muted hover:text-slate-950 dark:hover:text-white"
                   }`}
                 >
                   <span>{resolveLocale(cat.label, isVi).split("(")[0].trim()}</span>
@@ -98,7 +99,7 @@ export function SkillsSection() {
               placeholder={isVi ? "Tìm kiếm kỹ năng..." : "Search skills..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-blue-500/50 backdrop-blur-md"
+              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 journey-text placeholder:text-slate-400 focus:outline-none focus:border-blue-500/50 backdrop-blur-md"
             />
           </div>
         </div>
@@ -110,11 +111,11 @@ export function SkillsSection() {
               {/* Category Header */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-white/10">
                 <div className="space-y-1">
-                  <div className="font-bold text-base text-slate-900 dark:text-white">
+                  <div className="font-bold text-base journey-text">
                     <span>{resolveLocale(category.label, isVi)}</span>
                   </div>
                   {category.description && (
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <div className="text-[11px] journey-faint">
                       {resolveLocale(category.description, isVi)}
                     </div>
                   )}
@@ -129,7 +130,7 @@ export function SkillsSection() {
                     className="p-3 rounded-xl bg-slate-50/80 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5 space-y-1.5 hover:border-slate-300 dark:hover:border-white/15 transition-colors"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-xs text-slate-900 dark:text-white">
+                      <span className="font-semibold text-xs journey-text">
                         {skill.name}
                       </span>
                       {skill.tag && (
@@ -137,7 +138,7 @@ export function SkillsSection() {
                           className={`text-[10px] font-mono font-medium px-2 py-0.5 rounded-md border ${
                             skill.highlight
                               ? "bg-blue-50 dark:bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30"
-                              : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-white/10"
+                              : "bg-slate-100 dark:bg-white/5 journey-muted border-slate-200 dark:border-white/10"
                           }`}
                         >
                           {resolveLocale(skill.tag, isVi)}
@@ -146,7 +147,7 @@ export function SkillsSection() {
                     </div>
 
                     {skill.description && (
-                      <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <p className="text-[11px] journey-muted leading-relaxed">
                         {resolveLocale(skill.description, isVi)}
                       </p>
                     )}

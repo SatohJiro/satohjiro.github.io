@@ -62,18 +62,19 @@ export function AboutSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="journey-eyebrow">{isVi ? "Chặng 02 — Cội nguồn" : "Chapter 02 — Roots"}</div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold journey-text tracking-tight">
             {isVi ? (
               <>
-                Hành Trình Kỹ Thuật & <span className="text-gradient-amber">Nền Tảng Vững Chắc</span>
+                Hành Trình Kỹ Thuật & <span className="journey-accent">Nền Tảng Vững Chắc</span>
               </>
             ) : (
               <>
-                Engineering Journey & <span className="text-gradient-amber">Core Background</span>
+                Engineering Journey & <span className="journey-accent">Core Background</span>
               </>
             )}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+          <p className="text-sm sm:text-base journey-muted">
             {isVi
               ? "Tốt nghiệp Thủ khoa ngành CNTT ĐH Nông Lâm TP.HCM kết hợp hơn 3 năm kinh nghiệm thực chiến phát triển ứng dụng Web."
               : "Nong Lam University IT Valedictorian combined with 3+ years of hands-on web software engineering experience."}
@@ -85,28 +86,28 @@ export function AboutSection() {
           {/* Main Story Narrative */}
           <GlassCard className="lg:col-span-7 p-6 sm:p-8 space-y-6 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
             <div className="border-b border-slate-200/80 dark:border-white/10 pb-4">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold">
+              <div className="text-[11px] font-mono uppercase tracking-wider journey-accent font-semibold">
                 {isVi ? "Hồ Sơ Năng Lực" : "Engineering Profile"}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+              <h3 className="text-xl font-bold journey-text mt-1">
                 {isVi ? "Tổng Quan Bản Thân" : "Professional Background"}
               </h3>
             </div>
 
-            <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            <div className="space-y-4 text-sm journey-muted leading-relaxed">
               {(isVi ? summaryData.vi : summaryData.en).map((para, pIdx) => (
                 <p key={pIdx}>{para}</p>
               ))}
             </div>
 
             {/* Quick Principles */}
-            <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 dark:text-slate-300">
+            <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs journey-muted">
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
-                <span className="font-mono text-blue-600 dark:text-blue-400 font-bold">—</span>
+                <span className="font-mono journey-accent font-bold">—</span>
                 <span>{isVi ? "Ưu tiên Performance & Clean Code" : "Performance & Clean Code first"}</span>
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
-                <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">—</span>
+                <span className="font-mono journey-accent font-bold">—</span>
                 <span>{isVi ? "Khả năng tự học & thích ứng nhanh" : "Rapid self-learning & adaptation"}</span>
               </div>
             </div>
@@ -118,7 +119,7 @@ export function AboutSection() {
               <div className="text-xs font-mono text-amber-600 dark:text-amber-400 uppercase font-semibold tracking-wider">
                 {isVi ? "Học Vấn Chính Quy" : "Academic Background"}
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
+              <h3 className="text-lg font-bold journey-text mt-1">
                 {resolveLocale(educationData.school, isVi)}
               </h3>
             </div>
@@ -130,7 +131,7 @@ export function AboutSection() {
                 </span>
                 <GlassBadge variant="amber" size="sm">GPA 3.6 / 4.0</GlassBadge>
               </div>
-              <div className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+              <div className="text-xs journey-muted font-medium">
                 {resolveLocale(educationData.major, isVi)} • {resolveLocale(educationData.duration, isVi)}
               </div>
               <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 pt-1">
@@ -139,10 +140,10 @@ export function AboutSection() {
             </div>
 
             <div className="space-y-2.5">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
+              <div className="text-xs font-semibold uppercase tracking-wider journey-faint font-mono">
                 {isVi ? "Dấu Ấn Nổi Bật" : "Academic Highlights"}
               </div>
-              <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+              <ul className="space-y-2 text-xs journey-muted">
                 {(isVi ? educationData.highlights.vi : educationData.highlights.en).map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="font-mono text-amber-600 dark:text-amber-400 font-bold shrink-0 mt-0.5">•</span>
@@ -163,15 +164,15 @@ export function AboutSection() {
               glowColor="none"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+                <span className="font-mono text-xs font-bold journey-accent bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
                   {pillar.index}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 transition-colors" />
               </div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+              <h4 className="text-xs sm:text-sm font-bold journey-text">
                 {resolveLocale(pillar.title, isVi)}
               </h4>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p className="text-xs journey-muted leading-relaxed">
                 {resolveLocale(pillar.desc, isVi)}
               </p>
             </GlassCard>
