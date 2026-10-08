@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { telemetry } from "@/lib/telemetry";
+import { ChapterHeader } from "../editorial/ChapterHeader";
+import { Reveal } from "../editorial/Reveal";
 
 export function ContactSection() {
   const { isVi } = useLanguage();
@@ -30,27 +32,11 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Kết Nối & <span className="text-gradient">Trao Đổi Cơ Hội Nghề Nghiệp</span>
-              </>
-            ) : (
-              <>
-                Let&apos;s Connect & <span className="text-gradient">Explore Opportunities</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            {isVi
-              ? "Bạn có thể liên hệ trực tiếp với tôi qua email, số điện thoại hoặc các mạng xã hội nghề nghiệp bên dưới."
-              : "Feel free to reach out directly via email, phone, or professional networks below."}
-          </p>
-        </div>
+    <section id="contact" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[92rem] mx-auto space-y-12">
+        <Reveal>
+          <ChapterHeader id="contact" />
+        </Reveal>
 
         {/* Contact Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

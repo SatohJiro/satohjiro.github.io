@@ -124,6 +124,8 @@ export interface ProjectItem {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  /** Editorial cover image path (e.g. "/covers/gpt-code-generator.jpg"). */
+  cover?: string;
   badge?: {
     en: string;
     vi: string;

@@ -2,12 +2,13 @@
 
 import React, { useState, useRef, useEffect, KeyboardEvent, MouseEvent } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
-import { GlassBadge } from "../glass/GlassBadge";
 import {
   CornerDownLeft,
   Trash2,
 } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
+import { ChapterHeader } from "../editorial/ChapterHeader";
+import { Reveal } from "../editorial/Reveal";
 
 interface TerminalLine {
   id: string;
@@ -20,7 +21,7 @@ interface InteractiveTerminalProps {
 }
 
 export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalProps) {
-  const { isVi, isEn } = useLanguage();
+  useLanguage();
   const [inputVal, setInputVal] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState<number>(-1);
@@ -253,30 +254,11 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
   };
 
   return (
-    <section id="terminal" className="relative py-20 px-4 sm:px-6 lg:px-8">
+    <section id="terminal" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto space-y-8">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <GlassBadge variant="indigo" size="md">
-            {isVi ? "Giao Diện Dòng Lệnh Tương Tác" : "Developer CLI Sandbox"}
-          </GlassBadge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Interactive <span className="text-gradient">CLI Terminal</span>
-              </>
-            ) : (
-              <>
-                Interactive <span className="text-gradient">Terminal Sandbox</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
-            {isVi
-              ? "Khám phá nhanh thông tin qua các lệnh dòng lệnh hoặc click vào các phím tắt bên dưới."
-              : "Query profile info via CLI commands or click the shortcut chips below."}
-          </p>
-        </div>
+        <Reveal>
+          <ChapterHeader id="terminal" />
+        </Reveal>
 
         {/* Quick Chips */}
         <div className="flex flex-wrap items-center justify-center gap-2">

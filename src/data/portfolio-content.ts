@@ -487,6 +487,7 @@ export const experienceData: WorkExperience[] = [
 export const projectsData: ProjectItem[] = [
   {
     id: "gpt-code-generator",
+    cover: "/covers/gpt-code-generator.jpg",
     name: {
       en: "GPT Code Generator (AI Web Tool)",
       vi: "GPT Code Generator (Công Cụ Sinh Mã AI)",
@@ -540,6 +541,7 @@ export const projectsData: ProjectItem[] = [
   },
   {
     id: "ahamo-docomo",
+    cover: "/covers/ahamo-docomo.jpg",
     name: {
       en: "ahamo NTT Docomo Web Platform",
       vi: "Nền Tảng Viễn Thông ahamo (NTT Docomo)",
@@ -593,6 +595,7 @@ export const projectsData: ProjectItem[] = [
   },
   {
     id: "salesforce-crm",
+    cover: "/covers/salesforce-crm.jpg",
     name: {
       en: "Salesforce-CRM Web Platform",
       vi: "Nền Tảng Quản Trị Khách Hàng CRM",
@@ -644,6 +647,7 @@ export const projectsData: ProjectItem[] = [
   },
   {
     id: "thesis-management-system",
+    cover: "/covers/thesis-management-system.jpg",
     name: {
       en: "Graduation Thesis Management System",
       vi: "Hệ Thống Quản Lý Khóa Luận Tốt Nghiệp",

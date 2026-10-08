@@ -6,6 +6,8 @@ import { summaryData, educationData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
 import { GlassCard } from "../glass/GlassCard";
 import { GlassBadge } from "../glass/GlassBadge";
+import { ChapterHeader } from "../editorial/ChapterHeader";
+import { Reveal } from "../editorial/Reveal";
 
 export function AboutSection() {
   const { isVi } = useLanguage();
@@ -58,27 +60,11 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="about" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Hành Trình Kỹ Thuật & <span className="text-gradient-amber">Nền Tảng Vững Chắc</span>
-              </>
-            ) : (
-              <>
-                Engineering Journey & <span className="text-gradient-amber">Core Background</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            {isVi
-              ? "Tốt nghiệp Thủ khoa ngành CNTT ĐH Nông Lâm TP.HCM kết hợp hơn 3 năm kinh nghiệm thực chiến phát triển ứng dụng Web."
-              : "Nong Lam University IT Valedictorian combined with 3+ years of hands-on web software engineering experience."}
-          </p>
-        </div>
+    <section id="about" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[92rem] mx-auto space-y-12">
+        <Reveal>
+          <ChapterHeader id="about" />
+        </Reveal>
 
         {/* Story & Education Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

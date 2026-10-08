@@ -7,6 +7,8 @@ import { resolveLocale } from "@/lib/locale";
 import { GlassCard } from "../glass/GlassCard";
 import { Search } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
+import { ChapterHeader } from "../editorial/ChapterHeader";
+import { Reveal } from "../editorial/Reveal";
 
 export function SkillsSection() {
   const { isVi } = useLanguage();
@@ -36,27 +38,11 @@ export function SkillsSection() {
     .filter((cat) => cat.skills.length > 0);
 
   return (
-    <section id="skills" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Kỹ Năng Kỹ Thuật & <span className="text-gradient">Kinh Nghiệm Thực Tế</span>
-              </>
-            ) : (
-              <>
-                Technical Stack & <span className="text-gradient">Applied Experience</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            {isVi
-              ? "Thế mạnh nòng cốt về Frontend & tối ưu hiệu năng, kết hợp kinh nghiệm thực tế với các kiến trúc Micro-frontend, Backend APIs và tích hợp AI."
-              : "Core expertise in frontend engineering and performance optimization, supported by applied experience in micro-frontends, backend APIs, and AI integrations."}
-          </p>
-        </div>
+    <section id="skills" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[92rem] mx-auto space-y-12">
+        <Reveal>
+          <ChapterHeader id="skills" />
+        </Reveal>
 
         {/* Filter & Search Controls */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">

@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { GlowSpotlight } from "@/components/glass/GlowSpotlight";
-import { Navbar } from "@/components/layout/Navbar";
+import { SiteHeader } from "@/components/editorial/SiteHeader";
+import { EditorialHero } from "@/components/editorial/EditorialHero";
+import { CommandPalette } from "@/components/editorial/CommandPalette";
+import { usePaletteCommands } from "@/hooks/usePaletteCommands";
 import { Footer } from "@/components/layout/Footer";
-import { DesktopShell } from "@/components/os/DesktopShell";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
@@ -31,22 +32,23 @@ export default function HomePage() {
   const [isPrivacyDrawerOpen, setIsPrivacyDrawerOpen] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
+  const { paletteOpen, setPaletteOpen, openPalette, commands, toast } =
+    usePaletteCommands(() => setIsResumeModalOpen(true));
+
   useEffect(() => {
     // Initial page view telemetry
     telemetry.track("page_view", "homepage");
   }, []);
 
   return (
-    <div className="relative min-h-screen selection:bg-blue-600 selection:text-white">
-      {/* Background Ambient Glow Spotlight & Mesh */}
-      <GlowSpotlight />
+    <div className="relative min-h-screen bg-[var(--ed-paper)] text-[var(--ed-ink)] selection:bg-blue-600 selection:text-white">
+      <div className="ed-grain" aria-hidden="true" />
 
-      {/* Floating Navbar */}
-      <Navbar onOpenResumeModal={() => setIsResumeModalOpen(true)} />
+      <SiteHeader onOpenPalette={openPalette} />
 
       {/* Main Content Sections */}
-      <main className="relative z-10 space-y-8">
-        <DesktopShell onOpenResumeModal={() => setIsResumeModalOpen(true)} />
+      <main className="relative z-10">
+        <EditorialHero onOpenResume={() => setIsResumeModalOpen(true)} />
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
@@ -56,11 +58,25 @@ export default function HomePage() {
         <ContactSection />
       </main>
 
-      {/* Glass Footer */}
       <Footer
         onOpenPrivacyDrawer={() => setIsPrivacyDrawerOpen(true)}
         onOpenResumeModal={() => setIsResumeModalOpen(true)}
       />
+
+      {/* Command palette */}
+      <CommandPalette
+        key={paletteOpen ? "palette-open" : "palette-closed"}
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        commands={commands}
+      />
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 z-[95] -translate-x-1/2 rounded-full border border-[var(--ed-hairline)] bg-[var(--ed-ink)] px-5 py-2.5 font-mono text-xs text-[var(--ed-paper)] shadow-xl">
+          {toast}
+        </div>
+      )}
 
       {/* Modals & Slide-over Drawers */}
       <PrivacyTelemetryDrawer

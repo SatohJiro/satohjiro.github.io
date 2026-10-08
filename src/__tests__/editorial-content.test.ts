@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { osContent } from "../data/os-content";
+import { editorialContent, chapters } from "../data/editorial-content";
 
 type Localized = { en: string; vi: string };
 
@@ -16,10 +16,10 @@ function collectLocalized(obj: unknown, path: string, out: { path: string; value
   }
 }
 
-describe("os-content bilingual parity", () => {
+describe("editorial-content bilingual parity", () => {
   it("every localized string has non-empty en and vi", () => {
     const found: { path: string; value: Localized }[] = [];
-    collectLocalized(osContent, "", found);
+    collectLocalized(editorialContent, "", found);
     expect(found.length).toBeGreaterThan(0);
     for (const { path, value } of found) {
       expect(value.en.trim().length, `${path}.en`).toBeGreaterThan(0);
@@ -27,18 +27,21 @@ describe("os-content bilingual parity", () => {
     }
   });
 
-  it("boot lines are plain ASCII mono log lines (no emoji)", () => {
-    expect(osContent.boot.lines.length).toBeGreaterThanOrEqual(4);
-    for (const line of osContent.boot.lines) {
-      expect(line.length).toBeGreaterThan(0);
-      expect(/[^\x00-\x7F]/.test(line), line).toBe(false);
+  it("hero description stays under 20 words per language (hero discipline)", () => {
+    for (const lang of ["en", "vi"] as const) {
+      const words = editorialContent.hero.description[lang].trim().split(/\s+/).length;
+      expect(words, `hero.description.${lang}`).toBeLessThanOrEqual(20);
     }
   });
 
-  it("hero description stays under 20 words per language (hero discipline)", () => {
-    for (const lang of ["en", "vi"] as const) {
-      const words = osContent.hero.description[lang].trim().split(/\s+/).length;
-      expect(words, `hero.description.${lang}`).toBeLessThanOrEqual(20);
+  it("chapter index is sequential 01..07 and matches chapters record", () => {
+    expect(chapters.map((c) => c.index)).toEqual(["01", "02", "03", "04", "05", "06", "07"]);
+    for (const c of chapters) {
+      expect(editorialContent.chapters[c.id], `chapter ${c.id}`).toBeDefined();
     }
+  });
+
+  it("marquee lists at least 6 capabilities", () => {
+    expect(editorialContent.hero.marquee.length).toBeGreaterThanOrEqual(6);
   });
 });

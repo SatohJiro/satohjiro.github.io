@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { CornerDownLeft } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
-import { osContent } from "@/data/os-content";
+import { editorialContent } from "@/data/editorial-content";
 import { filterOsCommands, type OsCommandDef } from "@/lib/os-commands";
 import type { LucideIcon } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
@@ -25,7 +25,8 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+
+  const t = editorialContent.palette;
 
   const filtered = useMemo(() => {
     const defs = filterOsCommands(commands, query);
@@ -35,9 +36,9 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
 
   useEffect(() => {
     if (!open) return;
-    const t = window.setTimeout(() => inputRef.current?.focus(), 40);
-    return () => window.clearTimeout(t);
-  }, [open ]);
+    const timer = window.setTimeout(() => inputRef.current?.focus(), 40);
+    return () => window.clearTimeout(timer);
+  }, [open]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -75,17 +76,12 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
   const renderGroup = (group: "jump" | "action") => {
     const items = filtered.filter((c) => c.group === group);
     if (items.length === 0) return null;
-    const title =
-      group === "jump"
-        ? isVi
-          ? osContent.palette.groupJump.vi
-          : osContent.palette.groupJump.en
-        : isVi
-          ? osContent.palette.groupAction.vi
-          : osContent.palette.groupAction.en;
+    const title = isVi
+      ? group === "jump" ? t.groupJump.vi : t.groupAction.vi
+      : group === "jump" ? t.groupJump.en : t.groupAction.en;
     return (
       <div key={group}>
-        <div className="px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
+        <div className="px-4 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--ed-muted)]">
           {title}
         </div>
         {items.map((cmd) => {
@@ -101,10 +97,10 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
                 cmd.run();
                 onClose();
               }}
-              className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+              className={`flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left transition-colors ${
                 isActive
                   ? "bg-blue-600 text-white"
-                  : "text-slate-700 hover:bg-slate-900/5 dark:text-slate-200 dark:hover:bg-white/5"
+                  : "text-[var(--ed-ink)] hover:bg-blue-500/10"
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
@@ -116,7 +112,7 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
                   className={`rounded border px-1.5 font-mono text-[10px] ${
                     isActive
                       ? "border-white/30 text-white/80"
-                      : "border-slate-300/60 text-slate-400 dark:border-white/15 dark:text-slate-500"
+                      : "border-[var(--ed-hairline)] text-[var(--ed-muted)]"
                   }`}
                 >
                   {cmd.hint}
@@ -131,33 +127,33 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-start justify-center bg-slate-950/40 px-4 pt-[14vh] backdrop-blur-sm dark:bg-black/60"
+      className="fixed inset-0 z-[90] flex items-start justify-center bg-black/45 px-4 pt-[14vh] backdrop-blur-sm"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={isVi ? osContent.palette.placeholder.vi : osContent.palette.placeholder.en}
+      aria-label={isVi ? t.placeholder.vi : t.placeholder.en}
     >
       <div
-        className="os-palette os-pop w-full max-w-lg overflow-hidden"
+        className="ed-palette-pop w-full max-w-lg overflow-hidden border border-[var(--ed-hairline)] bg-[var(--ed-paper)] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-2 border-b border-slate-200/70 px-4 dark:border-white/10">
+        <div className="flex items-center gap-2 border-b border-[var(--ed-hairline)] px-4">
           <input
             ref={inputRef}
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
-            placeholder={isVi ? osContent.palette.placeholder.vi : osContent.palette.placeholder.en}
-            className="h-12 w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400 dark:text-white dark:placeholder:text-slate-500"
-            aria-label={isVi ? osContent.palette.placeholder.vi : osContent.palette.placeholder.en}
+            placeholder={isVi ? t.placeholder.vi : t.placeholder.en}
+            className="h-12 w-full bg-transparent font-mono text-sm text-[var(--ed-ink)] outline-none placeholder:text-[var(--ed-muted)]"
+            aria-label={isVi ? t.placeholder.vi : t.placeholder.en}
           />
-          <kbd className="shrink-0 rounded border border-slate-300/60 px-1.5 font-mono text-[10px] text-slate-400 dark:border-white/15 dark:text-slate-500">
+          <kbd className="shrink-0 rounded border border-[var(--ed-hairline)] px-1.5 font-mono text-[10px] text-[var(--ed-muted)]">
             esc
           </kbd>
         </div>
-        <div ref={listRef} className="max-h-[46vh] overflow-y-auto p-2">
+        <div className="max-h-[46vh] overflow-y-auto py-1">
           {filtered.length === 0 ? (
-            <div className="px-3 py-8 text-center text-sm text-slate-400 dark:text-slate-500">
-              {isVi ? osContent.palette.empty.vi : osContent.palette.empty.en}
+            <div className="px-4 py-8 text-center font-mono text-sm text-[var(--ed-muted)]">
+              {isVi ? t.empty.vi : t.empty.en}
             </div>
           ) : (
             <>
@@ -166,12 +162,12 @@ export function CommandPalette({ open, onClose, commands }: CommandPaletteProps)
             </>
           )}
         </div>
-        <div className="flex items-center gap-4 border-t border-slate-200/70 px-4 py-2.5 font-mono text-[10px] text-slate-400 dark:border-white/10 dark:text-slate-500">
+        <div className="flex items-center gap-4 border-t border-[var(--ed-hairline)] px-4 py-2.5 font-mono text-[10px] text-[var(--ed-muted)]">
           <span className="flex items-center gap-1">
             <CornerDownLeft className="h-3 w-3" /> select
           </span>
           <span>↑↓ navigate</span>
-          <span className="ml-auto">satohos ⌘K</span>
+          <span className="ml-auto">⌘K</span>
         </div>
       </div>
     </div>
