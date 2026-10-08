@@ -2,10 +2,6 @@
 
 import React, { useState, useRef, useEffect, KeyboardEvent, MouseEvent } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
-import {
-  CornerDownLeft,
-  Trash2,
-} from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 import { ChapterHeader } from "../editorial/ChapterHeader";
 import { Reveal } from "../editorial/Reveal";
@@ -29,17 +25,19 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
     {
       id: "1",
       type: "system",
-      text: "SatohJiro Terminal Sandbox v2.4.0 (x86_64-nextjs)",
+      text: "satohjiro — portfolio console",
     },
     {
       id: "2",
       type: "system",
-      text: "Type 'help' or click any command chip below to explore.",
+      text: "Type 'help' or pick a command from the index above.",
     },
   ]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const outputContainerRef = useRef<HTMLDivElement>(null);
+  const lineId = useRef(100);
+  const nextLineId = (tag: string) => `${lineId.current++}-${tag}`;
 
   const quickCommands = ["help", "whoami", "skills", "experience", "projects", "awards", "contact", "hire", "resume"];
 
@@ -61,13 +59,13 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
 
     const newLines: TerminalLine[] = [
       ...lines,
-      { id: `${Date.now()}-in`, type: "input", text: `$ ${cmdStr}` },
+      { id: nextLineId("in"), type: "input", text: `$ ${cmdStr}` },
     ];
 
     if (trimmed === "clear") {
       setLines([
         {
-          id: `${Date.now()}-init`,
+          id: nextLineId("init"),
           type: "system",
           text: "Terminal buffer cleared. Type 'help' for commands.",
         },
@@ -78,7 +76,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
 
     if (trimmed === "help") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-slate-200">
@@ -99,7 +97,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "whoami") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-slate-200">
@@ -113,7 +111,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "skills") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-slate-200">
@@ -128,7 +126,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "experience" || trimmed === "exp") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-2 font-mono text-xs text-slate-200">
@@ -146,7 +144,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "projects") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-1.5 font-mono text-xs text-slate-200">
@@ -160,7 +158,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "awards" || trimmed === "honors") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-amber-300">
@@ -172,7 +170,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "contact") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="space-y-1 font-mono text-xs text-slate-200">
@@ -185,7 +183,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else if (trimmed === "resume" || trimmed === "cv") {
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: <span className="text-emerald-400 font-mono text-xs">Opening Resume Viewer modal...</span>,
       });
@@ -201,7 +199,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
         })
         .catch(() => {});
       newLines.push({
-        id: `${Date.now()}-out`,
+        id: nextLineId("out"),
         type: "output",
         text: (
           <div className="p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono text-xs space-y-1">
@@ -213,7 +211,7 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
       });
     } else {
       newLines.push({
-        id: `${Date.now()}-err`,
+        id: nextLineId("err"),
         type: "error",
         text: (
           <span className="font-mono text-xs text-rose-400">
@@ -260,54 +258,55 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
           <ChapterHeader id="terminal" />
         </Reveal>
 
-        {/* Quick Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {quickCommands.map((cmd) => (
-            <button
-              key={cmd}
-              type="button"
-              onClick={(e) => handleChipClick(e, cmd)}
-              className="px-3.5 py-1.5 text-xs font-mono font-bold rounded-xl bg-white dark:bg-slate-900/80 border border-slate-300 dark:border-white/15 text-cyan-700 dark:text-cyan-400 hover:border-cyan-500 hover:bg-cyan-50 dark:hover:bg-cyan-500/15 transition-all cursor-pointer shadow-xs"
-            >
-              $ {cmd}
-            </button>
+        {/* Command index */}
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2 font-mono text-sm">
+          <span className="text-xs uppercase tracking-[0.2em] text-[var(--ed-muted)]">
+            {">"} try
+          </span>
+          {quickCommands.map((cmd, i) => (
+            <React.Fragment key={cmd}>
+              {i > 0 && <span className="text-[var(--ed-hairline)]">·</span>}
+              <button
+                type="button"
+                onClick={(e) => handleChipClick(e, cmd)}
+                className="text-[var(--ed-muted)] underline-offset-4 transition-colors hover:text-blue-600 hover:underline dark:hover:text-blue-400 cursor-pointer"
+              >
+                {cmd}
+              </button>
+            </React.Fragment>
           ))}
         </div>
 
-        {/* Dedicated Dark Terminal Window Frame (Permanent Dark Console UI) */}
-        <div className="rounded-2xl border border-slate-800 dark:border-white/15 bg-slate-950 text-slate-100 shadow-2xl overflow-hidden">
-          {/* Terminal Window Header Bar */}
-          <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-rose-500" />
-              <div className="w-3 h-3 rounded-full bg-amber-500" />
-              <div className="w-3 h-3 rounded-full bg-emerald-500" />
-              <span className="text-xs font-mono text-slate-400 ml-2 font-medium">satohjiro@terminal: ~/portfolio</span>
-            </div>
+        {/* Console transcript — permanent dark, no fake window chrome */}
+        <div className="overflow-hidden rounded-lg border border-[var(--ed-hairline)] bg-[#0b0d12] text-slate-200">
+          {/* Console title bar */}
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
+            <span className="font-mono text-xs text-slate-500">
+              satohjiro@portfolio <span className="text-slate-600">—</span> zsh
+            </span>
             <button
               type="button"
               onClick={() => executeCommand("clear")}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-              title="Clear Console"
+              className="font-mono text-xs text-slate-500 underline-offset-4 transition-colors hover:text-slate-200 hover:underline cursor-pointer"
             >
-              <Trash2 className="w-3.5 h-3.5" />
+              clear
             </button>
           </div>
 
-          {/* Terminal Output Area (Always High-Contrast Dark Console Body) */}
+          {/* Console output */}
           <div
             ref={outputContainerRef}
             onClick={() => inputRef.current?.focus()}
-            className="p-5 min-h-[260px] max-h-[380px] overflow-y-auto font-mono text-xs space-y-2 cursor-text bg-slate-950 text-slate-200"
+            className="min-h-[260px] max-h-[380px] cursor-text space-y-2 overflow-y-auto bg-[#0b0d12] p-5 font-mono text-xs text-slate-200"
           >
             {lines.map((line) => (
               <div key={line.id} className="leading-relaxed">
                 {line.type === "input" ? (
-                  <span className="text-blue-300 font-bold">{line.text}</span>
+                  <span className="font-bold text-slate-100">{line.text}</span>
                 ) : line.type === "system" ? (
-                  <span className="text-slate-400 italic">{line.text}</span>
+                  <span className="italic text-slate-500">{line.text}</span>
                 ) : line.type === "error" ? (
-                  <span className="text-rose-400 font-semibold">{line.text}</span>
+                  <span className="font-semibold text-rose-400">{line.text}</span>
                 ) : (
                   <div>{line.text}</div>
                 )}
@@ -315,27 +314,24 @@ export function InteractiveTerminal({ onOpenResumeModal }: InteractiveTerminalPr
             ))}
           </div>
 
-          {/* Terminal Prompt Input Bar */}
-          <div className="flex items-center gap-2 px-4 py-3 bg-slate-900 border-t border-slate-800">
-            <span className="text-emerald-400 font-mono text-xs font-bold shrink-0">$</span>
+          {/* Prompt */}
+          <div className="flex items-center gap-2 border-t border-white/10 px-4 py-3">
+            <span className="shrink-0 font-mono text-xs font-bold text-emerald-400">$</span>
             <input
               ref={inputRef}
               type="text"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="type command (e.g. whoami, skills, projects)..."
-              className="w-full bg-transparent text-xs font-mono text-cyan-300 focus:outline-none placeholder:text-slate-500 font-medium"
+              placeholder="type a command…"
+              className="w-full bg-transparent font-mono text-xs font-medium text-slate-100 caret-emerald-400 focus:outline-none placeholder:text-slate-600"
               spellCheck={false}
               autoComplete="off"
+              aria-label="Terminal command input"
             />
-            <button
-              type="button"
-              onClick={() => executeCommand(inputVal)}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-400 transition-colors shrink-0 cursor-pointer"
-            >
-              <CornerDownLeft className="w-4 h-4" />
-            </button>
+            <kbd className="hidden shrink-0 rounded border border-white/10 px-1.5 font-mono text-[10px] text-slate-500 sm:inline">
+              enter
+            </kbd>
           </div>
         </div>
       </div>

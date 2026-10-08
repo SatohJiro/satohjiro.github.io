@@ -4,8 +4,6 @@ import React from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { summaryData, educationData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
-import { GlassCard } from "../glass/GlassCard";
-import { GlassBadge } from "../glass/GlassBadge";
 import { ChapterHeader } from "../editorial/ChapterHeader";
 import { Reveal } from "../editorial/Reveal";
 
@@ -59,110 +57,119 @@ export function AboutSection() {
     },
   ];
 
+  const principles = [
+    isVi ? "Ưu tiên Performance & Clean Code" : "Performance & Clean Code first",
+    isVi ? "Khả năng tự học & thích ứng nhanh" : "Rapid self-learning & adaptation",
+  ];
+
   return (
     <section id="about" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[92rem] mx-auto space-y-12">
+      <div className="mx-auto max-w-[92rem]">
         <Reveal>
           <ChapterHeader id="about" />
         </Reveal>
 
-        {/* Story & Education Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main Story Narrative */}
-          <GlassCard className="lg:col-span-7 p-6 sm:p-8 space-y-6 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-            <div className="border-b border-slate-200/80 dark:border-white/10 pb-4">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold">
+        {/* Story & Education */}
+        <div className="mt-10 grid grid-cols-1 gap-px border border-[var(--ed-hairline)] bg-[var(--ed-hairline)] lg:grid-cols-12">
+          {/* Main story */}
+          <Reveal className="bg-[var(--ed-paper)] p-6 sm:p-10 lg:col-span-7">
+            <div className="border-b border-[var(--ed-hairline)] pb-5">
+              <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
                 {isVi ? "Hồ Sơ Năng Lực" : "Engineering Profile"}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+              <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-[var(--ed-ink)]">
                 {isVi ? "Tổng Quan Bản Thân" : "Professional Background"}
               </h3>
             </div>
 
-            <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-[var(--ed-muted)]">
               {(isVi ? summaryData.vi : summaryData.en).map((para, pIdx) => (
                 <p key={pIdx}>{para}</p>
               ))}
             </div>
 
-            {/* Quick Principles */}
-            <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 dark:text-slate-300">
-              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
-                <span className="font-mono text-blue-600 dark:text-blue-400 font-bold">—</span>
-                <span>{isVi ? "Ưu tiên Performance & Clean Code" : "Performance & Clean Code first"}</span>
-              </div>
-              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/70 dark:border-white/5">
-                <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">—</span>
-                <span>{isVi ? "Khả năng tự học & thích ứng nhanh" : "Rapid self-learning & adaptation"}</span>
-              </div>
-            </div>
-          </GlassCard>
+            <ul className="mt-7 space-y-2 border-t border-[var(--ed-hairline)] pt-5">
+              {principles.map((p) => (
+                <li
+                  key={p}
+                  className="flex items-start gap-2.5 text-sm font-medium text-[var(--ed-ink)]"
+                >
+                  <span className="mt-0.5 font-mono text-xs text-blue-600 dark:text-blue-400">▸</span>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
 
-          {/* Education Highlight Card */}
-          <GlassCard className="lg:col-span-5 p-6 sm:p-8 space-y-6 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-            <div className="border-b border-slate-200/80 dark:border-white/10 pb-4">
-              <div className="text-xs font-mono text-amber-600 dark:text-amber-400 uppercase font-semibold tracking-wider">
+          {/* Education */}
+          <Reveal delay={80} className="bg-[var(--ed-paper)] p-6 sm:p-10 lg:col-span-5">
+            <div className="border-b border-[var(--ed-hairline)] pb-5">
+              <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--ed-muted)]">
                 {isVi ? "Học Vấn Chính Quy" : "Academic Background"}
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
+              <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-[var(--ed-ink)]">
                 {resolveLocale(educationData.school, isVi)}
               </h3>
             </div>
 
-            <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-amber-800 dark:text-amber-300">
+            <div className="mt-6 border-y border-[var(--ed-hairline)] py-5">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-display text-base font-bold text-[var(--ed-ink)]">
                   {isVi ? "Bằng Kỹ Sư Công Nghệ Thông Tin" : "Degree of Engineer in IT"}
                 </span>
-                <GlassBadge variant="amber" size="sm">GPA 3.6 / 4.0</GlassBadge>
+                <span className="shrink-0 font-mono text-sm font-bold text-blue-600 dark:text-blue-400">
+                  GPA 3.6/4.0
+                </span>
               </div>
-              <div className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-                {resolveLocale(educationData.major, isVi)} • {resolveLocale(educationData.duration, isVi)}
+              <div className="mt-2 font-mono text-xs text-[var(--ed-muted)]">
+                {resolveLocale(educationData.major, isVi)} · {resolveLocale(educationData.duration, isVi)}
               </div>
-              <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 pt-1">
+              <div className="mt-2 flex items-center gap-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </span>
                 {resolveLocale(educationData.honors, isVi)}
               </div>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
+            <div className="mt-6">
+              <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ed-muted)]">
                 {isVi ? "Dấu Ấn Nổi Bật" : "Academic Highlights"}
               </div>
-              <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+              <ul className="mt-3 space-y-2">
                 {(isVi ? educationData.highlights.vi : educationData.highlights.en).map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <span className="font-mono text-amber-600 dark:text-amber-400 font-bold shrink-0 mt-0.5">•</span>
+                  <li key={idx} className="flex items-start gap-2.5 text-sm text-[var(--ed-muted)]">
+                    <span className="mt-0.5 font-mono text-xs text-blue-600 dark:text-blue-400">▸</span>
                     <span className="leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          </GlassCard>
+          </Reveal>
         </div>
 
-        {/* 4 Pillars (Minimalist Technical Cards) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {engineeringPillars.map((pillar, idx) => (
-            <GlassCard
-              key={idx}
-              className="p-5 space-y-3 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 relative overflow-hidden group"
-              glowColor="none"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+        {/* 4 pillars — hairline index grid */}
+        <Reveal delay={120}>
+          <div className="mt-px grid grid-cols-1 border border-[var(--ed-hairline)] bg-[var(--ed-hairline)] gap-px sm:grid-cols-2 lg:grid-cols-4">
+            {engineeringPillars.map((pillar) => (
+              <div
+                key={pillar.index}
+                className="group bg-[var(--ed-paper)] p-6 transition-colors hover:bg-blue-500/[0.04]"
+              >
+                <div className="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
                   {pillar.index}
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 transition-colors" />
+                </div>
+                <h4 className="mt-3 font-display text-base font-bold tracking-tight text-[var(--ed-ink)]">
+                  {resolveLocale(pillar.title, isVi)}
+                </h4>
+                <p className="mt-2 text-[13px] leading-relaxed text-[var(--ed-muted)]">
+                  {resolveLocale(pillar.desc, isVi)}
+                </p>
               </div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                {resolveLocale(pillar.title, isVi)}
-              </h4>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                {resolveLocale(pillar.desc, isVi)}
-              </p>
-            </GlassCard>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
