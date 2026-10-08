@@ -42,14 +42,15 @@ export function AwardsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <span className="play-eyebrow play-eyebrow-purple">{isVi ? "Vinh danh" : "Honors"}</span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#1e1e2a] tracking-tight">
             {isVi ? (
               <>
-                Giải Thưởng & <span className="text-gradient-amber">Ghi Nhận Đóng Góp</span>
+                Giải Thưởng & <span className="play-underline">Ghi Nhận Đóng Góp</span>
               </>
             ) : (
               <>
-                Honors & <span className="text-gradient-amber">Key Recognitions</span>
+                Honors & <span className="play-underline">Key Recognitions</span>
               </>
             )}
           </h2>

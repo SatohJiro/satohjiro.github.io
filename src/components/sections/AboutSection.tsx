@@ -62,14 +62,15 @@ export function AboutSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <span className="play-eyebrow play-eyebrow-pink">{isVi ? "Giới thiệu" : "About"}</span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#1e1e2a] tracking-tight">
             {isVi ? (
               <>
-                Hành Trình Kỹ Thuật & <span className="text-gradient-amber">Nền Tảng Vững Chắc</span>
+                Hành Trình Kỹ Thuật & <span className="play-underline">Nền Tảng Vững Chắc</span>
               </>
             ) : (
               <>
-                Engineering Journey & <span className="text-gradient-amber">Core Background</span>
+                Engineering Journey & <span className="play-underline">Core Background</span>
               </>
             )}
           </h2>

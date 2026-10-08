@@ -27,14 +27,15 @@ export function ExperienceSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <span className="play-eyebrow play-eyebrow-blue">{isVi ? "Kinh nghiệm" : "Experience"}</span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#1e1e2a] tracking-tight">
             {isVi ? (
               <>
-                Kinh Nghiệm & <span className="text-gradient">Dấu Ấn Kỹ Thuật</span>
+                Kinh Nghiệm & <span className="play-underline">Dấu Ấn Kỹ Thuật</span>
               </>
             ) : (
               <>
-                Work Experience & <span className="text-gradient">Engineering Track Record</span>
+                Work Experience & <span className="play-underline">Engineering Track Record</span>
               </>
             )}
           </h2>
