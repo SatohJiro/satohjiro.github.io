@@ -3,13 +3,21 @@
 import React from "react";
 import { ProjectItem } from "@/types";
 import { resolveLocale, resolveLocaleArray } from "@/lib/locale";
-import { GlassModal } from "../glass/GlassModal";
+import { Modal } from "../editorial/Modal";
 
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
   isOpen: boolean;
   onClose: () => void;
   isVi: boolean;
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--ed-muted)]">
+      {children}
+    </div>
+  );
 }
 
 export function ProjectDetailModal({
@@ -21,93 +29,90 @@ export function ProjectDetailModal({
   if (!project) return null;
 
   return (
-    <GlassModal
+    <Modal
       isOpen={isOpen}
       onClose={onClose}
       maxWidth="xl"
+      closeLabel={isVi ? "Đóng" : "Close"}
       title={
-        <div className="text-slate-900 dark:text-white">
-          <div className="text-[10px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider font-semibold">
-            {isVi ? "Kiến Trúc & Chi Tiết Kỹ Thuật" : "Architecture & Technical Deep-Dive"}
+        <div>
+          <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+            {isVi ? "Kiến trúc & Chi tiết kỹ thuật" : "Architecture & Technical Deep-Dive"}
           </div>
-          <div className="text-base sm:text-lg font-bold mt-0.5">
+          <div className="mt-1.5 font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] sm:text-2xl">
             {resolveLocale(project.name, isVi)}
           </div>
         </div>
       }
     >
-      <div className="space-y-6 text-slate-800 dark:text-slate-100">
-        {/* Organization & Year */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-y border-[var(--ed-hairline)] py-3.5">
+      <div className="space-y-7">
+        {/* Organization & badge */}
+        <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--ed-hairline)] pb-4">
           <div>
-            <div className="text-xs text-slate-500 dark:text-slate-400">
-              {isVi ? "Đơn vị / Bối cảnh" : "Organization / Context"}
-            </div>
-            <div className="text-sm font-bold text-slate-900 dark:text-white">
+            <SectionLabel>{isVi ? "Đơn vị / Bối cảnh" : "Organization / Context"}</SectionLabel>
+            <div className="mt-1 text-sm font-bold text-[var(--ed-ink)]">
               {resolveLocale(project.organization, isVi)}
+              <span className="ml-2 font-mono text-xs font-normal text-[var(--ed-muted)]">
+                {resolveLocale(project.year, isVi)}
+              </span>
             </div>
           </div>
           {project.badge && (
-            <span className="rounded-md border border-blue-500/40 bg-blue-500/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-blue-700 dark:text-blue-300">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
               {resolveLocale(project.badge, isVi)}
             </span>
           )}
         </div>
 
         {/* Description */}
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-            {isVi ? "Mô Tả & Mục Tiêu Dự Án" : "Project Summary & Mission"}
-          </div>
-          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+        <div className="space-y-2.5">
+          <SectionLabel>{isVi ? "Mô tả & Mục tiêu" : "Summary & Mission"}</SectionLabel>
+          <p className="max-w-3xl text-sm leading-relaxed text-[var(--ed-muted)]">
             {resolveLocale(project.description, isVi)}
           </p>
         </div>
 
-        {/* Architecture Blueprint if available */}
+        {/* Architecture */}
         {project.architecture && (
-          <div className="space-y-2">
-            <div className="text-xs font-mono font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider">
-              {isVi ? "[Kiến Trúc Triển Khai]" : "[System Architecture]"}
-            </div>
-            <div className="p-3.5 rounded-xl bg-slate-950 border border-blue-500/30 font-mono text-xs text-blue-300 leading-relaxed shadow-xs">
+          <div className="space-y-2.5">
+            <SectionLabel>{isVi ? "Kiến trúc hệ thống" : "System Architecture"}</SectionLabel>
+            <div className="border border-[var(--ed-hairline)] bg-blue-500/[0.04] px-4 py-3.5 font-mono text-xs leading-relaxed text-[var(--ed-ink)]">
               {resolveLocale(project.architecture, isVi)}
             </div>
           </div>
         )}
 
-        {/* Challenges & Solutions */}
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider">
-            {isVi ? "[Vấn Đề Kỹ Thuật & Giải Pháp]" : "[Technical Challenges & Solutions]"}
-          </div>
-          <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+        {/* Challenges & solutions */}
+        <div className="space-y-2.5">
+          <SectionLabel>{isVi ? "Vấn đề & Giải pháp kỹ thuật" : "Technical Challenges & Solutions"}</SectionLabel>
+          <ul className="max-w-3xl space-y-2">
             {resolveLocaleArray(project.challengesSolved, isVi).map((c: string, idx: number) => (
               <li
                 key={idx}
-                className="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5"
+                className="flex items-start gap-2.5 text-sm leading-relaxed text-[var(--ed-ink)]/85"
               >
-                <span className="font-mono text-amber-600 dark:text-amber-400 font-bold mt-0.5">•</span>
-                <span className="leading-relaxed">{c}</span>
+                <span className="mt-0.5 font-mono text-xs text-blue-600 dark:text-blue-400">▸</span>
+                <span>{c}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* All Technologies */}
-        <div className="space-y-2">
-          <div className="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-            {isVi ? "Công Nghệ Sử Dụng" : "Technologies Used"}
-          </div>
+        {/* Technologies */}
+        <div className="space-y-2.5">
+          <SectionLabel>{isVi ? "Công nghệ sử dụng" : "Technologies Used"}</SectionLabel>
           <div className="flex flex-wrap gap-1.5">
             {project.technologies.map((t, idx) => (
-              <span key={idx} className="rounded-md border border-[var(--ed-hairline)] px-2 py-0.5 font-mono text-[11px] text-[var(--ed-muted)]">
+              <span
+                key={idx}
+                className="rounded-md border border-[var(--ed-hairline)] px-2 py-0.5 font-mono text-[11px] text-[var(--ed-muted)]"
+              >
                 {t}
               </span>
             ))}
           </div>
         </div>
       </div>
-    </GlassModal>
+    </Modal>
   );
 }
