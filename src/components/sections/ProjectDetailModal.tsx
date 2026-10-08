@@ -3,7 +3,6 @@
 import React from "react";
 import { ProjectItem } from "@/types";
 import { resolveLocale, resolveLocaleArray } from "@/lib/locale";
-import { GlassBadge } from "../glass/GlassBadge";
 import { GlassModal } from "../glass/GlassModal";
 
 interface ProjectDetailModalProps {
@@ -39,7 +38,7 @@ export function ProjectDetailModal({
     >
       <div className="space-y-6 text-slate-800 dark:text-slate-100">
         {/* Organization & Year */}
-        <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-y border-[var(--ed-hairline)] py-3.5">
           <div>
             <div className="text-xs text-slate-500 dark:text-slate-400">
               {isVi ? "Đơn vị / Bối cảnh" : "Organization / Context"}
@@ -49,9 +48,9 @@ export function ProjectDetailModal({
             </div>
           </div>
           {project.badge && (
-            <GlassBadge variant="blue" size="md">
+            <span className="rounded-md border border-blue-500/40 bg-blue-500/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-blue-700 dark:text-blue-300">
               {resolveLocale(project.badge, isVi)}
-            </GlassBadge>
+            </span>
           )}
         </div>
 
@@ -102,9 +101,9 @@ export function ProjectDetailModal({
           </div>
           <div className="flex flex-wrap gap-1.5">
             {project.technologies.map((t, idx) => (
-              <GlassBadge key={idx} variant="blue" size="sm">
+              <span key={idx} className="rounded-md border border-[var(--ed-hairline)] px-2 py-0.5 font-mono text-[11px] text-[var(--ed-muted)]">
                 {t}
-              </GlassBadge>
+              </span>
             ))}
           </div>
         </div>

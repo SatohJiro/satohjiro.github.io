@@ -13,7 +13,6 @@ import {
   skillsData,
 } from "@/data/portfolio-content";
 import { GlassModal } from "../glass/GlassModal";
-import { GlassButton } from "../glass/GlassButton";
 import {
   Printer,
   FileDown,
@@ -142,24 +141,22 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
-            <GlassButton
+            <button
               onClick={handlePrint}
-              variant="primary"
-              size="sm"
-              icon={<Printer className="w-3.5 h-3.5" />}
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--ed-ink)] px-4 py-2 text-xs font-semibold text-[var(--ed-paper)] cursor-pointer"
             >
+              <Printer className="w-3.5 h-3.5" />
               {isVi ? "In / Lưu PDF (A4)" : "Print / PDF Export"}
-            </GlassButton>
+            </button>
 
-            <GlassButton
+            <button
               onClick={handleDownloadJson}
-              variant="outline"
-              size="sm"
-              icon={<Code className="w-3.5 h-3.5" />}
               title="Download structured JSON resume"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--ed-hairline)] px-4 py-2 font-mono text-xs text-[var(--ed-muted)] transition-colors hover:border-blue-500/60 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
             >
+              <Code className="w-3.5 h-3.5" />
               JSON
-            </GlassButton>
+            </button>
           </div>
         </div>
 

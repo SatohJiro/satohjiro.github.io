@@ -5,15 +5,12 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { contactData } from "@/data/portfolio-content";
 import { siteConfig } from "@/config/site";
 import { resolveLocale } from "@/lib/locale";
-import { GlassCard } from "../glass/GlassCard";
-import { GlassButton } from "../glass/GlassButton";
 import {
-  Mail,
-  Phone,
-  MapPin,
+  ArrowUpRight,
   Copy,
   Check,
-  ExternalLink,
+  Mail,
+  Phone,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { telemetry } from "@/lib/telemetry";
@@ -31,213 +28,174 @@ export function ContactSection() {
     setTimeout(() => setCopiedKey(null), 2500);
   };
 
+  const copyLabel = (key: string) =>
+    copiedKey === key ? (isVi ? "Đã sao chép" : "Copied") : isVi ? "Sao chép" : "Copy";
+
+  const networks = [
+    {
+      name: "LinkedIn",
+      handle: "/in/satohjiro",
+      href: siteConfig.links.linkedin,
+      Icon: LinkedinIcon,
+      track: "contact_card_linkedin",
+    },
+    {
+      name: "GitHub",
+      handle: "/SatohJiro",
+      href: siteConfig.links.github,
+      Icon: GithubIcon,
+      track: "contact_card_github",
+    },
+  ];
+
   return (
     <section id="contact" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[92rem] mx-auto space-y-12">
+      <div className="mx-auto max-w-[92rem]">
         <Reveal>
           <ChapterHeader id="contact" />
         </Reveal>
 
-        {/* Contact Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1: Email */}
-          <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 flex flex-col justify-between" glowColor="none">
-            <div className="space-y-4">
+        {/* Contact index — hairline grid */}
+        <div className="mt-10 grid grid-cols-1 gap-px border border-[var(--ed-hairline)] bg-[var(--ed-hairline)] md:grid-cols-2">
+          {/* Email */}
+          <Reveal className="bg-[var(--ed-paper)]">
+            <div className="flex h-full flex-col p-6 sm:p-8">
               <div className="flex items-center justify-between">
-                <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-                  <Mail className="w-4 h-4" />
-                  <span>[Primary Email]</span>
-                </div>
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+                  {isVi ? "Email chính" : "Primary email"}
+                </span>
                 <button
                   onClick={() => handleCopy(contactData.email, "email")}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer shadow-xs"
-                  title="Copy Email Address"
+                  className="flex items-center gap-1.5 font-mono text-xs text-[var(--ed-muted)] underline-offset-4 transition-colors hover:text-blue-600 hover:underline dark:hover:text-blue-400 cursor-pointer"
                 >
-                  {copiedKey === "email" ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                      <span className="text-emerald-700 dark:text-emerald-400 font-bold">{isVi ? "Đã sao chép" : "Copied"}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>{isVi ? "Sao chép" : "Copy"}</span>
-                    </>
-                  )}
+                  {copiedKey === "email" ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copyLabel("email")}
                 </button>
               </div>
-
-              <div>
-                <div className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">Direct Inbox</div>
-                <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5 select-all">
-                  {contactData.email}
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              <a
+                href={siteConfig.links.email}
+                onClick={() => telemetry.track("click", "contact_direct_email")}
+                className="mt-4 block font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] break-all transition-colors hover:text-blue-600 dark:hover:text-blue-400 sm:text-2xl"
+              >
+                {contactData.email}
+              </a>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--ed-muted)]">
                 {isVi
                   ? "Kênh liên hệ chính cho các cơ hội việc làm, phỏng vấn và trao đổi chuyên môn."
                   : "Primary contact channel for recruitment, interview invitations, and project discussions."}
               </p>
-            </div>
-
-            <div className="pt-2">
               <a
                 href={siteConfig.links.email}
-                onClick={() => telemetry.track("click", "contact_direct_email")}
-                className="w-full"
+                onClick={() => telemetry.track("click", "contact_cta_email")}
+                className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[var(--ed-ink)] px-6 py-3 text-sm font-semibold text-[var(--ed-paper)] transition-transform hover:-translate-y-0.5"
               >
-                <GlassButton
-                  variant="primary"
-                  size="md"
-                  icon={<Mail className="w-4 h-4" />}
-                  className="w-full text-xs font-semibold"
-                >
-                  {isVi ? "Gửi Email Trực Tiếp" : "Send Direct Email"}
-                </GlassButton>
+                <Mail className="h-4 w-4" />
+                {isVi ? "Gửi Email Trực Tiếp" : "Send Direct Email"}
               </a>
             </div>
-          </GlassCard>
+          </Reveal>
 
-          {/* Card 2: Phone */}
-          <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70 flex flex-col justify-between" glowColor="none">
-            <div className="space-y-4">
+          {/* Phone */}
+          <Reveal delay={60} className="bg-[var(--ed-paper)]">
+            <div className="flex h-full flex-col p-6 sm:p-8">
               <div className="flex items-center justify-between">
-                <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  <Phone className="w-4 h-4" />
-                  <span>[Direct Line]</span>
-                </div>
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+                  {isVi ? "Điện thoại" : "Direct line"}
+                </span>
                 <button
                   onClick={() => handleCopy(contactData.phone, "phone")}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all cursor-pointer shadow-xs"
-                  title="Copy Phone Number"
+                  className="flex items-center gap-1.5 font-mono text-xs text-[var(--ed-muted)] underline-offset-4 transition-colors hover:text-blue-600 hover:underline dark:hover:text-blue-400 cursor-pointer"
                 >
-                  {copiedKey === "phone" ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                      <span className="text-emerald-700 dark:text-emerald-400 font-bold">{isVi ? "Đã sao chép" : "Copied"}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>{isVi ? "Sao chép" : "Copy"}</span>
-                    </>
-                  )}
+                  {copiedKey === "phone" ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copyLabel("phone")}
                 </button>
               </div>
-
-              <div>
-                <div className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">Phone / Zalo</div>
-                <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5 select-all">
-                  {contactData.phone}
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              <a
+                href={siteConfig.links.phone}
+                onClick={() => telemetry.track("click", "contact_direct_phone")}
+                className="mt-4 block font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] transition-colors hover:text-blue-600 dark:hover:text-blue-400 sm:text-2xl"
+              >
+                {contactData.phone}
+              </a>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--ed-muted)]">
                 {isVi
                   ? "Sẵn sàng nhận cuộc gọi, tin nhắn SMS hoặc trao đổi qua Zalo trong giờ hành chính."
                   : "Available for phone calls, SMS, or quick messaging during business hours."}
               </p>
-            </div>
-
-            <div className="pt-2">
               <a
                 href={siteConfig.links.phone}
-                onClick={() => telemetry.track("click", "contact_direct_phone")}
-                className="w-full"
+                onClick={() => telemetry.track("click", "contact_cta_phone")}
+                className="mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-[var(--ed-hairline)] px-6 py-3 text-sm font-semibold text-[var(--ed-ink)] transition-colors hover:border-blue-500/60 hover:text-blue-600 dark:hover:text-blue-400"
               >
-                <GlassButton
-                  variant="outline"
-                  size="md"
-                  icon={<Phone className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
-                  className="w-full text-xs font-semibold text-slate-800 dark:text-slate-200"
-                >
-                  {isVi ? "Gọi Điện Thoại" : "Make a Phone Call"}
-                </GlassButton>
+                <Phone className="h-4 w-4" />
+                {isVi ? "Gọi Điện Thoại" : "Make a Phone Call"}
               </a>
             </div>
-          </GlassCard>
+          </Reveal>
 
-          {/* Card 3: Professional Networks (LinkedIn & GitHub) */}
-          <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-            <div className="space-y-2">
-              <div className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
-                {isVi ? "Mạng Xã Hội Nghề Nghiệp" : "Professional Profiles"}
+          {/* Networks */}
+          <Reveal delay={80} className="bg-[var(--ed-paper)]">
+            <div className="flex h-full flex-col p-6 sm:p-8">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ed-muted)]">
+                {isVi ? "Mạng xã hội nghề nghiệp" : "Professional profiles"}
+              </span>
+              <div className="mt-4 flex-1 border-t border-[var(--ed-hairline)]">
+                {networks.map((n) => (
+                  <a
+                    key={n.name}
+                    href={n.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => telemetry.track("click", n.track)}
+                    className="group flex items-center justify-between gap-4 border-b border-[var(--ed-hairline)] py-4"
+                  >
+                    <span className="flex items-center gap-3">
+                      <n.Icon className="h-5 w-5 text-[var(--ed-muted)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                      <span>
+                        <span className="block text-sm font-bold text-[var(--ed-ink)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                          {n.name}
+                        </span>
+                        <span className="block font-mono text-xs text-[var(--ed-muted)]">{n.handle}</span>
+                      </span>
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 text-[var(--ed-muted)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-600" />
+                  </a>
+                ))}
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                LinkedIn & GitHub
-              </h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400">
+              <p className="mt-4 text-sm leading-relaxed text-[var(--ed-muted)]">
                 {isVi
-                  ? "Xem lịch sử nghề nghiệp chi tiết và các mã nguồn dự án mã nguồn mở."
+                  ? "Xem lịch sử nghề nghiệp chi tiết và các đóng góp mã nguồn mở."
                   : "Explore career timeline and open-source software contributions."}
               </p>
             </div>
+          </Reveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => telemetry.track("click", "contact_card_linkedin")}
-                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-500/10 transition-all group shadow-xs"
-              >
-                <div className="flex items-center gap-3">
-                  <LinkedinIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">LinkedIn</div>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">/in/satohjiro</div>
-                  </div>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
-              </a>
-
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => telemetry.track("click", "contact_card_github")}
-                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-500/10 transition-all group shadow-xs"
-              >
-                <div className="flex items-center gap-3">
-                  <GithubIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">GitHub</div>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">/SatohJiro</div>
-                  </div>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
-              </a>
-            </div>
-          </GlassCard>
-
-          {/* Card 4: Location & Work Mode */}
-          <GlassCard className="p-6 sm:p-7 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-            <div className="space-y-2">
-              <div className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
-                {isVi ? "Khu Vực Làm Việc" : "Location & Availability"}
+          {/* Location */}
+          <Reveal delay={120} className="bg-[var(--ed-paper)]">
+            <div className="flex h-full flex-col p-6 sm:p-8">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ed-muted)]">
+                {isVi ? "Khu vực làm việc" : "Location & availability"}
+              </span>
+              <div className="mt-4 font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] sm:text-2xl">
+                {resolveLocale(contactData.location, isVi)}
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-slate-400" />
-                <span>{resolveLocale(contactData.location, isVi)}</span>
-              </h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--ed-muted)]">
                 {isVi
                   ? "Sẵn sàng làm việc theo hình thức On-site tại TP. Hồ Chí Minh, Hybrid hoặc Remote cho các công ty trong và ngoài nước."
                   : "Available for On-site roles in Ho Chi Minh City, Hybrid setups, or Remote positions."}
               </p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[var(--ed-hairline)] pt-5 font-mono text-xs text-[var(--ed-muted)]">
+                <span className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </span>
+                  {isVi ? "Sẵn sàng nhận việc" : "Available to join"}
+                </span>
+                <span>On-site / Hybrid / Remote</span>
+              </div>
             </div>
-
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
-                {isVi ? "Sẵn sàng nhận việc" : "Available to Join"}
-              </span>
-              <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-300">
-                On-site / Hybrid / Remote
-              </span>
-            </div>
-          </GlassCard>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -5,9 +5,8 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/hooks/useLanguage";
 import { resolveLocale } from "@/lib/locale";
-import { Mail, Phone, ShieldCheck, Heart, Activity } from "lucide-react";
+import { Mail, Phone, ShieldCheck, Activity } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
-import { GlassButton } from "../glass/GlassButton";
 import { telemetry } from "@/lib/telemetry";
 
 interface FooterProps {
@@ -20,13 +19,13 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-slate-200/80 dark:border-white/10 bg-slate-50/90 dark:bg-slate-950/60 backdrop-blur-2xl py-12 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-200/80 dark:border-white/10">
+    <footer className="relative z-10 border-t border-[var(--ed-hairline)] bg-[var(--ed-paper)] py-12 mt-20">
+      <div className="max-w-[92rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-[var(--ed-hairline)]">
           {/* Col 1: Identity */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shrink-0">
                 NTA
               </div>
               <div>
@@ -51,7 +50,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "footer_github")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-lg border border-[var(--ed-hairline)] text-[var(--ed-muted)] hover:text-blue-600 hover:border-blue-500/50 transition-all cursor-pointer"
                 aria-label="GitHub Profile"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -61,7 +60,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => telemetry.track("click", "footer_linkedin")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-lg border border-[var(--ed-hairline)] text-[var(--ed-muted)] hover:text-blue-600 hover:border-blue-500/50 transition-all cursor-pointer"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -69,7 +68,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               <a
                 href={siteConfig.links.email}
                 onClick={() => telemetry.track("click", "footer_email")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-white hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-lg border border-[var(--ed-hairline)] text-[var(--ed-muted)] hover:text-blue-600 hover:border-blue-500/50 transition-all cursor-pointer"
                 aria-label="Send Email"
               >
                 <Mail className="w-4 h-4" />
@@ -77,7 +76,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               <a
                 href={siteConfig.links.phone}
                 onClick={() => telemetry.track("click", "footer_phone")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white hover:border-amber-500/40 hover:bg-amber-500/10 transition-all cursor-pointer shadow-xs"
+                className="p-2.5 rounded-lg border border-[var(--ed-hairline)] text-[var(--ed-muted)] hover:text-blue-600 hover:border-blue-500/50 transition-all cursor-pointer"
                 aria-label="Call Phone"
               >
                 <Phone className="w-4 h-4" />
@@ -123,15 +122,13 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
                 ? "Website tuân thủ GDPR/CCPA. 100% không dùng Cookie bên thứ 3, không thu thập IP và không lưu dữ liệu cá nhân."
                 : "GDPR/CCPA compliant. 100% cookie-free, no IP logging, and zero personal data stored."}
             </p>
-            <GlassButton
+            <button
               onClick={onOpenPrivacyDrawer}
-              size="sm"
-              variant="outline"
-              icon={<Activity className="w-3 h-3 text-blue-600 dark:text-blue-400" />}
-              className="text-xs"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--ed-hairline)] px-4 py-2 text-xs font-semibold text-[var(--ed-muted)] transition-colors hover:border-blue-500/60 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
             >
+              <Activity className="w-3 h-3" />
               {isVi ? "Xem Telemetry Log" : "View Telemetry"}
-            </GlassButton>
+            </button>
           </div>
         </div>
 
@@ -141,9 +138,7 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
             © {currentYear} Nguyen Tran Anh (SatohJiro). All rights reserved.
           </div>
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              Built with <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> Next.js & Glassmorphism
-            </span>
+            <span className="font-mono">Built with Next.js</span>
             <span className="font-mono">v1.0.0</span>
           </div>
         </div>

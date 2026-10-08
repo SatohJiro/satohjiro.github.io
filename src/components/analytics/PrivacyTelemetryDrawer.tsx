@@ -4,8 +4,6 @@ import React from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useTelemetry } from "@/hooks/useTelemetry";
 import { formatDate } from "@/lib/utils";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassButton } from "../glass/GlassButton";
 import {
   ShieldCheck,
   Activity,
@@ -58,7 +56,7 @@ export function PrivacyTelemetryDrawer({ isOpen, onClose }: PrivacyTelemetryDraw
           </div>
 
           {/* Privacy Principles Banner */}
-          <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-300 space-y-2">
+          <div className="p-3.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-300 space-y-2">
             <div className="font-bold text-emerald-300 flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5" />
               <span>{isVi ? "Nguyên tắc Bảo mật 100% Ẩn danh" : "Privacy-by-Design Compliance"}</span>
@@ -80,7 +78,7 @@ export function PrivacyTelemetryDrawer({ isOpen, onClose }: PrivacyTelemetryDraw
           </div>
 
           {/* Opt-out Control */}
-          <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+          <div className="p-3.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
             <div>
               <div className="text-xs font-semibold text-white">
                 {isVi ? "Trạng thái Thu thập Ẩn danh" : "Anonymous Telemetry"}
@@ -145,24 +143,20 @@ export function PrivacyTelemetryDrawer({ isOpen, onClose }: PrivacyTelemetryDraw
 
         {/* Footer Actions */}
         <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-          <GlassButton
+          <button
             onClick={clearEvents}
-            size="sm"
-            variant="outline"
-            icon={<Trash2 className="w-3.5 h-3.5 text-rose-400" />}
-            className="text-xs"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--ed-hairline)] px-4 py-2 text-xs font-semibold text-[var(--ed-muted)] transition-colors hover:border-rose-500/60 hover:text-rose-500 cursor-pointer"
           >
+            <Trash2 className="w-3.5 h-3.5" />
             {isVi ? "Xóa Log" : "Clear Log"}
-          </GlassButton>
+          </button>
 
-          <GlassButton
+          <button
             onClick={onClose}
-            size="sm"
-            variant="glass"
-            className="text-xs"
+            className="rounded-full bg-[var(--ed-ink)] px-4 py-2 text-xs font-semibold text-[var(--ed-paper)] cursor-pointer"
           >
             {isVi ? "Đóng" : "Close"}
-          </GlassButton>
+          </button>
         </div>
       </div>
     </div>

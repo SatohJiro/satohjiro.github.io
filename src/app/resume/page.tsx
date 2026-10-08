@@ -34,7 +34,7 @@ function ResumeContent() {
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-6 px-4 sm:px-6 lg:px-8 print:p-0 print:bg-white print:text-slate-950">
       {/* Floating Action Controls Bar (hidden during print) */}
-      <div className="no-print max-w-4xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-lg">
+      <div className="no-print max-w-4xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-4 p-4 border border-[var(--ed-hairline)] bg-[var(--ed-paper)]">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-colors"
