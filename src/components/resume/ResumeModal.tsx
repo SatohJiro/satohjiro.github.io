@@ -12,10 +12,9 @@ import {
   awardsData,
   skillsData,
 } from "@/data/portfolio-content";
-import { GlassModal } from "../glass/GlassModal";
+import { Modal } from "../editorial/Modal";
 import {
   Printer,
-  FileDown,
   ExternalLink,
   Code,
   Info,
@@ -96,20 +95,25 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   };
 
   return (
-    <GlassModal
+    <Modal
       isOpen={isOpen}
       onClose={onClose}
       maxWidth="2xl"
       title={
-        <div className="flex items-center gap-2.5">
-          <FileDown className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <span>{isVi ? "Hồ Sơ Năng Lực / ATS Resume" : "Curriculum Vitae / ATS Resume"}</span>
+        <div>
+          <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+            {isVi ? "Hồ sơ năng lực" : "Curriculum vitae"}
+          </div>
+          <div className="mt-1.5 font-display text-xl font-bold tracking-tight text-[var(--ed-ink)]">
+            ATS Resume
+          </div>
         </div>
       }
+      closeLabel={isVi ? "Đóng" : "Close"}
     >
       <div className="space-y-5">
         {/* Controls Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-y border-[var(--ed-hairline)] py-3">
           {/* Language selector for resume */}
           <div className="flex items-center gap-2">
             <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">
@@ -319,6 +323,6 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           </Link>
         </div>
       </div>
-    </GlassModal>
+    </Modal>
   );
 }
