@@ -1,28 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import { LanguageProvider } from "@/hooks/useLanguage";
 import { siteConfig } from "@/config/site";
 import { generatePersonJsonLd, generateWebSiteJsonLd } from "@/config/seo";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin", "vietnamese"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const fraunces = Fraunces({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-display",
+  display: "swap",
+  style: ["normal", "italic"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin", "vietnamese"],
   variable: "--font-mono",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#090d16" },
-  ],
+  themeColor: "#faf7f0",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -116,7 +120,7 @@ export default function RootLayout({
   const websiteJsonLd = generateWebSiteJsonLd();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${plexMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -127,12 +131,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
+      <body className="font-sans antialiased mono-paper">
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );
