@@ -4,22 +4,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/hooks/useLanguage";
-import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
 import { GlassButton } from "../glass/GlassButton";
-import {
-  FileDown,
-  Menu,
-  X,
-  Home,
-  User,
-  Briefcase,
-  Layers,
-  Cpu,
-  Trophy,
-  Terminal,
-  Mail,
-} from "lucide-react";
+import { FileDown, Menu, X } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
 import { useScrollSpy } from "@/hooks/useScrollSpy";
@@ -29,7 +16,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ onOpenResumeModal }: NavbarProps) {
-  const { isVi, isEn } = useLanguage();
+  const { isVi } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navSectionIds = React.useMemo(() => siteConfig.navItems.map((item) => item.id), []);
@@ -40,7 +27,7 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          const isPast = window.scrollY > 20;
+          const isPast = window.scrollY > 24;
           setScrolled((prev) => (prev !== isPast ? isPast : prev));
           ticking = false;
         });
@@ -49,79 +36,78 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Lock scroll when the mobile menu is open (html is the viewport scroller).
+  useEffect(() => {
+    document.documentElement.style.overflowY = mobileMenuOpen ? "hidden" : "";
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflowY = "";
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
 
   const handleNavClick = (id: string) => {
     telemetry.track("click", `nav_${id}`);
     setMobileMenuOpen(false);
   };
 
-  const iconMap: Record<string, React.ReactNode> = {
-    Home: <Home className="w-3.5 h-3.5" />,
-    User: <User className="w-3.5 h-3.5" />,
-    Briefcase: <Briefcase className="w-3.5 h-3.5" />,
-    Layers: <Layers className="w-3.5 h-3.5" />,
-    Cpu: <Cpu className="w-3.5 h-3.5" />,
-    Trophy: <Trophy className="w-3.5 h-3.5" />,
-    Terminal: <Terminal className="w-3.5 h-3.5" />,
-    Mail: <Mail className="w-3.5 h-3.5" />,
-  };
+  // Terminal nav item removed — section no longer exists on this branch.
+  const navItems = siteConfig.navItems.filter((item) => item.id !== "terminal");
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ${scrolled
-          ? "py-2.5 bg-white/90 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-200/80 dark:border-white/10 shadow-lg shadow-black/5"
-          : "py-4 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md border-b border-slate-200/50 dark:border-white/5"
-        }`}
+      className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-white/[0.06] bg-[#08090a]/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent"
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
-        {/* Brand / Logo */}
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+        {/* Brand */}
         <Link
           href="#home"
           onClick={() => handleNavClick("home")}
-          className="flex items-center gap-2.5 group cursor-pointer shrink-0"
+          className="group flex shrink-0 items-center gap-2.5"
         >
-          <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 group-hover:scale-105 transition-all">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#5e6ad2] font-mono text-[11px] font-bold tracking-wider text-white shadow-[0_0_20px_rgba(94,106,210,0.45)] transition-transform group-hover:scale-105">
             NTA
           </div>
-          <div className="hidden sm:block text-left">
-            <div className="font-bold text-sm tracking-tight text-slate-900 dark:text-white whitespace-nowrap leading-tight">
+          <div className="hidden text-left sm:block">
+            <div className="whitespace-nowrap text-sm font-semibold tracking-tight text-white">
               {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
             </div>
-            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono tracking-wider leading-tight">
-              @SatohJiro
-            </div>
+            <div className="font-mono text-[11px] leading-tight text-[#8a8f98]">@SatohJiro</div>
           </div>
         </Link>
 
-        {/* Unified Desktop Nav Items (Clean Text Navigation, Anti-Slop) */}
-        <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 backdrop-blur-xl shadow-inner">
-          {siteConfig.navItems.map((item) => {
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-0.5 lg:flex">
+          {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <Link
                 key={item.id}
                 href={item.href}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
+                className={`rounded-lg px-3 py-1.5 text-[13px] font-medium whitespace-nowrap transition-colors ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-xs border-blue-500/40"
-                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                    ? "bg-white/[0.07] text-white"
+                    : "text-[#8a8f98] hover:bg-white/[0.04] hover:text-white"
                 }`}
               >
-                <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
+                {item.label[isVi ? "vi" : "en"]}
               </Link>
             );
           })}
         </nav>
 
-        {/* Actions (Language, Theme, Download CV, Mobile Toggle) */}
-        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        {/* Actions */}
+        <div className="flex shrink-0 items-center gap-2">
           <LanguageToggle />
-          <ThemeToggle />
-
           <GlassButton
             onClick={() => {
               telemetry.track("download_cv", "navbar_cta");
@@ -130,47 +116,43 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
             variant="primary"
             size="sm"
             icon={<FileDown className="w-3.5 h-3.5" />}
-            className="hidden sm:inline-flex whitespace-nowrap shrink-0"
+            className="hidden whitespace-nowrap sm:inline-flex"
           >
-            {isVi ? "Tải CV / In" : "Get Resume"}
+            {isVi ? "Tải CV" : "Get Resume"}
           </GlassButton>
-
-          {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 text-slate-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
-            aria-label="Toggle Navigation Menu"
+            className="rounded-lg p-2 text-[#b6b9c0] transition-colors hover:bg-white/[0.06] hover:text-white lg:hidden cursor-pointer"
+            aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-slate-200/80 dark:border-white/10 bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top duration-200">
-          <div className="grid grid-cols-2 gap-2">
-            {siteConfig.navItems.map((item) => {
+        <div className="border-b border-white/[0.06] bg-[#08090a]/95 px-4 pt-2 pb-5 backdrop-blur-xl lg:hidden">
+          <div className="grid grid-cols-2 gap-1.5">
+            {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <Link
                   key={item.id}
                   href={item.href}
                   onClick={() => handleNavClick(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 ${
+                  className={`rounded-lg px-3 py-2.5 text-[13px] font-medium whitespace-nowrap transition-colors ${
                     isActive
-                      ? "bg-blue-600 text-white shadow-sm border-blue-500/40"
-                      : "border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                      ? "bg-white/[0.07] text-white"
+                      : "text-[#8a8f98] hover:bg-white/[0.04] hover:text-white"
                   }`}
                 >
-                  {iconMap[item.icon]}
-                  <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
+                  {item.label[isVi ? "vi" : "en"]}
                 </Link>
               );
             })}
           </div>
-
-          <div className="pt-3 border-t border-slate-200 dark:border-white/10 flex justify-center">
+          <div className="mt-3 border-t border-white/[0.06] pt-3">
             <GlassButton
               onClick={() => {
                 telemetry.track("download_cv", "mobile_nav_cta");
@@ -180,7 +162,7 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
               variant="primary"
               size="md"
               icon={<FileDown className="w-4 h-4" />}
-              className="w-full whitespace-nowrap"
+              className="w-full"
             >
               {isVi ? "Xem & Tải CV (PDF)" : "View & Download CV (PDF)"}
             </GlassButton>

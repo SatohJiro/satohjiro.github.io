@@ -1,6 +1,7 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ interface GlassModalProps {
   className?: string;
 }
 
+/** Sleek dark modal (Linear-style), portaled to document.body. */
 export function GlassModal({
   isOpen,
   onClose,
@@ -21,25 +23,33 @@ export function GlassModal({
   maxWidth = "xl",
   className,
 }: GlassModalProps) {
+  // Mounted flag for portal (avoids SSR mismatch); set via lazy initializer.
+  const [mounted] = useState(() => typeof document !== "undefined");
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
+    // html { overflow-y: scroll } makes <html> the viewport scroller — lock both.
+    const root = document.documentElement;
     if (isOpen) {
+      root.style.overflowY = "hidden";
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
     } else {
+      root.style.overflowY = "";
       document.body.style.overflow = "";
     }
 
     return () => {
+      root.style.overflowY = "";
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const maxWidthStyles = {
     sm: "max-w-sm",
@@ -50,49 +60,40 @@ export function GlassModal({
     "4xl": "max-w-6xl",
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-950/75 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-black/70 backdrop-blur-[2px]"
         onClick={onClose}
         aria-hidden="true"
       />
-
-      {/* Modal Container */}
-      <div className="flex min-h-full items-center justify-center p-3 sm:p-6 text-center">
-        {/* Modal Card */}
+      <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-6">
         <div
           className={cn(
-            "relative w-full rounded-2xl sm:rounded-3xl p-5 sm:p-7 my-6 z-10 text-left",
-            "bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/15 shadow-2xl",
-            "max-h-[88vh] flex flex-col animate-in zoom-in-95 duration-200",
+            "relative z-10 my-8 flex max-h-[90vh] w-full flex-col overflow-hidden text-left",
+            "rounded-2xl border border-white/10 bg-[#0d0e11] shadow-[0_24px_80px_-16px_rgba(0,0,0,0.8)]",
             maxWidthStyles[maxWidth],
             className
           )}
           role="dialog"
           aria-modal="true"
         >
-          {/* Fixed Header */}
-          <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 dark:border-white/10 shrink-0">
-            <div className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white pr-4">
+          <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/[0.06] px-6 py-4">
+            <div className="min-w-0 text-[15px] font-semibold tracking-tight text-[#f7f8f8]">
               {title}
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 rounded-xl text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer shrink-0"
-              aria-label="Close modal"
+              aria-label="Close"
+              className="shrink-0 rounded-lg p-1.5 text-[#8a8f98] transition-colors hover:bg-white/[0.06] hover:text-white cursor-pointer"
             >
-              <X className="w-5 h-5" />
+              <X className="h-4 w-4" />
             </button>
           </div>
-
-          {/* Scrollable Body */}
-          <div className="overflow-y-auto py-4 pr-1 text-slate-700 dark:text-slate-300">
-            {children}
-          </div>
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">{children}</div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -34,14 +34,15 @@ export function ContactSection() {
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="sleek-eyebrow sleek-eyebrow-accent">{isVi ? "Liên hệ" : "Contact"}</div>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-[-0.01em]">
             {isVi ? (
               <>
-                Kết Nối & <span className="text-gradient">Trao Đổi Cơ Hội Nghề Nghiệp</span>
+                Kết Nối & <span className="sleek-gradient-accent">Trao Đổi Cơ Hội Nghề Nghiệp</span>
               </>
             ) : (
               <>
-                Let&apos;s Connect & <span className="text-gradient">Explore Opportunities</span>
+                Let&apos;s Connect & <span className="sleek-gradient-accent">Explore Opportunities</span>
               </>
             )}
           </h2>

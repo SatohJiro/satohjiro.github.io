@@ -11,6 +11,7 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   glowColor?: "cyan" | "indigo" | "blue" | "emerald" | "amber" | "rose" | "none";
 }
 
+/** Sleek dark card (Linear-style). API kept for drop-in compatibility. */
 export function GlassCard({
   children,
   className,
@@ -19,22 +20,23 @@ export function GlassCard({
   glowColor = "none",
   ...props
 }: GlassCardProps) {
-  const subtleGlowStyles = {
-    cyan: "hover:border-cyan-500/25",
-    indigo: "hover:border-blue-500/25",
-    blue: "hover:border-blue-500/25",
-    emerald: "hover:border-emerald-500/25",
-    amber: "hover:border-amber-500/25",
-    rose: "hover:border-rose-500/25",
+  void enableTilt;
+  const glowStyles: Record<string, string> = {
+    cyan: "hover:border-cyan-400/25",
+    indigo: "hover:border-[#5e6ad2]/40",
+    blue: "hover:border-[#5e6ad2]/40",
+    emerald: "hover:border-emerald-400/25",
+    amber: "hover:border-amber-400/25",
+    rose: "hover:border-rose-400/25",
     none: "",
   };
 
   return (
     <div
       className={cn(
-        "relative rounded-2xl p-6 transition-all duration-200 overflow-hidden",
-        interactive ? "glass-panel-interactive" : "glass-panel",
-        subtleGlowStyles[glowColor],
+        "relative overflow-hidden",
+        interactive ? "sleek-card-interactive" : "sleek-card",
+        glowStyles[glowColor],
         className
       )}
       {...props}

@@ -40,14 +40,15 @@ export function SkillsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="sleek-eyebrow sleek-eyebrow-accent">{isVi ? "Kỹ năng" : "Skills"}</div>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-[-0.01em]">
             {isVi ? (
               <>
-                Kỹ Năng Kỹ Thuật & <span className="text-gradient">Kinh Nghiệm Thực Tế</span>
+                Kỹ Năng Kỹ Thuật & <span className="sleek-gradient-accent">Kinh Nghiệm Thực Tế</span>
               </>
             ) : (
               <>
-                Technical Stack & <span className="text-gradient">Applied Experience</span>
+                Technical Stack & <span className="sleek-gradient-accent">Applied Experience</span>
               </>
             )}
           </h2>
@@ -66,8 +67,8 @@ export function SkillsSection() {
               onClick={() => handleCategorySelect("all")}
               className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                 selectedCategory === "all"
-                  ? "bg-blue-600 text-white shadow-xs border border-blue-500/40"
-                  : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+                  ? "bg-[#5e6ad2] text-white border border-[#5e6ad2]/60 shadow-[0_0_16px_rgba(94,106,210,0.4)]"
+                  : "border border-white/[0.08] bg-white/[0.03] text-[#8a8f98] hover:text-white hover:border-white/[0.16]"
               }`}
             >
               {isVi ? "Tất Cả" : "All Categories"}
@@ -80,8 +81,8 @@ export function SkillsSection() {
                   onClick={() => handleCategorySelect(cat.id)}
                   className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? "bg-blue-600 text-white shadow-xs border border-blue-500/40"
-                      : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+                      ? "bg-[#5e6ad2] text-white border border-[#5e6ad2]/60 shadow-[0_0_16px_rgba(94,106,210,0.4)]"
+                      : "border border-white/[0.08] bg-white/[0.03] text-[#8a8f98] hover:text-white hover:border-white/[0.16]"
                   }`}
                 >
                   <span>{resolveLocale(cat.label, isVi).split("(")[0].trim()}</span>

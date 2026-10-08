@@ -45,17 +45,15 @@ export function ProjectsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <GlassBadge variant="emerald" size="md">
-            {isVi ? "Dự Án Tiêu Biểu" : "Featured Projects"}
-          </GlassBadge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="sleek-eyebrow sleek-eyebrow-accent">{isVi ? "Dự án" : "Projects"}</div>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-[-0.01em]">
             {isVi ? (
               <>
-                Dự Án Tiêu Biểu & <span className="text-gradient-emerald">Sản Phẩm Đã Làm</span>
+                Dự Án Tiêu Biểu & <span className="sleek-gradient-accent">Sản Phẩm Đã Làm</span>
               </>
             ) : (
               <>
-                Featured Works & <span className="text-gradient-emerald">Projects Delivered</span>
+                Featured Works & <span className="sleek-gradient-accent">Projects Delivered</span>
               </>
             )}
           </h2>
@@ -76,8 +74,8 @@ export function ProjectsSection() {
                 onClick={() => handleFilterChange(cat.id)}
                 className={`px-4 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                   isSelected
-                    ? "bg-emerald-600 text-white shadow-xs border border-emerald-500/40"
-                    : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+                    ? "bg-[#5e6ad2] text-white border border-[#5e6ad2]/60 shadow-[0_0_16px_rgba(94,106,210,0.4)]"
+                    : "border border-white/[0.08] bg-white/[0.03] text-[#8a8f98] hover:text-white hover:border-white/[0.16]"
                 }`}
               >
                 {cat.label[isVi ? "vi" : "en"]}

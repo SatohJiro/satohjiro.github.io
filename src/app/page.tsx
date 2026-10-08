@@ -11,7 +11,6 @@ import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { AwardsSection } from "@/components/sections/AwardsSection";
-import { InteractiveTerminal } from "@/components/sections/InteractiveTerminal";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { PixelVersionFloatButton } from "@/components/layout/PixelVersionFloatButton";
 import { telemetry } from "@/lib/telemetry";
@@ -52,7 +51,6 @@ export default function HomePage() {
         <ProjectsSection />
         <SkillsSection />
         <AwardsSection />
-        <InteractiveTerminal onOpenResumeModal={() => setIsResumeModalOpen(true)} />
         <ContactSection />
       </main>
 

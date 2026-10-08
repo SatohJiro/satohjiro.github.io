@@ -12,6 +12,7 @@ interface GlassButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   glow?: boolean;
 }
 
+/** Sleek dark button (Linear-style). API kept for drop-in compatibility. */
 export function GlassButton({
   children,
   className,
@@ -23,25 +24,25 @@ export function GlassButton({
   ...props
 }: GlassButtonProps) {
   const sizeStyles = {
-    sm: "px-3.5 py-1.5 text-xs rounded-xl gap-1.5",
-    md: "px-5 py-2.5 text-sm rounded-xl gap-2",
-    lg: "px-7 py-3.5 text-base rounded-2xl gap-2.5 font-medium",
+    sm: "px-3.5 py-1.5 text-xs gap-1.5",
+    md: "px-5 py-2.5 text-sm gap-2",
+    lg: "px-7 py-3.5 text-[15px] gap-2.5",
   };
 
   const variantStyles = {
-    primary: "glass-button-primary font-semibold",
-    glass: "glass-button text-slate-800 dark:text-slate-100 hover:text-slate-950 dark:hover:text-white font-medium",
-    outline: "border border-blue-500/30 text-slate-800 dark:text-slate-100 hover:border-blue-500 hover:bg-blue-500/10 font-medium",
-    ghost: "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 border-transparent font-medium",
+    primary: "sleek-btn-primary font-medium",
+    glass: "sleek-btn-secondary",
+    outline: "sleek-btn-secondary",
+    ghost: "sleek-btn-ghost",
   };
 
   return (
     <button
       className={cn(
-        "relative inline-flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none",
+        "sleek-btn select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5e6ad2]/60 disabled:cursor-not-allowed disabled:opacity-50",
         sizeStyles[size],
         variantStyles[variant],
-        glow && "shadow-[0_0_20px_rgba(37,99,235,0.35)]",
+        glow && "shadow-[0_0_24px_rgba(94,106,210,0.45)]",
         className
       )}
       {...props}

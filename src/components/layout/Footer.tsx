@@ -5,7 +5,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/hooks/useLanguage";
 import { resolveLocale } from "@/lib/locale";
-import { Mail, Phone, ShieldCheck, Heart, Activity } from "lucide-react";
+import { Mail, Phone, ShieldCheck } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { GlassButton } from "../glass/GlassButton";
 import { telemetry } from "@/lib/telemetry";
@@ -16,86 +16,66 @@ interface FooterProps {
 }
 
 export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) {
-  const { isVi, isEn } = useLanguage();
+  const { isVi } = useLanguage();
   const currentYear = new Date().getFullYear();
 
+  const socials = [
+    { href: siteConfig.links.github, label: "GitHub", icon: <GithubIcon className="h-4 w-4" />, track: "footer_github" },
+    { href: siteConfig.links.linkedin, label: "LinkedIn", icon: <LinkedinIcon className="h-4 w-4" />, track: "footer_linkedin" },
+    { href: siteConfig.links.email, label: "Email", icon: <Mail className="h-4 w-4" />, track: "footer_email" },
+    { href: siteConfig.links.phone, label: "Phone", icon: <Phone className="h-4 w-4" />, track: "footer_phone" },
+  ];
+
   return (
-    <footer className="relative z-10 border-t border-slate-200/80 dark:border-white/10 bg-slate-50/90 dark:bg-slate-950/60 backdrop-blur-2xl py-12 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-200/80 dark:border-white/10">
-          {/* Col 1: Identity */}
-          <div className="md:col-span-2 space-y-4">
+    <footer className="relative z-10 mt-24 border-t border-white/[0.06] bg-[#08090a]">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <div className="grid grid-cols-1 gap-10 border-b border-white/[0.06] pb-10 md:grid-cols-4">
+          {/* Identity */}
+          <div className="space-y-4 md:col-span-2">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-blue-600 flex items-center justify-center font-mono font-extrabold text-xs text-white tracking-wider shadow-sm shadow-blue-500/20 shrink-0">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e6ad2] font-mono text-[11px] font-bold tracking-wider text-white">
                 NTA
               </div>
               <div>
-                <div className="font-bold text-base text-slate-900 dark:text-white">
+                <div className="text-[15px] font-semibold tracking-tight text-white">
                   {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
                 </div>
-                <div className="text-xs text-slate-600 dark:text-slate-400">
-                  {isVi ? "Kỹ sư Phần mềm | Thủ khoa ĐH Nông Lâm" : "Software Engineer | Valedictorian"}
+                <div className="text-xs text-[#8a8f98]">
+                  {isVi ? "Kỹ sư Phần mềm · Thủ khoa ĐH Nông Lâm" : "Software Engineer · Valedictorian"}
                 </div>
               </div>
             </div>
-
-            <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
+            <p className="max-w-md text-[13px] leading-relaxed text-[#8a8f98]">
               {isVi
-                ? "Phát triển các ứng dụng Web chất lượng cao với Next.js, React, Vue.js, Spring Boot, FastAPI và ứng dụng AI GPT-4."
-                : "Building responsive web applications with Next.js, React, Vue.js, Spring Boot, FastAPI, and GPT-4 AI."}
+                ? "Xây dựng web app chất lượng cao với Next.js, React, Vue.js, Spring Boot, FastAPI và AI."
+                : "Building high-quality web applications with Next.js, React, Vue.js, Spring Boot, FastAPI, and AI."}
             </p>
-
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => telemetry.track("click", "footer_github")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="GitHub Profile"
-              >
-                <GithubIcon className="w-4 h-4" />
-              </a>
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => telemetry.track("click", "footer_linkedin")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="LinkedIn Profile"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
-                href={siteConfig.links.email}
-                onClick={() => telemetry.track("click", "footer_email")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-white hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="Send Email"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-              <a
-                href={siteConfig.links.phone}
-                onClick={() => telemetry.track("click", "footer_phone")}
-                className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white hover:border-amber-500/40 hover:bg-amber-500/10 transition-all cursor-pointer shadow-xs"
-                aria-label="Call Phone"
-              >
-                <Phone className="w-4 h-4" />
-              </a>
+            <div className="flex items-center gap-2 pt-1">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target={s.href.startsWith("http") ? "_blank" : undefined}
+                  rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  onClick={() => telemetry.track("click", s.track)}
+                  aria-label={s.label}
+                  className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-2.5 text-[#8a8f98] transition-colors hover:border-white/[0.16] hover:text-white cursor-pointer"
+                >
+                  {s.icon}
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Col 2: Navigation */}
+          {/* Quick links */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {isVi ? "Điều hướng nhanh" : "Quick Links"}
-            </div>
-            <ul className="space-y-2 text-xs">
+            <div className="sleek-eyebrow">{isVi ? "Điều hướng" : "Navigate"}</div>
+            <ul className="space-y-2 text-[13px]">
               {siteConfig.navItems.slice(0, 5).map((item) => (
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="text-[#8a8f98] transition-colors hover:text-white"
                   >
                     {resolveLocale(item.label, isVi)}
                   </Link>
@@ -104,48 +84,34 @@ export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) 
               <li>
                 <button
                   onClick={onOpenResumeModal}
-                  className="text-blue-600 dark:text-blue-400 hover:underline transition-colors cursor-pointer font-medium"
+                  className="font-medium text-[#8f99e8] transition-colors hover:text-white cursor-pointer"
                 >
-                  {isVi ? "Xem CV Online" : "Online ATS Resume"}
+                  {isVi ? "Xem CV Online" : "Online Resume"}
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Privacy & Telemetry */}
+          {/* Privacy */}
           <div className="space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>{isVi ? "Quyền riêng tư" : "Privacy by Design"}</span>
+            <div className="sleek-eyebrow flex items-center gap-1.5">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400/80" />
+              <span>{isVi ? "Riêng tư" : "Privacy"}</span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-[13px] leading-relaxed text-[#8a8f98]">
               {isVi
-                ? "Website tuân thủ GDPR/CCPA. 100% không dùng Cookie bên thứ 3, không thu thập IP và không lưu dữ liệu cá nhân."
-                : "GDPR/CCPA compliant. 100% cookie-free, no IP logging, and zero personal data stored."}
+                ? "Không cookie bên thứ 3, không log IP, không lưu dữ liệu cá nhân."
+                : "No third-party cookies, no IP logging, zero personal data stored."}
             </p>
-            <GlassButton
-              onClick={onOpenPrivacyDrawer}
-              size="sm"
-              variant="outline"
-              icon={<Activity className="w-3 h-3 text-blue-600 dark:text-blue-400" />}
-              className="text-xs"
-            >
-              {isVi ? "Xem Telemetry Log" : "View Telemetry"}
+            <GlassButton onClick={onOpenPrivacyDrawer} size="sm" variant="glass" className="text-xs">
+              {isVi ? "Xem Telemetry" : "View Telemetry"}
             </GlassButton>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-4">
-          <div>
-            © {currentYear} Nguyen Tran Anh (SatohJiro). All rights reserved.
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1">
-              Built with <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> Next.js & Glassmorphism
-            </span>
-            <span className="font-mono">v1.0.0</span>
-          </div>
+        <div className="flex flex-col items-center justify-between gap-3 pt-6 text-xs text-[#5a5f68] sm:flex-row">
+          <div>© {currentYear} Nguyen Tran Anh (SatohJiro). All rights reserved.</div>
+          <div className="font-mono">v2.0 — dark sleek</div>
         </div>
       </div>
     </footer>
