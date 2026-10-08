@@ -9,8 +9,7 @@ export const chapters = [
   { id: "projects", index: "03" },
   { id: "skills", index: "04" },
   { id: "awards", index: "05" },
-  { id: "terminal", index: "06" },
-  { id: "contact", index: "07" },
+  { id: "contact", index: "06" },
 ] as const;
 
 export const editorialContent = {
@@ -39,7 +38,6 @@ export const editorialContent = {
     },
     ctaResume: { en: "Download CV", vi: "Tải CV" },
     ctaProjects: { en: "View projects", vi: "Xem dự án" },
-    ctaTerminal: { en: "$ terminal", vi: "$ terminal" },
     meta: {
       location: {
         label: { en: "Location", vi: "Địa điểm" },
@@ -106,13 +104,6 @@ export const editorialContent = {
       description: {
         en: "Recognitions from university leadership and company teams for academic performance and project contributions.",
         vi: "Sự ghi nhận từ nhà trường và công ty cho thành tích học tập xuất sắc và đóng góp phát triển sản phẩm.",
-      },
-    },
-    terminal: {
-      title: { en: "Terminal", vi: "Terminal" },
-      description: {
-        en: "Prefer the command line? Explore the portfolio the old-school way.",
-        vi: "Thích dùng dòng lệnh? Khám phá portfolio theo cách cổ điển.",
       },
     },
     contact: {

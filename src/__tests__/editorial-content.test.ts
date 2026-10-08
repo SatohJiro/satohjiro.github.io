@@ -35,7 +35,7 @@ describe("editorial-content bilingual parity", () => {
   });
 
   it("chapter index is sequential 01..07 and matches chapters record", () => {
-    expect(chapters.map((c) => c.index)).toEqual(["01", "02", "03", "04", "05", "06", "07"]);
+    expect(chapters.map((c) => c.index)).toEqual(["01", "02", "03", "04", "05", "06"]);
     for (const c of chapters) {
       expect(editorialContent.chapters[c.id], `chapter ${c.id}`).toBeDefined();
     }

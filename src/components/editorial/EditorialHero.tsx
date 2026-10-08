@@ -89,12 +89,6 @@ export function EditorialHero({ onOpenResume }: { onOpenResume: () => void }) {
               >
                 {isVi ? h.ctaProjects.vi : h.ctaProjects.en}
               </button>
-              <button
-                onClick={() => goTo("terminal")}
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--ed-hairline)] px-5 py-3 font-mono text-sm text-[var(--ed-muted)] transition-colors hover:border-blue-500/50 hover:text-[var(--ed-ink)] cursor-pointer"
-              >
-                {isVi ? h.ctaTerminal.vi : h.ctaTerminal.en}
-              </button>
             </div>
           </Reveal>
 
