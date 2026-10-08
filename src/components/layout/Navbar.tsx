@@ -71,7 +71,7 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ${scrolled
+      className={`fixed top-0 left-0 right-0 z-40 lg:hidden transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ${scrolled
           ? "py-2.5 bg-white/90 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-200/80 dark:border-white/10 shadow-lg shadow-black/5"
           : "py-4 bg-white/70 dark:bg-slate-950/40 backdrop-blur-md border-b border-slate-200/50 dark:border-white/5"
         }`}
@@ -95,27 +95,6 @@ export function Navbar({ onOpenResumeModal }: NavbarProps) {
             </div>
           </div>
         </Link>
-
-        {/* Unified Desktop Nav Items (Clean Text Navigation, Anti-Slop) */}
-        <nav className="hidden lg:flex items-center gap-1 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 backdrop-blur-xl shadow-inner">
-          {siteConfig.navItems.map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap border transition-colors duration-150 shrink-0 ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-xs border-blue-500/40"
-                    : "border-transparent text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                }`}
-              >
-                <span className="whitespace-nowrap">{item.label[isVi ? "vi" : "en"]}</span>
-              </Link>
-            );
-          })}
-        </nav>
 
         {/* Actions (Language, Theme, Download CV, Mobile Toggle) */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">

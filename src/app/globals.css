@@ -5,6 +5,7 @@
 @theme {
   --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-mono), monospace;
+  --font-display: var(--font-display), "Space Grotesk", system-ui, -apple-system, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card-border: var(--card-border);
@@ -392,4 +393,176 @@
   .animate-float-reverse {
     animation: none !important;
   }
-}
+}
+/* ================= SatohOS Phase 1 — desktop shell ================= */
+
+/* Wallpaper: neutral base + single-hue aurora blobs (Lila rule) + film grain */
+.os-desktop {
+  background-color: #edf1f7;
+  background-image:
+    radial-gradient(52rem 32rem at 12% -8%, rgba(37, 99, 235, 0.14), transparent 60%),
+    radial-gradient(44rem 30rem at 88% 12%, rgba(5, 150, 105, 0.1), transparent 60%),
+    radial-gradient(60rem 40rem at 50% 115%, rgba(37, 99, 235, 0.08), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.dark .os-desktop {
+  background-color: #070b14;
+  background-image:
+    radial-gradient(52rem 32rem at 12% -8%, rgba(59, 130, 246, 0.22), transparent 60%),
+    radial-gradient(44rem 30rem at 88% 12%, rgba(16, 185, 129, 0.12), transparent 60%),
+    radial-gradient(60rem 40rem at 50% 115%, rgba(59, 130, 246, 0.1), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* Top menu bar */
+.os-menubar {
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.dark .os-menubar {
+  background: rgba(9, 13, 22, 0.62);
+}
+
+.os-menubar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.625rem;
+  color: #475569;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.os-menubar-btn:hover {
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+}
+
+.dark .os-menubar-btn {
+  color: #cbd5e1;
+}
+
+.dark .os-menubar-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Window chrome */
+.os-window {
+  border-radius: 1rem;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  backdrop-filter: blur(24px) saturate(1.3);
+  box-shadow:
+    0 24px 70px -12px rgba(2, 6, 23, 0.25),
+    0 4px 18px rgba(2, 6, 23, 0.08);
+}
+
+.dark .os-window {
+  box-shadow:
+    0 24px 70px -12px rgba(0, 0, 0, 0.6),
+    0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Dock */
+.os-dock {
+  border-radius: 1.25rem;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.18);
+}
+
+.dark .os-dock {
+  background: rgba(15, 23, 42, 0.62);
+}
+
+/* Command palette */
+.os-palette {
+  border-radius: 1rem;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  backdrop-filter: blur(24px) saturate(1.3);
+  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.35);
+}
+
+/* Toast */
+.os-toast {
+  border-radius: 9999px;
+  border: 1px solid var(--card-border);
+  background: rgba(15, 23, 42, 0.92);
+  color: #f8fafc;
+  font-size: 12px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.3);
+}
+
+/* Terminal caret */
+.os-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  background: currentColor;
+  vertical-align: -0.15em;
+  animation: osCaretBlink 1.06s steps(1) infinite;
+}
+
+@keyframes osCaretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Entrance motion */
+.os-rise {
+  animation: osRise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes osRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.os-pop {
+  animation: osPop 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes osPop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Anchor offset under the fixed menu bar */
+section[id] {
+  scroll-margin-top: 3rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-rise,
+  .os-pop {
+    animation: none;
+  }
+  .os-caret {
+    animation: none;
+  }
+}

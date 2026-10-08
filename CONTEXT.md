@@ -43,3 +43,8 @@
 - **Decision:** Declare `src/app/manifest.ts` with `export const dynamic = "force-static"` and standard Android/Apple icon definitions.
 - **Rationale:** Generates `/manifest.webmanifest` during `next build` compatible with `output: 'export'` on GitHub Pages.
 
+
+### ADR-005: SatohOS Desktop Shell (Phase 1 UI refactor)
+- **Decision:** Reframe the portfolio as a developer OS: `BootSequence` overlay, `MenuBar` (status/clock/lang/theme/⌘K), `HeroWindow` (rewritten hero in `DesktopWindow` chrome), `DesktopDock` (icon nav replacing desktop text navbar), and `CommandPalette` (⌘K fuzzy jump/actions). Legacy sections stay untouched below the desktop viewport; `Navbar` becomes mobile-only (`lg:hidden`).
+- **Rationale:** Fixes the "one recipe ×7 sections" monotony while keeping i18n EN/VI parity, dark-first theming, static export, telemetry, and vitest coverage. Command filtering is pure (`src/lib/os-commands.ts`) and unit-tested; copy is centralized in `src/data/os-content.ts` with bilingual parity tests.
+- **Dials for this phase:** `DESIGN_VARIANCE: 6/10`, `MOTION_INTENSITY: 6/10`, `VISUAL_DENSITY: 6/10`. Lila Rule kept: neutral wallpaper + single blue accent reserved for actions/focus.

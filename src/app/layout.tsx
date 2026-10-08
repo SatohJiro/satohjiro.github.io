@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/hooks/useLanguage";
 import { siteConfig } from "@/config/site";
@@ -15,6 +15,12 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -116,7 +122,7 @@ export default function RootLayout({
   const websiteJsonLd = generateWebSiteJsonLd();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
       <head>
         <script
           type="application/ld+json"

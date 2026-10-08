@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { GlowSpotlight } from "@/components/glass/GlowSpotlight";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { HeroSection } from "@/components/sections/HeroSection";
+import { DesktopShell } from "@/components/os/DesktopShell";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
@@ -46,7 +46,7 @@ export default function HomePage() {
 
       {/* Main Content Sections */}
       <main className="relative z-10 space-y-8">
-        <HeroSection onOpenResumeModal={() => setIsResumeModalOpen(true)} />
+        <DesktopShell onOpenResumeModal={() => setIsResumeModalOpen(true)} />
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
