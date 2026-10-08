@@ -4,196 +4,72 @@ import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/hooks/useLanguage";
 import { statsData } from "@/data/portfolio-content";
-import { GlassButton } from "../glass/GlassButton";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassCard } from "../glass/GlassCard";
-import {
-  FileDown,
-  ArrowRight,
-} from "lucide-react";
+import { FileDown, ArrowDown } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
 
-interface HeroSectionProps {
-  onOpenResumeModal: () => void;
-}
-
-export function HeroSection({ onOpenResumeModal }: HeroSectionProps) {
+export function HeroSection({ onOpenResumeModal }: { onOpenResumeModal: () => void }) {
   const { isVi } = useLanguage();
 
   return (
-    <section
-      id="home"
-      className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          {/* Left Column: Hero Text & Call to Actions */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/10 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-medium text-emerald-800 dark:text-emerald-300">
-                {isVi ? "Sẵn sàng đón nhận cơ hội nghề nghiệp mới" : "Open for new software engineering opportunities"}
-              </span>
-            </div>
+    <section id="home" className="relative pt-14">
+      <div className="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
+        <div className="bp-panel bp-corners p-8 sm:p-12">
+          <div className="flex flex-wrap justify-between gap-3">
+            <span className="bp-label">{isVi ? "Bản vẽ kỹ thuật — Hồ sơ năng lực" : "Technical drawing — Portfolio"}</span>
+            <span className="bp-label bp-label-accent">SCALE 1:1 · SHEET A-001</span>
+          </div>
 
-            {/* Main Headline */}
-            <div className="space-y-2">
-              <div className="text-xs font-mono tracking-widest text-blue-600 dark:text-blue-400 uppercase font-semibold">
-                {isVi ? "Kỹ sư Phần mềm | Full-Stack & Frontend" : "Software Engineer | Full-Stack & Frontend"}
-              </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-                {isVi ? "Xin chào, tôi là " : "Hi, I'm "}
-                <span className="text-gradient">
-                  {isVi ? "Nguyễn Trần Anh" : "Nguyen Tran Anh"}
-                </span>
-              </h1>
-              <div className="text-lg sm:text-xl font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-center lg:justify-start gap-2 pt-1">
-                <span>alias:</span>
-                <span className="font-mono text-blue-700 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg border border-blue-500/20 text-sm">
-                  @SatohJiro
-                </span>
+          <div className="bp-rule my-8" />
+
+          <h1 className="bp-title text-[clamp(2.8rem,9vw,7.5rem)] uppercase">
+            Nguyen<br />Tran Anh<span className="text-[#ffb000]">.</span>
+          </h1>
+          <p className="bp-spec mt-4">FIG.01 — SOFTWARE ENGINEER, FRONTEND SYSTEMS</p>
+
+          <div className="mt-10 grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <p className="max-w-lg text-lg leading-relaxed text-white/85">
+                {isVi
+                  ? "Kỹ sư Phần mềm, 3+ năm kinh nghiệm. Thiết kế và chế tạo web app chính xác như bản vẽ kỹ thuật — nhanh, sạch, đúng spec."
+                  : "Software Engineer, 3+ years. I design and build web apps with blueprint precision — fast, clean, to spec."}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button onClick={() => { telemetry.track("download_cv", "hero"); onOpenResumeModal(); }} className="bp-btn bp-btn-solid">
+                  <FileDown className="h-4 w-4" /> {isVi ? "Xem bản vẽ CV" : "View CV sheet"}
+                </button>
+                <Link href="#projects" className="bp-btn">{isVi ? "Công trình" : "Works"}</Link>
               </div>
             </div>
-
-            {/* Description (Anti-Slop: Under 20 words) */}
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-              {isVi
-                ? "Kỹ sư phần mềm hơn 3 năm kinh nghiệm phát triển ứng dụng web, micro-frontend NTT Docomo và tích hợp AI."
-                : "Software Engineer with 3+ years building high-performance web apps, micro-frontends at NTT Docomo, and production AI tools."}
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-              <GlassButton
-                onClick={() => {
-                  telemetry.track("download_cv", "hero_main_button");
-                  onOpenResumeModal();
-                }}
-                variant="primary"
-                size="md"
-                icon={<FileDown className="w-4 h-4" />}
-                className="whitespace-nowrap"
-              >
-                {isVi ? "Tải CV & Xem Resume" : "Download CV / Resume"}
-              </GlassButton>
-
-              <Link href="#projects">
-                <GlassButton
-                  onClick={() => telemetry.track("click", "hero_explore_projects")}
-                  variant="glass"
-                  size="md"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                  iconPosition="right"
-                  className="whitespace-nowrap"
-                >
-                  {isVi ? "Xem Dự Án" : "View Projects"}
-                </GlassButton>
-              </Link>
-
-              <Link href="#terminal">
-                <GlassButton
-                  onClick={() => telemetry.track("click", "hero_open_terminal")}
-                  variant="outline"
-                  size="md"
-                  className="whitespace-nowrap"
-                >
-                  Terminal
-                </GlassButton>
-              </Link>
-            </div>
-
-            {/* Quick Metrics Bar */}
-            <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-gradient-emerald">{statsData.yearsExperience}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Năm Kinh nghiệm" : "Years Experience"}</div>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-gradient-amber">{statsData.gpa}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Thủ Khoa GPA (NLU)" : "Valedictorian GPA"}</div>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{statsData.awardsCount}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Giải Thưởng / Vinh Danh" : "Honors & Awards"}</div>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md text-center shadow-xs">
-                <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{statsData.performanceGain}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? "Tối ưu Render" : "Performance Gain"}</div>
-              </div>
+            <div className="lg:col-span-6">
+              <table className="bp-table">
+                <thead><tr>
+                  <th>{isVi ? "Thông số" : "Spec"}</th>
+                  <th className="text-right">{isVi ? "Giá trị" : "Value"}</th>
+                </tr></thead>
+                <tbody>
+                  {[
+                    [isVi ? "Kinh nghiệm" : "Experience", statsData.yearsExperience],
+                    ["GPA · Valedictorian", statsData.gpa],
+                    [isVi ? "Giải thưởng" : "Awards", statsData.awardsCount],
+                    [isVi ? "Tối ưu hiệu năng" : "Perf. gain", statsData.performanceGain],
+                  ].map(([k, v]) => (
+                    <tr key={k as string}>
+                      <td className="bp-spec">{k}</td>
+                      <td className="text-right text-2xl font-extrabold">{v}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 
-          {/* Right Column: Key Focus Cards (Executive Technical Cards, No AI Slop) */}
-          <div className="lg:col-span-5 relative space-y-3.5">
-            {/* Card 1: ahamo */}
-            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[11px] font-mono text-blue-600 dark:text-blue-400 font-semibold tracking-wider uppercase">
-                    Enterprise Platform
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
-                    ahamo Web Platform (NTT Docomo)
-                  </div>
-                </div>
-                <GlassBadge variant="blue" size="sm">
-                  Active
-                </GlassBadge>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 line-clamp-2 leading-relaxed">
-                {isVi
-                  ? "Kinh nghiệm phát triển giao diện Micro-frontend, Vue.js, ReactJS và CMS Webrelease cho thị trường Nhật Bản."
-                  : "Frontend development on micro-frontends with Vue.js, ReactJS, and CMS Webrelease for Japanese platform."}
-              </p>
-            </GlassCard>
-
-            {/* Card 2: Valedictorian Honor */}
-            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[11px] font-mono text-amber-600 dark:text-amber-400 font-semibold tracking-wider uppercase">
-                    Academic Distinction
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
-                    {isVi ? "Thủ Khoa Toàn Khóa (NLU 2019)" : "Class Valedictorian (NLU 2019)"}
-                  </div>
-                </div>
-                <GlassBadge variant="amber" size="sm">
-                  Top 1
-                </GlassBadge>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-                {isVi
-                  ? "Bằng Kỹ sư CNTT loại Xuất sắc (GPA 3.6/4.0). Nhận Giấy khen của Hiệu trưởng Nhà trường."
-                  : "Degree of Engineer in IT with Excellent rating (GPA 3.6/4.0). Certificate of Merit by University President."}
-              </p>
-            </GlassCard>
-
-            {/* Card 3: AI Tool */}
-            <GlassCard className="p-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70" glowColor="none">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold tracking-wider uppercase">
-                    AI Engineering
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
-                    GPT Code Generator & Pipeline
-                  </div>
-                </div>
-                <GlassBadge variant="emerald" size="sm">
-                  3rd Prize
-                </GlassBadge>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-                {isVi
-                  ? "Dự án ứng dụng OpenAI GPT-4 sinh mã nguồn web, kết hợp FastAPI, RabbitMQ & Next.js."
-                  : "AI application converting natural language to web code with GPT-4, FastAPI, RabbitMQ & Next.js."}
-              </p>
-            </GlassCard>
+          <div className="bp-rule my-8" />
+          <div className="flex items-center justify-between">
+            <span className="bp-spec">TOLERANCE ±0.01 · MATERIAL: TYPESCRIPT</span>
+            <button onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+              className="bp-label flex items-center gap-2 hover:text-white cursor-pointer">
+              {isVi ? "Xem tiếp" : "Continue"} <ArrowDown className="h-3.5 w-3.5 animate-bounce" />
+            </button>
           </div>
         </div>
       </div>
