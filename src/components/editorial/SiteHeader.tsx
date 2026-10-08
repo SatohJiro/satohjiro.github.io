@@ -30,8 +30,11 @@ export function SiteHeader({ onOpenPalette }: SiteHeaderProps) {
   const t = editorialContent.header;
 
   useEffect(() => {
+    // html is the viewport scroller (see globals.css), so lock both.
+    document.documentElement.style.overflowY = menuOpen ? "hidden" : "";
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
+      document.documentElement.style.overflowY = "";
       document.body.style.overflow = "";
     };
   }, [menuOpen]);

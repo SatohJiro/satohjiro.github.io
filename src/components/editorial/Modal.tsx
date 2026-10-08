@@ -29,14 +29,20 @@ export function Modal({
       if (e.key === "Escape") onClose();
     };
 
+    // Note: globals.css sets `html { overflow-y: scroll }`, which makes
+    // <html> (not <body>) the viewport scroller — so we must lock both.
+    const root = document.documentElement;
     if (isOpen) {
+      root.style.overflowY = "hidden";
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
     } else {
+      root.style.overflowY = "";
       document.body.style.overflow = "";
     }
 
     return () => {
+      root.style.overflowY = "";
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
