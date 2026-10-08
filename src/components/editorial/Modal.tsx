@@ -1,6 +1,7 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +15,11 @@ interface ModalProps {
   closeLabel?: string;
 }
 
-/** Editorial modal — paper panel, hairline border, sharp corners. */
+/**
+ * Editorial modal — paper panel, hairline border, sharp corners.
+ * Rendered via portal into document.body so no ancestor layout
+ * (transforms, filters, containers) can break its fixed positioning.
+ */
 export function Modal({
   isOpen,
   onClose,
@@ -24,6 +29,12 @@ export function Modal({
   className,
   closeLabel = "Close",
 }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -48,7 +59,7 @@ export function Modal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const maxWidthStyles = {
     sm: "max-w-sm",
@@ -58,17 +69,17 @@ export function Modal({
     "2xl": "max-w-4xl",
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div
         className="fixed inset-0 bg-black/60"
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="flex min-h-full justify-center p-4 sm:p-6">
+      <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-6">
         <div
           className={cn(
-            "ed-palette-pop relative z-10 m-auto flex max-h-[calc(100dvh-3rem)] w-full flex-col overflow-hidden",
+            "ed-palette-pop relative z-10 my-8 flex max-h-[90vh] w-full flex-col overflow-hidden text-left",
             "border border-[var(--ed-hairline)] bg-[var(--ed-paper)] shadow-2xl",
             maxWidthStyles[maxWidth],
             className
@@ -76,7 +87,7 @@ export function Modal({
           role="dialog"
           aria-modal="true"
         >
-          <div className="flex shrink-0 items-start justify-between gap-4 border-b border-[var(--ed-hairline)] px-6 py-5 sm:px-8">
+          <div className="flex shrink-0 items-start justify-between gap-4 border-b border-[var(--ed-hairline)] px-6 py-5 text-left sm:px-8">
             <div className="min-w-0">{title}</div>
             <button
               onClick={onClose}
@@ -86,9 +97,12 @@ export function Modal({
               <X className="h-4 w-4" />
             </button>
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6 sm:px-8">{children}</div>
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6 text-left sm:px-8">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
