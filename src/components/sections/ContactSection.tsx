@@ -15,11 +15,9 @@ import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { SectionHeading } from "@/components/yourname/SectionHeading";
 import { Reveal } from "@/components/yourname/Reveal";
 import { PixelCharacter } from "@/components/yourname/PixelCharacter";
-import { useBeatSyncContext } from "@/components/yourname/BeatSyncProvider";
 
 export function ContactSection() {
   const { isVi, t } = useLanguage();
-  const { beatCount } = useBeatSyncContext();
   const [copied, setCopied] = useState<string | null>(null);
 
   const copy = async (value: string, key: string) => {
@@ -144,7 +142,6 @@ export function ContactSection() {
               <PixelCharacter
                 id="boy"
                 pose="wave"
-                bounceKey={beatCount}
                 label={t({ en: "Boy waving goodbye", vi: "Cậu bé vẫy tay chào" })}
               />
             </div>
@@ -154,7 +151,6 @@ export function ContactSection() {
             <PixelCharacter
               id="girl"
               pose="wave"
-              bounceKey={beatCount}
               label={t({ en: "Girl waving goodbye", vi: "Cô bé vẫy tay chào" })}
             />
           </div>

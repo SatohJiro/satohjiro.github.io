@@ -174,15 +174,15 @@
   100% { transform: translateY(0) scale(1, 1); }
 }
 
-/* gentle "breathing" idle life */
-.yn-breathe {
-  animation: yn-breathe 3.4s ease-in-out infinite;
+/* gentle sway, like standing in the evening breeze */
+.yn-sway {
+  animation: yn-sway 5.2s ease-in-out infinite;
   transform-origin: 50% 100%;
 }
 
-@keyframes yn-breathe {
-  0%, 100% { transform: scale(1, 1); }
-  50% { transform: scale(1.018, 1.032); }
+@keyframes yn-sway {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50% { transform: rotate(1.6deg); }
 }
 
 /* happy hop when the character is tapped / clicked */
@@ -322,6 +322,26 @@
   100% { transform: scale(1.12); opacity: 0; }
 }
 
+/* drifting fireflies / dusk motes around the characters */
+.yn-mote {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #ffd9a0;
+  box-shadow: 0 0 8px 2px rgba(255, 200, 130, 0.55);
+  pointer-events: none;
+  opacity: 0;
+  animation: yn-mote-drift 9s linear infinite;
+}
+
+@keyframes yn-mote-drift {
+  0% { transform: translateY(12px) translateX(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(-130px) translateX(16px); opacity: 0; }
+}
+
 /* ---------- music control ---------- */
 .yn-music-btn {
   position: relative;
@@ -407,10 +427,11 @@
 @media (prefers-reduced-motion: reduce) {
   .yn-bounce,
   .yn-idle-float,
-  .yn-breathe,
+  .yn-sway,
   .yn-hop,
   .yn-heart,
   .yn-sparkle,
+  .yn-mote,
   .yn-entry-card,
   .yn-entry-star,
   .yn-entry-btn::after,

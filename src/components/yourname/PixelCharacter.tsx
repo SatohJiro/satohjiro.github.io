@@ -3,15 +3,15 @@
 /**
  * PixelCharacter — the two Your Name-inspired chibi characters as
  * AI-illustrated artwork (public/yourname/characters/*.png, transparent
- * background), brought to life:
+ * background), brought to life with calm, scene-fitting motion:
  *
+ * - gentle sway, like standing in the evening breeze,
  * - periodic happy blinks (idle pose),
- * - gentle "breathing" idle motion,
- * - squash-and-stretch bounce on every detected beat,
- * - tap/click: happy hop + temporary wave + floating hearts burst.
+ * - every ~10–16s the character waves hello on its own,
+ * - tap/click: happy hop + wave + floating hearts burst.
  *
- * Same props API as before: call sites (HeroSection, ContactSection) only
- * needed pointer-events re-enabled to let clicks through.
+ * Deliberately NOT synced to the music beat — the sky dances to the music,
+ * the characters just enjoy the evening.
  */
 
 import React, { useEffect, useRef, useState } from "react";
@@ -42,42 +42,34 @@ const HEART_SPOTS = [8, 30, 52, 74, 92]; // % left positions for the burst
 export interface PixelCharacterProps {
   id: CharacterId;
   pose?: CharacterPose;
-  /** bounceKey: change to re-trigger the bounce animation (e.g. on beat) */
-  bounceKey?: number | string;
   className?: string;
   label: string;
 }
 
-export function PixelCharacter({
-  id,
-  pose = "idle",
-  bounceKey,
-  className = "",
-  label,
-}: PixelCharacterProps) {
-  const [blinking, setBlinking] = useState(false);
-  const [excited, setExcited] = useState(false);
-  const [hearts, setHearts] = useState<number[]>([]);
+/** Run `fn` after a random delay in [minMs, maxMs], tracked for cleanup. */
+function useRandomLoop(
+  active: boolean,
+  minMs: number,
+  maxMs: number,
+  fn: () => void,
+  holdMs = 0,
+) {
   const timers = useRef<number[]>([]);
-
-  // Periodic happy blink (idle pose only): every ~3–6s, eyes close ~170ms.
   useEffect(() => {
-    if (pose !== "idle") return;
+    if (!active) return;
     let alive = true;
-    const later = (fn: () => void, ms: number) => {
+    const later = (cb: () => void, ms: number) => {
       const t = window.setTimeout(() => {
-        if (alive) fn();
+        if (alive) cb();
       }, ms);
       timers.current.push(t);
     };
     const schedule = (): void => {
       later(() => {
-        setBlinking(true);
-        later(() => {
-          setBlinking(false);
-          schedule();
-        }, 170);
-      }, 2600 + Math.random() * 3400);
+        fn();
+        if (holdMs > 0) later(schedule, holdMs);
+        else schedule();
+      }, minMs + Math.random() * (maxMs - minMs));
     };
     schedule();
     return () => {
@@ -85,9 +77,45 @@ export function PixelCharacter({
       timers.current.forEach(clearTimeout);
       timers.current = [];
     };
-  }, [pose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+}
 
-  // Tap / click: happy hop, brief wave, hearts burst.
+export function PixelCharacter({
+  id,
+  pose = "idle",
+  className = "",
+  label,
+}: PixelCharacterProps) {
+  const [blinking, setBlinking] = useState(false);
+  const [autoWaving, setAutoWaving] = useState(false);
+  const [excited, setExcited] = useState(false);
+  const [hearts, setHearts] = useState<number[]>([]);
+  const timers = useRef<number[]>([]);
+  const idle = pose === "idle";
+
+  // Periodic happy blink: every ~3–6s, eyes close ~170ms.
+  useRandomLoop(
+    idle,
+    2600,
+    6000,
+    () => {
+      setBlinking(true);
+      const t = window.setTimeout(() => setBlinking(false), 170);
+      timers.current.push(t);
+    },
+  );
+
+  // Every ~10–16s the character waves hello on its own for ~1.6s.
+  useRandomLoop(idle, 10000, 16000, () => setAutoWaving(true), 1600);
+  useEffect(() => {
+    if (!autoWaving) return;
+    const t = window.setTimeout(() => setAutoWaving(false), 1600);
+    timers.current.push(t);
+    return () => clearTimeout(t);
+  }, [autoWaving]);
+
+  // Tap / click: happy hop, wave, hearts burst.
   const handleInteract = () => {
     if (excited) return;
     setExcited(true);
@@ -106,7 +134,8 @@ export function PixelCharacter({
     [],
   );
 
-  const shownPose: CharacterPose = excited ? "wave" : pose;
+  const waving = excited || autoWaving;
+  const shownPose: CharacterPose = waving ? "wave" : pose;
 
   return (
     <div
@@ -123,12 +152,8 @@ export function PixelCharacter({
         }
       }}
     >
-      <div className="yn-breathe">
-        {/* key change re-triggers the bounce animation */}
-        <div
-          key={String(bounceKey ?? pose)}
-          className={`yn-bounce${excited ? " yn-hop" : ""}`}
-        >
+      <div className="yn-sway">
+        <div className={excited ? "yn-hop" : ""}>
           <div className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

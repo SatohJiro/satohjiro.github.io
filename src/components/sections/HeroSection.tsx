@@ -11,11 +11,9 @@ import { ArrowDown, FolderOpen, Mail } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { siteConfig } from "@/config/site";
 import { PixelCharacter } from "@/components/yourname/PixelCharacter";
-import { useBeatSyncContext } from "@/components/yourname/BeatSyncProvider";
 
 export function HeroSection() {
   const { t, isVi } = useLanguage();
-  const { beatCount } = useBeatSyncContext();
 
   return (
     <section id="home" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden">
@@ -24,11 +22,13 @@ export function HeroSection() {
         <span className="yn-sparkle" style={{ top: "4%", left: "12%" }} aria-hidden="true" />
         <span className="yn-sparkle" style={{ top: "38%", left: "-6%", animationDelay: "-0.9s" }} aria-hidden="true" />
         <span className="yn-sparkle" style={{ top: "22%", right: "-4%", animationDelay: "-1.7s" }} aria-hidden="true" />
+        <span className="yn-mote" style={{ bottom: "18%", left: "20%" }} aria-hidden="true" />
+        <span className="yn-mote" style={{ bottom: "10%", left: "70%", animationDelay: "-3.2s", animationDuration: "11s" }} aria-hidden="true" />
+        <span className="yn-mote" style={{ bottom: "24%", left: "45%", animationDelay: "-6.1s", animationDuration: "8s" }} aria-hidden="true" />
         <div className="-scale-x-100">
           <PixelCharacter
             id="boy"
             pose="idle"
-            bounceKey={beatCount}
             label={t({ en: "City schoolboy gazing at the comet", vi: "Cậu học sinh thành phố ngắm sao băng" })}
           />
         </div>
@@ -42,10 +42,12 @@ export function HeroSection() {
         <span className="yn-sparkle" style={{ top: "8%", right: "10%", animationDelay: "-0.4s" }} aria-hidden="true" />
         <span className="yn-sparkle" style={{ top: "42%", right: "-8%", animationDelay: "-1.3s" }} aria-hidden="true" />
         <span className="yn-sparkle" style={{ top: "26%", left: "-6%", animationDelay: "-2.1s" }} aria-hidden="true" />
+        <span className="yn-mote" style={{ bottom: "14%", right: "24%", animationDelay: "-1.4s" }} aria-hidden="true" />
+        <span className="yn-mote" style={{ bottom: "20%", right: "60%", animationDelay: "-4.8s", animationDuration: "10s" }} aria-hidden="true" />
+        <span className="yn-mote" style={{ bottom: "8%", right: "42%", animationDelay: "-7.3s", animationDuration: "12s" }} aria-hidden="true" />
         <PixelCharacter
           id="girl"
           pose="idle"
-          bounceKey={beatCount}
           label={t({ en: "Small-town schoolgirl gazing at the comet", vi: "Cô học sinh thị trấn nhỏ ngắm sao băng" })}
         />
         <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#4a2438] drop-shadow-[0_1px_8px_rgba(255,240,220,0.9)]">
