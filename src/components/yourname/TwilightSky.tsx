@@ -373,12 +373,6 @@ export function TwilightSky() {
           ctx.arc(px, py, pr, 0, Math.PI * 2);
           ctx.fill();
         }
-        // sunset-lit rim along the top — the anime silver lining
-        ctx.strokeStyle = `rgba(255,178,150,${Math.min(0.45, c.a * 2.2).toFixed(3)})`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.ellipse(c.x, c.y - c.h * 0.08, c.w * 0.42, c.h * 0.4, 0, Math.PI * 1.12, Math.PI * 1.88);
-        ctx.stroke();
       }
 
       /* 5 — floating light motes */
