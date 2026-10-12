@@ -20,7 +20,10 @@ export function HeroSection() {
   return (
     <section id="home" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden">
       {/* boy — city side (left) */}
-      <div className="yn-idle-float pointer-events-none absolute bottom-[16%] left-[4%] w-24 sm:left-[8%] md:w-36 lg:w-44">
+      <div className="yn-idle-float absolute bottom-[16%] left-[4%] w-24 sm:left-[8%] md:w-36 lg:w-44">
+        <span className="yn-sparkle" style={{ top: "4%", left: "12%" }} aria-hidden="true" />
+        <span className="yn-sparkle" style={{ top: "38%", left: "-6%", animationDelay: "-0.9s" }} aria-hidden="true" />
+        <span className="yn-sparkle" style={{ top: "22%", right: "-4%", animationDelay: "-1.7s" }} aria-hidden="true" />
         <div className="-scale-x-100">
           <PixelCharacter
             id="boy"
@@ -35,7 +38,10 @@ export function HeroSection() {
       </div>
 
       {/* girl — small-town side (right) */}
-      <div className="yn-idle-float pointer-events-none absolute bottom-[16%] right-[4%] w-24 sm:right-[8%] md:w-36 lg:w-44" style={{ animationDelay: "-2.2s" }}>
+      <div className="yn-idle-float absolute bottom-[16%] right-[4%] w-24 sm:right-[8%] md:w-36 lg:w-44" style={{ animationDelay: "-2.2s" }}>
+        <span className="yn-sparkle" style={{ top: "8%", right: "10%", animationDelay: "-0.4s" }} aria-hidden="true" />
+        <span className="yn-sparkle" style={{ top: "42%", right: "-8%", animationDelay: "-1.3s" }} aria-hidden="true" />
+        <span className="yn-sparkle" style={{ top: "26%", left: "-6%", animationDelay: "-2.1s" }} aria-hidden="true" />
         <PixelCharacter
           id="girl"
           pose="idle"
