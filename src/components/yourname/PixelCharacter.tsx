@@ -1,16 +1,14 @@
 "use client";
 
 /**
- * PixelCharacter — two ORIGINAL chibi pixel-art characters, hand-crafted as
- * inline SVG rect grids (crisp pixels, no AI imagery, no film likenesses).
+ * PixelCharacter — two chibi pixel-art characters, hand-crafted as inline SVG
+ * rect grids (crisp pixels, no AI imagery).
  *
- * - "boy": city schoolboy archetype — tousled ink-navy hair, amber scarf,
- *   steel-blue blazer. Original design, original uniform colors.
- * - "girl": small-town schoolgirl archetype — chestnut hair with a side braid
- *   tied by a red cord, moss-green uniform. Original design, original colors.
+ * Redesigned 2026-10-12 to match the user's reference images: a tousled
+ * brown-haired schoolboy in white shirt + green striped tie, and a black-bob
+ * schoolgirl with red cord hair-ties, white blouse + red bow and pleated skirt.
  *
- * Poses: "idle" | "wave". They evoke two people connected across distance
- * without reproducing any film character.
+ * Poses: "idle" | "wave".
  */
 
 import React from "react";
@@ -19,101 +17,154 @@ export type CharacterId = "boy" | "girl";
 export type CharacterPose = "idle" | "wave";
 
 const PALETTE: Record<string, string> = {
-  H: "#2e3a52", // boy hair (ink navy)
-  h: "#5a6f96", // boy hair highlight
+  H: "#6e4a2f", // boy hair (brown)
+  D: "#4a2f1d", // boy hair dark
+  h: "#a07a4e", // boy hair light
+  K: "#26232e", // girl hair (near-black)
+  k: "#4a4458", // girl hair light
+  d: "#17141d", // girl hair dark
   S: "#ffd9b3", // skin
-  s: "#eba671", // skin shade
-  E: "#33302e", // eyes
-  J: "#31435f", // boy blazer (steel blue)
-  W: "#f4efe4", // shirt
-  P: "#3c4048", // trousers
-  B: "#23262d", // boy shoes
-  A: "#e8a13c", // amber scarf
-  G: "#6b4a33", // girl hair (chestnut)
-  g: "#9a7350", // girl hair highlight
-  R: "#d8364f", // red cord
-  U: "#3f6b52", // girl uniform (moss green)
-  C: "#f2ead8", // collar cream
-  K: "#7a5a3a", // skirt
-  L: "#4a3a2c", // girl shoes
+  s: "#e8a06a", // skin shade / blush
+  M: "#b65a4a", // mouth
+  E: "#2b2b38", // boy eyes
+  N: "#6b4226", // girl eyes (brown)
+  W: "#ffffff", // eye shine
+  T: "#f7f4ec", // shirt / blouse white
+  t: "#d9d2c0", // shirt shade
+  G: "#2f8f5b", // tie green
+  g: "#e8e4d8", // tie stripe
+  R: "#d8364f", // red (cord / bow)
+  P: "#3b3f4b", // boy trousers
+  B: "#26262c", // boy shoes
+  V: "#2e3444", // skirt navy
+  v: "#232837", // skirt pleat shade
+  O: "#4a3320", // girl shoes
 };
 
 type Sprite = string[];
 
 const BOY_IDLE: Sprite = [
-  "....HHHHHH....",
-  "..HHHHHHHHHH..",
-  "..HhhHHHHHHH..",
-  "..HHHHHHHHHH..",
-  "..HHHHHHHHHH..",
-  "...SSSSSSSS...",
-  "...SESSSSES...",
-  "...SSSSSSSS...",
-  "...SSAAAASS...",
-  "..JJJJJJJJJJ..",
-  "..JJJWWWWJJJ..",
-  "..sJJWWWWJJs..",
-  "..sJJWWWWJJs..",
-  "....PPPPPP....",
-  "....PPP.PPP...",
-  "....BBB.BBB...",
+  ".....HHHHHHHHHH.....",
+  "...HHHHHHHHHHHHHH...",
+  "..HHhHHHHHHHHHhHHH..",
+  ".HHHHHHHHHHHHHHHHHH.",
+  ".HDHHHHHHHHHHHHHHDH.",
+  "..HHHHHHHHHHHHHHHH..",
+  "..HHHHHHHHHHHHHHHH..",
+  "..HHHSSSSSSSSSSHHH..",
+  "..HHHSSSSSSSSSSHHH..",
+  "..HHHSEWSSSSEWSHHH..",
+  "..HHHSEESSSSEESHHH..",
+  "..HHHsSSSSSSSSsHHH..",
+  "..HHHSSSSMMSSSSHHH..",
+  "...HHSSSSSSSSSSHH...",
+  ".....SSSSSS.........",
+  "....TTTTTTTTTTTT....",
+  "....TTTTTGgTTTTT....",
+  "....TTTTTGGTTTTT....",
+  "....TTTTTGGTTTTT....",
+  "....TTTTTGGTTTTT....",
+  "....TTTTTGGTTTTT....",
+  "..sTTTTTTTTTTTTTTs..",
+  "..sTTTTTTTTTTTTTTs..",
+  "....PPPPPPPPPPPP....",
+  "....PPPPPPPPPPPP....",
+  "....PPPPP..PPPPP....",
+  "....PPPPP..PPPPP....",
+  "....BBBBB..BBBBB....",
 ];
 
 const BOY_WAVE: Sprite = [
-  "....HHHHHH....",
-  "..HHHHHHHHHH..",
-  "..HhhHHHHHHH..",
-  "..HHHHHHHHHH..",
-  "..HHHHHHHHHH..",
-  "...SSSSSSSSss.",
-  "...SESSSSESJJ.",
-  "...SSSSSSJJJ..",
-  "...SSAAAJJJJ..",
-  "..JJJJJJJJJJ..",
-  "..JJJWWWWJJJ..",
-  "..sJJWWWWJJJ..",
-  "..sJJWWWWJJJ..",
-  "....PPPPPP....",
-  "....PPP.PPP...",
-  "....BBB.BBB...",
+  ".....HHHHHHHHHH.....",
+  "...HHHHHHHHHHHHHH...",
+  "..HHhHHHHHHHHHhHHH..",
+  ".HHHHHHHHHHHHHHHHHH.",
+  ".HDHHHHHHHHHHHHHHDH.",
+  "..HHHHHHHHHHHHHHHH..",
+  "..HHHHHHHHHHHHHHHH..",
+  "..HHHSSSSSSSSSSHHH..",
+  "..HHHSSSSSSSSSSHHH..",
+  "..HHHSEWSSSSEWSHHH..",
+  "..HHHSEESSSSEESHHH..",
+  "..HHHsSSSSSSSSsHHH..",
+  "..HHHSSSSMMSSSSHHH..",
+  "...HHSSSSSSSSSSHH...",
+  ".....SSSSSS.........",
+  "....TTTTTTTTTTTT....",
+  "....TTTTTGGTTTTT....",
+  "....TTTTTGGTTTTT....",
+  "....TTTTTGGTTTTTs...",
+  "....TTTTTGGTTTTs....",
+  "....TTTTTGTTTTs.....",
+  "....TTTTTTTTTTs.....",
+  "..sTTTTTTTTTTTTT....",
+  "....PPPPPPPPPPPP....",
+  "....PPPPPPPPPPPP....",
+  "....PPPPP..PPPPP....",
+  "....PPPPP..PPPPP....",
+  "....BBBBB..BBBBB....",
 ];
 
 const GIRL_IDLE: Sprite = [
-  "....GGGGGG....",
-  "..GGGGGGGGGG..",
-  "..GggGGGGGGG..",
-  "..GGGGGGGGGG..",
-  "..GGGGGGGGGG..",
-  "...SSSSSSSS...",
-  "...SESSSSES...",
-  "...SSSSSSSS...",
-  "GG.SSSSSSSS.GG",
-  "RG.SSSSSSSS.GG",
-  "GGGUUUUUUUUGGG",
-  "RGUUCCCCCCUUGG",
-  "GGGUUUUUUUUGGG",
-  "RGUUUUUUUUUUGG",
-  "..KKKKKKKKKK..",
-  "..SLL....LLS..",
+  ".....KKKKKKKKKK.....",
+  "...KKKKKKKKKKKKKK...",
+  "..KKkKKKKKKKKKKkKK..",
+  ".KKKKKKKKKKKKKKKKKK.",
+  ".KKKKKKKKKKKKKKKKKK.",
+  ".KKKKKKKKKKKKKKKKKK.",
+  ".KKKKKKKKKKKKKKKKKK.",
+  "RRRKKSSSSSSSSSSKKRRR",
+  "RRRKKSSSSSSSSSSKKRRR",
+  ".RRKKSNWSSSSNWSKKRR.",
+  ".RRKKSNNSSSSNNSKKRR.",
+  "..KKKsSSSSSSSSsKKK..",
+  "..KKKSSSSMMSSSSKKK..",
+  "..KKKSSSSSSSSSSKKK..",
+  ".....SSSSSS.........",
+  "....TTTTTTTTTTTT....",
+  "....TTTTRRRRTTTT....",
+  "....TTTTTRRTTTTT....",
+  "....TTTTTTTTTTTT....",
+  "....TTTTTTTTTTTT....",
+  "..sTTTTTTTTTTTTTTs..",
+  "..sTTTTTTTTTTTTTTs..",
+  "...VVVVVVVVVVVVVV...",
+  "...VVvVVVVVVVVvVV...",
+  "...VVVVVVVVVVVVVV...",
+  "....SSSSS..SSSSS....",
+  "....TTTTT..TTTTT....",
+  "....OOOOO..OOOOO....",
 ];
 
 const GIRL_WAVE: Sprite = [
-  "....GGGGGG....",
-  "..GGGGGGGGGG..",
-  "..GggGGGGGGG..",
-  "..GGGGGGGGGG..",
-  "..GGGGGGGGGG..",
-  "...SSSSSSSS.s.",
-  "...SESSSSESUU.",
-  "...SSSSSSSUU..",
-  "GG.SSSSSSUUUGG",
-  "RG.SSSSSSUUGGG",
-  "GGGUUUUUUUUGGG",
-  "RGUUCCCCCCUUGG",
-  "GGGUUUUUUUUGGG",
-  "RGUUUUUUUUUUGG",
-  "..KKKKKKKKKK..",
-  "..SLL....LLS..",
+  ".....KKKKKKKKKK.....",
+  "...KKKKKKKKKKKKKK...",
+  "..KKkKKKKKKKKKKkKK..",
+  ".KKKKKKKKKKKKKKKKKK.",
+  ".KKKKKKKKKKKKKKKKKK.",
+  ".KKKKKKKKKKKKKKKKKK.",
+  ".KKKKKKKKKKKKKKKKKK.",
+  "RRRKKSSSSSSSSSSKKRRR",
+  "RRRKKSSSSSSSSSSKKRRR",
+  ".RRKKSNWSSSSNWSKKRR.",
+  ".RRKKSNNSSSSNNSKKRR.",
+  "..KKKsSSSSSSSSsKKK..",
+  "..KKKSSSSMMSSSSKKK..",
+  "..KKKSSSSSSSSSSKKK..",
+  ".....SSSSSS.........",
+  "....TTTTTTTTTTTT....",
+  "....TTTTRRRRTTTT....",
+  "....TTTTTRRTTTTT....",
+  "...sTTTTTTTTTTTT....",
+  "....sTTTTTTTTTT.....",
+  ".....sTTTTTTTT......",
+  "......sTTTTTT.......",
+  "...VVVVVVVVVVVVVV...",
+  "...VVvVVVVVVVVvVV...",
+  "...VVVVVVVVVVVVVV...",
+  "....SSSSS..SSSSS....",
+  "....TTTTT..TTTTT....",
+  "....OOOOO..OOOOO....",
 ];
 
 const SPRITES: Record<CharacterId, Record<CharacterPose, Sprite>> = {
@@ -121,8 +172,8 @@ const SPRITES: Record<CharacterId, Record<CharacterPose, Sprite>> = {
   girl: { idle: GIRL_IDLE, wave: GIRL_WAVE },
 };
 
-export const SPRITE_WIDTH = 14;
-export const SPRITE_HEIGHT = 16;
+export const SPRITE_WIDTH = 20;
+export const SPRITE_HEIGHT = 28;
 
 export interface PixelCharacterProps {
   id: CharacterId;
@@ -188,7 +239,11 @@ export function validateSprites(): string[] {
   const errors: string[] = [];
   (Object.keys(SPRITES) as CharacterId[]).forEach((id) => {
     (Object.keys(SPRITES[id]) as CharacterPose[]).forEach((pose) => {
-      SPRITES[id][pose].forEach((row, i) => {
+      const sprite = SPRITES[id][pose];
+      if (sprite.length !== SPRITE_HEIGHT) {
+        errors.push(`${id}/${pose}: height ${sprite.length}, expected ${SPRITE_HEIGHT}`);
+      }
+      sprite.forEach((row, i) => {
         if (row.length !== SPRITE_WIDTH) {
           errors.push(`${id}/${pose} row ${i}: width ${row.length}`);
         }
