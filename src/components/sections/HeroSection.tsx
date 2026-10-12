@@ -32,7 +32,7 @@ export function HeroSection() {
             label={t({ en: "City schoolboy gazing at the comet", vi: "Cậu học sinh thành phố ngắm sao băng" })}
           />
         </div>
-        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#4a2438] drop-shadow-[0_1px_8px_rgba(255,240,220,0.9)]">
+        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#f3e2c8]/90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
           {t({ en: "the city", vi: "thành phố" })}
         </p>
       </div>
@@ -50,13 +50,18 @@ export function HeroSection() {
           pose="idle"
           label={t({ en: "Small-town schoolgirl gazing at the comet", vi: "Cô học sinh thị trấn nhỏ ngắm sao băng" })}
         />
-        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#4a2438] drop-shadow-[0_1px_8px_rgba(255,240,220,0.9)]">
+        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#f3e2c8]/90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
           {t({ en: "the small town", vi: "thị trấn nhỏ" })}
         </p>
       </div>
 
       {/* center copy */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+        {/* soft dark halo — keeps the title legible over the bright painting */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[28rem] w-[48rem] max-w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(8,8,26,0.5),transparent)] blur-2xl"
+        />
         <p className="yn-eyebrow mb-5">
           <span className="yn-jp-accent mr-3 text-base" lang="ja">星空</span>
           {t({ en: "under the same starry sky", vi: "dưới cùng một bầu trời sao" })}

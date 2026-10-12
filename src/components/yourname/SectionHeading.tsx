@@ -26,7 +26,12 @@ export function SectionHeading({
   description,
 }: SectionHeadingProps) {
   return (
-    <div className="yn-section-head mx-auto mb-12 max-w-3xl text-center">
+    <div className="yn-section-head relative mx-auto mb-12 max-w-3xl text-center">
+      {/* horizon glow — the heading basks in the same twilight as the world */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[-3rem] -z-10 h-56 w-[38rem] max-w-[120%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(8,8,24,0.55),transparent)] blur-2xl"
+      />
       <div className="mb-3 flex items-center justify-center gap-3">
         <span className="yn-jp-accent text-2xl" lang="ja" aria-label={accentReading}>
           {accent}

@@ -15,7 +15,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-[#fdf6ec]/10 bg-[#060818]/70 px-4 py-10 backdrop-blur-md">
+    <footer className="relative z-10 border-t border-[#fdf6ec]/10 bg-[#060818]/55 px-4 py-10 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 text-center">
         <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.3em] text-[#e8dcc8]/60">
           <CordKnot />
