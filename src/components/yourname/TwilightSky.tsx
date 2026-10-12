@@ -7,14 +7,16 @@
  * the world, and the canvas breathes life over it —
  *
  * Layers (back → front):
- *  1. Painted panorama (ultra-slow drift zoom; gradient fallback while loading)
- *  2. Readability veil so text always stays legible
- *  3. Warm horizon glow that swells with the music's energy
- *  4. God rays fanning up from below the horizon
- *  5. Twinkling starfield (amplitude follows beat energy)
- *  6. Quick shooting stars
- *  7. Periodic comet with glowing tail — grand ones split Tiamat-style
- *  8. Floating light motes / lens-dust
+ *  1. Deep twilight gradient — the calm sky behind all content
+ *  2. Painted kataware panorama, dissolving away on scroll (hero = full
+ *     splendor; content = faint ghost so text stays crisp)
+ *  3. Readability veil, fading with the painting
+ *  4. Warm horizon glow that swells with the music's energy
+ *  5. God rays fanning up from below the horizon
+ *  6. Twinkling starfield (amplitude follows beat energy)
+ *  7. Quick shooting stars
+ *  8. Periodic comet with glowing tail — grand ones split Tiamat-style
+ *  9. Floating light motes / lens-dust
  *
  * Reads the shared beat engine via ref every frame — no React re-renders.
  * Honors prefers-reduced-motion by painting one static frame.
@@ -141,14 +143,13 @@ export function TwilightSky() {
       const pulse = frame.pulse;
       const chorusBoost = frame.section === "chorus" ? 1.6 : 1;
 
-      /* 1 — the painted world (ultra-slow drift; gradient fallback first) */
-      if (bgReady && bgImg.naturalWidth > 0) {
-        const zoom = reduced ? 1 : 1 + 0.035 * (0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 75));
-        const s = Math.max(w / bgImg.naturalWidth, h / bgImg.naturalHeight) * zoom;
-        const dw = bgImg.naturalWidth * s;
-        const dh = bgImg.naturalHeight * s;
-        ctx.drawImage(bgImg, (w - dw) / 2, (h - dh) / 2, dw, dh);
-      } else {
+      /* scroll dissolve — the painting reigns over the hero, then yields to
+         the calm gradient so content text stays crisp (smoothstep fade) */
+      const scrollF = Math.min(1, (window.scrollY || 0) / (h * 0.9));
+      const paintA = 1 - scrollF * scrollF * (3 - 2 * scrollF);
+
+      /* 1 — deep twilight gradient: the calm sky behind all content */
+      {
         const g = ctx.createLinearGradient(0, 0, 0, h);
         g.addColorStop(0, "#070b26");
         g.addColorStop(0.34, "#1c1a4d");
@@ -161,8 +162,20 @@ export function TwilightSky() {
         ctx.fillRect(0, 0, w, h);
       }
 
-      /* 2 — readability veil */
+      /* 2 — the painted world (ultra-slow drift), dissolving on scroll */
+      if (bgReady && bgImg.naturalWidth > 0 && paintA > 0.02) {
+        const zoom = reduced ? 1 : 1 + 0.035 * (0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 75));
+        const s = Math.max(w / bgImg.naturalWidth, h / bgImg.naturalHeight) * zoom;
+        const dw = bgImg.naturalWidth * s;
+        const dh = bgImg.naturalHeight * s;
+        ctx.globalAlpha = Math.max(0.06, paintA);
+        ctx.drawImage(bgImg, (w - dw) / 2, (h - dh) / 2, dw, dh);
+        ctx.globalAlpha = 1;
+      }
+
+      /* 3 — readability veil (fades with the painting) */
       {
+        ctx.globalAlpha = 0.25 + 0.75 * paintA;
         const v = ctx.createLinearGradient(0, 0, 0, h);
         v.addColorStop(0, "rgba(7,11,38,0.38)");
         v.addColorStop(0.35, "rgba(7,11,38,0.12)");
@@ -170,9 +183,10 @@ export function TwilightSky() {
         v.addColorStop(1, "rgba(7,11,38,0.42)");
         ctx.fillStyle = v;
         ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = 1;
       }
 
-      /* 3 — warm horizon glow that swells with the music */
+      /* 4 — warm horizon glow that swells with the music */
       {
         const glowR = Math.max(w, h) * (0.5 + energy * 0.1);
         const glow = ctx.createRadialGradient(w * 0.5, h * 0.86, 0, w * 0.5, h * 0.86, glowR);
@@ -182,7 +196,7 @@ export function TwilightSky() {
         ctx.fillRect(0, 0, w, h);
       }
 
-      /* 4 — god rays fanning up from below the horizon */
+      /* 5 — god rays fanning up from below the horizon */
       {
         const x0 = w * 0.5;
         const y0 = h * 0.95;
@@ -209,7 +223,7 @@ export function TwilightSky() {
         }
       }
 
-      /* 5 — stars */
+      /* 6 — stars */
       for (const s of stars) {
         const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
         const a = Math.min(1, tw * (0.45 + energy * 0.75));
@@ -228,7 +242,7 @@ export function TwilightSky() {
         }
       }
 
-      /* 6 — quick shooting stars */
+      /* 7 — quick shooting stars */
       meteorTimer -= dt;
       if (meteorTimer <= 0) {
         spawnMeteor();
@@ -260,7 +274,7 @@ export function TwilightSky() {
         ctx.stroke();
       }
 
-      /* 7 — comet (occasionally a grand Tiamat-class one) */
+      /* 8 — comet (occasionally a grand Tiamat-class one) */
       cometTimer -= dt * chorusBoost;
       if (!comet.active && cometTimer <= 0) {
         spawnComet(energy);
@@ -334,7 +348,7 @@ export function TwilightSky() {
         }
       }
 
-      /* 8 — floating light motes */
+      /* 9 — floating light motes */
       for (const m of motes) {
         m.y -= m.vy * dt;
         if (m.y < -10) { m.y = h + 10; m.x = rand() * w; }
