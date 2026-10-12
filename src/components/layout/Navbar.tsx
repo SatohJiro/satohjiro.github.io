@@ -16,6 +16,7 @@ const NAV = [
   { href: "#projects", en: "Projects", vi: "Dự án" },
   { href: "#skills", en: "Skills", vi: "Kỹ năng" },
   { href: "#awards", en: "Honors", vi: "Vinh danh" },
+  { href: "#scenes", en: "Scenes", vi: "Khung hình" },
   { href: "#contact", en: "Contact", vi: "Liên hệ" },
 ];
 
