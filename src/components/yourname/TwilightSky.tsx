@@ -3,13 +3,18 @@
 /**
  * TwilightSky — full-viewport cinematic canvas for the Your Name theme.
  *
+ * A "living painting": an original kataware-doki panorama painting forms
+ * the world, and the canvas breathes life over it —
+ *
  * Layers (back → front):
- *  1. Kataware-doki twilight gradient (indigo → violet → rose → amber horizon)
- *  2. Twinkling starfield (twinkle amplitude follows beat energy)
- *  3. Periodic comet with glowing tail (pulse-reactive)
- *  4. Drifting clouds tinted by the sunset
- *  5. Floating light particles / lens-dust
- *  6. Distant hill + town-light silhouettes along the bottom
+ *  1. Painted panorama (ultra-slow drift zoom; gradient fallback while loading)
+ *  2. Readability veil so text always stays legible
+ *  3. Warm horizon glow that swells with the music's energy
+ *  4. God rays fanning up from below the horizon
+ *  5. Twinkling starfield (amplitude follows beat energy)
+ *  6. Quick shooting stars
+ *  7. Periodic comet with glowing tail — grand ones split Tiamat-style
+ *  8. Floating light motes / lens-dust
  *
  * Reads the shared beat engine via ref every frame — no React re-renders.
  * Honors prefers-reduced-motion by painting one static frame.
@@ -20,14 +25,12 @@ import { useBeatSyncContext } from "./BeatSyncProvider";
 
 interface Star { x: number; y: number; r: number; phase: number; speed: number; bright: boolean }
 interface Mote { x: number; y: number; r: number; vy: number; phase: number }
-interface Cloud { x: number; y: number; w: number; h: number; v: number; a: number }
 interface Comet {
   active: boolean; x: number; y: number; vx: number; vy: number; life: number; grand: boolean;
   // Tiamat split — a fragment that breaks off mid-flight
   fsplit: boolean; fx: number; fy: number; fvx: number; fvy: number; flife: number;
 }
 interface Meteor { active: boolean; x: number; y: number; vx: number; vy: number; life: number }
-interface TownLight { x: number; y: number; r: number; phase: number }
 
 function mulberry(seed: number) {
   let s = seed >>> 0;
@@ -38,6 +41,8 @@ function mulberry(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+
+const BG_SRC = "/yourname/scenes/scene-kataware.jpg";
 
 export function TwilightSky() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -53,10 +58,14 @@ export function TwilightSky() {
     const rand = mulberry(20261012);
     let w = 0, h = 0, dpr = 1;
 
+    // the painted world
+    const bgImg = new Image();
+    let bgReady = false;
+    bgImg.onload = () => { bgReady = true; };
+    bgImg.src = BG_SRC;
+
     let stars: Star[] = [];
     let motes: Mote[] = [];
-    let clouds: Cloud[] = [];
-    let lights: TownLight[] = [];
     const comet: Comet = {
       active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0, grand: false,
       fsplit: false, fx: 0, fy: 0, fvx: 0, fvy: 0, flife: 0,
@@ -94,27 +103,7 @@ export function TwilightSky() {
         vy: 6 + rand() * 14,
         phase: rand() * Math.PI * 2,
       }));
-      clouds = Array.from({ length: 9 }, (_, i) => ({
-        x: rand() * w,
-        y: h * (0.14 + rand() * 0.52),
-        w: 220 + rand() * 340,
-        h: 30 + rand() * 52,
-        v: (4 + rand() * 8) * (i % 2 === 0 ? 1 : -1),
-        a: 0.10 + rand() * 0.12,
-      }));
-      // town lights sit along the hill silhouette near the bottom
-      lights = Array.from({ length: 46 }, () => ({
-        x: rand() * w,
-        y: h * (0.86 + rand() * 0.1),
-        r: 0.8 + rand() * 1.6,
-        phase: rand() * Math.PI * 2,
-      }));
     };
-
-    const hillY = (x: number, ridge: number) =>
-      h * 0.88 -
-      Math.sin(x * 0.004 + ridge) * h * 0.03 -
-      Math.sin(x * 0.011 + ridge * 2.3) * h * 0.015;
 
     const spawnComet = (energy: number) => {
       const fromLeft = rand() < 0.5;
@@ -152,52 +141,61 @@ export function TwilightSky() {
       const pulse = frame.pulse;
       const chorusBoost = frame.section === "chorus" ? 1.6 : 1;
 
-      /* 1 — twilight gradient (subtle breathing with energy) */
-      const breathe = energy * 0.05;
-      const g = ctx.createLinearGradient(0, 0, 0, h);
-      g.addColorStop(0, "#070b26");
-      g.addColorStop(0.34, "#1c1a4d");
-      g.addColorStop(0.55, "#4a2a6b");
-      g.addColorStop(0.7, "#a34a6e");
-      g.addColorStop(0.82, "#e0705a");
-      g.addColorStop(0.92, "#f7b267");
-      g.addColorStop(1, "#0a0a18");
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, w, h);
-      // warm horizon glow that swells with the music
-      const glowR = Math.max(w, h) * (0.5 + breathe * 2);
-      const glow = ctx.createRadialGradient(w * 0.5, h * 0.86, 0, w * 0.5, h * 0.86, glowR);
-      glow.addColorStop(0, `rgba(255,150,90,${0.20 + energy * 0.22})`);
-      glow.addColorStop(1, "rgba(255,150,90,0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, w, h);
+      /* 1 — the painted world (ultra-slow drift; gradient fallback first) */
+      if (bgReady && bgImg.naturalWidth > 0) {
+        const zoom = reduced ? 1 : 1 + 0.035 * (0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 75));
+        const s = Math.max(w / bgImg.naturalWidth, h / bgImg.naturalHeight) * zoom;
+        const dw = bgImg.naturalWidth * s;
+        const dh = bgImg.naturalHeight * s;
+        ctx.drawImage(bgImg, (w - dw) / 2, (h - dh) / 2, dw, dh);
+      } else {
+        const g = ctx.createLinearGradient(0, 0, 0, h);
+        g.addColorStop(0, "#070b26");
+        g.addColorStop(0.34, "#1c1a4d");
+        g.addColorStop(0.55, "#4a2a6b");
+        g.addColorStop(0.7, "#a34a6e");
+        g.addColorStop(0.82, "#e0705a");
+        g.addColorStop(0.92, "#f7b267");
+        g.addColorStop(1, "#0a0a18");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+      }
 
-      /* 1b — faint milky-way band, diagonal across the upper sky */
-      ctx.save();
-      ctx.translate(w * 0.5, h * 0.28);
-      ctx.rotate(-0.42);
-      const mw = ctx.createLinearGradient(0, -h * 0.22, 0, h * 0.22);
-      mw.addColorStop(0, "rgba(205,210,255,0)");
-      mw.addColorStop(0.5, `rgba(205,210,255,${0.055 + energy * 0.035})`);
-      mw.addColorStop(1, "rgba(205,210,255,0)");
-      ctx.fillStyle = mw;
-      ctx.fillRect(-w, -h * 0.22, w * 2, h * 0.44);
-      ctx.restore();
+      /* 2 — readability veil */
+      {
+        const v = ctx.createLinearGradient(0, 0, 0, h);
+        v.addColorStop(0, "rgba(7,11,38,0.38)");
+        v.addColorStop(0.35, "rgba(7,11,38,0.12)");
+        v.addColorStop(0.62, "rgba(7,11,38,0.10)");
+        v.addColorStop(1, "rgba(7,11,38,0.42)");
+        ctx.fillStyle = v;
+        ctx.fillRect(0, 0, w, h);
+      }
 
-      /* 1c — god rays fanning up from below the horizon */
+      /* 3 — warm horizon glow that swells with the music */
+      {
+        const glowR = Math.max(w, h) * (0.5 + energy * 0.1);
+        const glow = ctx.createRadialGradient(w * 0.5, h * 0.86, 0, w * 0.5, h * 0.86, glowR);
+        glow.addColorStop(0, `rgba(255,150,90,${0.12 + energy * 0.16})`);
+        glow.addColorStop(1, "rgba(255,150,90,0)");
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      /* 4 — god rays fanning up from below the horizon */
       {
         const x0 = w * 0.5;
         const y0 = h * 0.95;
         for (let i = 0; i < 7; i++) {
           const spread = (i / 6 - 0.5) * 1.15;
-          const sway = Math.sin(t * 0.07 + i * 1.7) * 0.035;
+          const sway = reduced ? 0 : Math.sin(t * 0.07 + i * 1.7) * 0.035;
           const ang = -Math.PI / 2 + spread + sway;
           const len = h * 0.9;
           const x1 = x0 + Math.cos(ang) * len;
           const y1 = y0 + Math.sin(ang) * len;
           const perp = ang + Math.PI / 2;
           const half = 16 + i * 7;
-          const aMax = 0.045 + energy * 0.05;
+          const aMax = 0.04 + energy * 0.045;
           const rg = ctx.createLinearGradient(x0, y0, x1, y1);
           rg.addColorStop(0, `rgba(255,196,138,${aMax.toFixed(3)})`);
           rg.addColorStop(1, "rgba(255,196,138,0)");
@@ -211,25 +209,7 @@ export function TwilightSky() {
         }
       }
 
-      /* 1d — anamorphic lens flare along the horizon */
-      {
-        const flareA = 0.08 + energy * 0.1;
-        const fl = ctx.createLinearGradient(0, 0, w, 0);
-        fl.addColorStop(0, "rgba(255,170,120,0)");
-        fl.addColorStop(0.5, `rgba(255,196,150,${flareA.toFixed(3)})`);
-        fl.addColorStop(1, "rgba(255,170,120,0)");
-        ctx.fillStyle = fl;
-        ctx.fillRect(0, h * 0.815, w, 2.5);
-        const orb = ctx.createRadialGradient(w * 0.72, h * 0.7, 0, w * 0.72, h * 0.7, 26);
-        orb.addColorStop(0, `rgba(255,200,160,${(flareA * 0.8).toFixed(3)})`);
-        orb.addColorStop(1, "rgba(255,200,160,0)");
-        ctx.fillStyle = orb;
-        ctx.beginPath();
-        ctx.arc(w * 0.72, h * 0.7, 26, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      /* 2 — stars */
+      /* 5 — stars */
       for (const s of stars) {
         const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
         const a = Math.min(1, tw * (0.45 + energy * 0.75));
@@ -248,7 +228,7 @@ export function TwilightSky() {
         }
       }
 
-      /* 2b — quick shooting stars */
+      /* 6 — quick shooting stars */
       meteorTimer -= dt;
       if (meteorTimer <= 0) {
         spawnMeteor();
@@ -280,7 +260,7 @@ export function TwilightSky() {
         ctx.stroke();
       }
 
-      /* 3 — comet (occasionally a grand Tiamat-class one) */
+      /* 7 — comet (occasionally a grand Tiamat-class one) */
       cometTimer -= dt * chorusBoost;
       if (!comet.active && cometTimer <= 0) {
         spawnComet(energy);
@@ -354,28 +334,7 @@ export function TwilightSky() {
         }
       }
 
-      /* 4 — clouds: puffy clusters with sunset-lit top edges */
-      for (const c of clouds) {
-        c.x += c.v * dt;
-        if (c.x - c.w > w) c.x = -c.w;
-        if (c.x + c.w < 0) c.x = w + c.w;
-        const tint = c.y > h * 0.55 ? "255,150,120" : "120,110,190";
-        const puffs = 5;
-        for (let p = 0; p < puffs; p++) {
-          const px = c.x + (p / (puffs - 1) - 0.5) * c.w * 0.8;
-          const py = c.y + Math.sin(p * 2.1 + c.x * 0.01) * c.h * 0.18;
-          const pr = c.w * (0.22 + 0.06 * Math.sin(p * 3.7));
-          const pg = ctx.createRadialGradient(px, py, 0, px, py, pr);
-          pg.addColorStop(0, `rgba(${tint},${(c.a * 1.7).toFixed(3)})`);
-          pg.addColorStop(1, `rgba(${tint},0)`);
-          ctx.fillStyle = pg;
-          ctx.beginPath();
-          ctx.arc(px, py, pr, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      /* 5 — floating light motes */
+      /* 8 — floating light motes */
       for (const m of motes) {
         m.y -= m.vy * dt;
         if (m.y < -10) { m.y = h + 10; m.x = rand() * w; }
@@ -386,29 +345,6 @@ export function TwilightSky() {
         ctx.fillStyle = mg;
         ctx.beginPath();
         ctx.arc(m.x, m.y, m.r * 3, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      /* 6 — hill silhouettes + town lights */
-      ctx.fillStyle = "#0b0b1c";
-      ctx.beginPath();
-      ctx.moveTo(0, h);
-      for (let x = 0; x <= w; x += 8) ctx.lineTo(x, hillY(x, 1.7));
-      ctx.lineTo(w, h);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = "#060614";
-      ctx.beginPath();
-      ctx.moveTo(0, h);
-      for (let x = 0; x <= w; x += 8) ctx.lineTo(x, hillY(x, 4.2) + h * 0.035);
-      ctx.lineTo(w, h);
-      ctx.closePath();
-      ctx.fill();
-      for (const L of lights) {
-        const a = 0.35 + 0.4 * (0.5 + 0.5 * Math.sin(t * 2 + L.phase)) + energy * 0.25;
-        ctx.fillStyle = `rgba(255,190,110,${Math.min(1, a).toFixed(3)})`;
-        ctx.beginPath();
-        ctx.arc(L.x, L.y, L.r, 0, Math.PI * 2);
         ctx.fill();
       }
 
