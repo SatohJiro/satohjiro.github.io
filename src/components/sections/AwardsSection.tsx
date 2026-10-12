@@ -2,23 +2,19 @@
 
 /**
  * AwardsSection (Your Name theme) — 輝 brilliance.
- * Honors ledger under the twilight sky.
+ *
+ * An editorial honors ledger: numbered rows with hairline dividers,
+ * generous whitespace, no icon badges or pill tags. It reads like a
+ * printed record, not a template.
  */
 
 import React from "react";
-import { Trophy, Sparkles, Medal, Award } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { awardsData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
 import { SectionHeading } from "@/components/yourname/SectionHeading";
 import { Reveal } from "@/components/yourname/Reveal";
 import { BraidedCord } from "@/components/yourname/BraidedCord";
-
-const ICONS: Record<string, React.ReactNode> = {
-  Trophy: <Trophy className="h-6 w-6" aria-hidden="true" />,
-  Sparkles: <Sparkles className="h-6 w-6" aria-hidden="true" />,
-  Medal: <Medal className="h-6 w-6" aria-hidden="true" />,
-};
 
 export function AwardsSection() {
   const { isVi, t } = useLanguage();
@@ -35,32 +31,35 @@ export function AwardsSection() {
           />
         </Reveal>
 
-        <div className="space-y-5">
+        <ol className="mt-6">
           {awardsData.map((a, i) => (
             <Reveal key={a.id} delay={i * 80}>
-              <article className="yn-card yn-card-interactive flex gap-5 p-6 sm:p-7">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#d8364f] to-[#e0705a] text-white shadow-[0_8px_24px_-6px_rgba(216,54,79,0.7)]">
-                  {ICONS[a.iconName] ?? <Award className="h-6 w-6" aria-hidden="true" />}
+              <li className="grid gap-3 border-t border-[#e8dcc8]/15 py-7 sm:grid-cols-[88px_1fr] sm:gap-8">
+                <div className="flex items-baseline gap-4 sm:block">
+                  <p className="font-mono text-base text-[#f7b267]">{a.year}</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#e8dcc8]/40 sm:mt-2">
+                    {t({ en: "No.", vi: "Số" })} {String(i + 1).padStart(2, "0")}
+                  </p>
                 </div>
                 <div className="min-w-0">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="yn-display text-xl text-[#fdf6ec]">
-                      {resolveLocale(a.title, isVi)}
-                    </h3>
-                    <span className="font-mono text-xs text-[#f7b267]/80">{a.year}</span>
-                  </div>
-                  <p className="mt-1 text-sm text-[#e8dcc8]/75">
+                  <h3 className="yn-display text-2xl leading-snug text-[#fdf6ec]">
+                    {resolveLocale(a.title, isVi)}
+                  </h3>
+                  <p className="mt-2 text-[13px] uppercase tracking-[0.16em] text-[#e8dcc8]/55">
                     {resolveLocale(a.organization, isVi)}
                   </p>
-                  <p className="yn-tag mt-3 inline-block">{resolveLocale(a.badgeText, isVi)}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[#e8dcc8]/85">
+                  <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[#e8dcc8]/80">
                     {resolveLocale(a.description, isVi)}
                   </p>
+                  <p className="mt-3 font-mono text-xs text-[#f7b267]/70">
+                    {resolveLocale(a.badgeText, isVi)}
+                  </p>
                 </div>
-              </article>
+              </li>
             </Reveal>
           ))}
-        </div>
+        </ol>
+        <div className="border-t border-[#e8dcc8]/15" />
 
         <BraidedCord className="mt-16" />
       </div>

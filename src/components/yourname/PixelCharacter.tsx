@@ -12,9 +12,12 @@
  *
  * Deliberately NOT synced to the music beat — the sky dances to the music,
  * the characters just enjoy the evening.
+ *
+ * Asset note: all poses of a character share one identical canvas (padded
+ * and position-aligned), so blinks and pose swaps never jump or shift.
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
 
 export type CharacterId = "boy" | "girl";
@@ -46,39 +49,44 @@ export interface PixelCharacterProps {
   label: string;
 }
 
-/** Run `fn` after a random delay in [minMs, maxMs], tracked for cleanup. */
-function useRandomLoop(
+/**
+ * Random pulse: turns `true` for `holdMs` every `minDelay–maxDelay` ms.
+ * Used for blinks and autonomous waves.
+ */
+function useRandomPulse(
   active: boolean,
-  minMs: number,
-  maxMs: number,
-  fn: () => void,
-  holdMs = 0,
-) {
-  const timers = useRef<number[]>([]);
+  minDelay: number,
+  maxDelay: number,
+  holdMs: number,
+): boolean {
+  const [on, setOn] = useState(false);
   useEffect(() => {
     if (!active) return;
     let alive = true;
-    const later = (cb: () => void, ms: number) => {
-      const t = window.setTimeout(() => {
-        if (alive) cb();
-      }, ms);
-      timers.current.push(t);
-    };
-    const schedule = (): void => {
-      later(() => {
-        fn();
-        if (holdMs > 0) later(schedule, holdMs);
-        else schedule();
-      }, minMs + Math.random() * (maxMs - minMs));
+    let t1 = 0;
+    let t2 = 0;
+    const schedule = () => {
+      t1 = window.setTimeout(
+        () => {
+          if (!alive) return;
+          setOn(true);
+          t2 = window.setTimeout(() => {
+            if (!alive) return;
+            setOn(false);
+            schedule();
+          }, holdMs);
+        },
+        minDelay + Math.random() * (maxDelay - minDelay),
+      );
     };
     schedule();
     return () => {
       alive = false;
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, [active, minDelay, maxDelay, holdMs]);
+  return on;
 }
 
 export function PixelCharacter({
@@ -87,52 +95,27 @@ export function PixelCharacter({
   className = "",
   label,
 }: PixelCharacterProps) {
-  const [blinking, setBlinking] = useState(false);
-  const [autoWaving, setAutoWaving] = useState(false);
+  const idle = pose === "idle";
+  const blinking = useRandomPulse(idle, 2600, 6000, 170);
+  const autoWaving = useRandomPulse(idle, 10000, 16000, 1600);
   const [excited, setExcited] = useState(false);
   const [hearts, setHearts] = useState<number[]>([]);
-  const timers = useRef<number[]>([]);
-  const idle = pose === "idle";
 
-  // Periodic happy blink: every ~3–6s, eyes close ~170ms.
-  useRandomLoop(
-    idle,
-    2600,
-    6000,
-    () => {
-      setBlinking(true);
-      const t = window.setTimeout(() => setBlinking(false), 170);
-      timers.current.push(t);
-    },
-  );
-
-  // Every ~10–16s the character waves hello on its own for ~1.6s.
-  useRandomLoop(idle, 10000, 16000, () => setAutoWaving(true), 1600);
+  // End the tap excitement after the hop + hearts finish.
   useEffect(() => {
-    if (!autoWaving) return;
-    const t = window.setTimeout(() => setAutoWaving(false), 1600);
-    timers.current.push(t);
-    return () => clearTimeout(t);
-  }, [autoWaving]);
-
-  // Tap / click: happy hop, wave, hearts burst.
-  const handleInteract = () => {
-    if (excited) return;
-    setExcited(true);
-    setHearts(HEART_SPOTS.map((_, i) => Date.now() + i));
+    if (!excited) return;
     const t = window.setTimeout(() => {
       setExcited(false);
       setHearts([]);
     }, 1250);
-    timers.current.push(t);
-  };
+    return () => clearTimeout(t);
+  }, [excited]);
 
-  useEffect(
-    () => () => {
-      timers.current.forEach(clearTimeout);
-    },
-    [],
-  );
+  const handleInteract = () => {
+    if (excited) return;
+    setExcited(true);
+    setHearts(HEART_SPOTS.map((_, i) => Date.now() + i));
+  };
 
   const waving = excited || autoWaving;
   const shownPose: CharacterPose = waving ? "wave" : pose;
