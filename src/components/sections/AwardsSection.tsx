@@ -1,122 +1,69 @@
 "use client";
 
+/**
+ * AwardsSection (Your Name theme) — 輝 brilliance.
+ * Honors ledger under the twilight sky.
+ */
+
 import React from "react";
+import { Trophy, Sparkles, Medal, Award } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { awardsData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
-import { GlassCard } from "../glass/GlassCard";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassButton } from "../glass/GlassButton";
-import {
-  Trophy,
-  Medal,
-  Award,
-  PartyPopper,
-} from "lucide-react";
-import { telemetry } from "@/lib/telemetry";
+import { SectionHeading } from "@/components/yourname/SectionHeading";
+import { Reveal } from "@/components/yourname/Reveal";
+import { BraidedCord } from "@/components/yourname/BraidedCord";
+
+const ICONS: Record<string, React.ReactNode> = {
+  Trophy: <Trophy className="h-6 w-6" aria-hidden="true" />,
+  Sparkles: <Sparkles className="h-6 w-6" aria-hidden="true" />,
+  Medal: <Medal className="h-6 w-6" aria-hidden="true" />,
+};
 
 export function AwardsSection() {
-  const { isVi } = useLanguage();
-
-  const awardIcons: Record<string, React.ReactNode> = {
-    Trophy: <Trophy className="w-6 h-6 text-amber-500" />,
-    Sparkles: <Award className="w-6 h-6 text-blue-500" />,
-    Medal: <Medal className="w-6 h-6 text-blue-500" />,
-  };
-
-  const handleCelebrate = (awardName: string) => {
-    telemetry.track("click", `celebrate_award_${awardName}`);
-    import("canvas-confetti")
-      .then((mod) => {
-        mod.default({
-          particleCount: 60,
-          spread: 60,
-          origin: { y: 0.7 },
-        });
-      })
-      .catch(() => {});
-  };
+  const { isVi, t } = useLanguage();
 
   return (
-    <section id="awards" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Giải Thưởng & <span className="text-gradient-amber">Ghi Nhận Đóng Góp</span>
-              </>
-            ) : (
-              <>
-                Honors & <span className="text-gradient-amber">Key Recognitions</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            {isVi
-              ? "Sự ghi nhận từ nhà trường và công ty cho thành tích học tập xuất sắc và đóng góp phát triển sản phẩm."
-              : "Recognitions from university leadership and company teams for academic performance and project contributions."}
-          </p>
-        </div>
+    <section id="awards" className="relative px-4 py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl">
+        <Reveal>
+          <SectionHeading
+            accent="輝"
+            accentReading="kagayaki — brilliance"
+            eyebrow={t({ en: "chapter five", vi: "chương năm" })}
+            title={t({ en: "Honors", vi: "Vinh danh" })}
+          />
+        </Reveal>
 
-        {/* Awards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {awardsData.map((award) => (
-            <GlassCard
-              key={award.id}
-              className="flex flex-col justify-between p-6 sm:p-7 space-y-6 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70"
-              glowColor="none"
-            >
-              <div className="space-y-4">
-                {/* Header Icon & Year */}
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shadow-xs">
-                    {awardIcons[award.iconName] || <Award className="w-6 h-6 text-amber-500 dark:text-amber-400" />}
+        <div className="space-y-5">
+          {awardsData.map((a, i) => (
+            <Reveal key={a.id} delay={i * 80}>
+              <article className="yn-card yn-card-interactive flex gap-5 p-6 sm:p-7">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#d8364f] to-[#e0705a] text-white shadow-[0_8px_24px_-6px_rgba(216,54,79,0.7)]">
+                  {ICONS[a.iconName] ?? <Award className="h-6 w-6" aria-hidden="true" />}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <h3 className="yn-display text-xl text-[#fdf6ec]">
+                      {resolveLocale(a.title, isVi)}
+                    </h3>
+                    <span className="font-mono text-xs text-[#f7b267]/80">{a.year}</span>
                   </div>
-                  <GlassBadge variant={award.id === "valedictorian" ? "amber" : "blue"} size="sm">
-                    {award.year}
-                  </GlassBadge>
+                  <p className="mt-1 text-sm text-[#e8dcc8]/75">
+                    {resolveLocale(a.organization, isVi)}
+                  </p>
+                  <p className="yn-tag mt-3 inline-block">{resolveLocale(a.badgeText, isVi)}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[#e8dcc8]/85">
+                    {resolveLocale(a.description, isVi)}
+                  </p>
                 </div>
-
-                {/* Title */}
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    {resolveLocale(award.title, isVi)}
-                  </h3>
-                  <div className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 mt-1">
-                    {resolveLocale(award.badgeText, isVi)}
-                  </div>
-                </div>
-
-                {/* Organization */}
-                <div className="text-xs text-slate-600 dark:text-slate-400 font-medium pt-1">
-                  <span>{resolveLocale(award.organization, isVi)}</span>
-                </div>
-
-                {/* Description */}
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
-                  {resolveLocale(award.description, isVi)}
-                </p>
-              </div>
-
-              {/* Celebrate Button */}
-              <div className="pt-4 border-t border-slate-200/80 dark:border-white/10">
-                <GlassButton
-                  onClick={() => handleCelebrate(award.title.en)}
-                  variant="outline"
-                  size="sm"
-                  icon={<PartyPopper className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
-                  className="w-full text-xs text-slate-800 dark:text-slate-200"
-                >
-                  {isVi ? "Chúc Mừng Thành Tích" : "Celebrate Honor"}
-                </GlassButton>
-              </div>
-            </GlassCard>
+              </article>
+            </Reveal>
           ))}
         </div>
+
+        <BraidedCord className="mt-16" />
       </div>
     </section>
   );
 }
-

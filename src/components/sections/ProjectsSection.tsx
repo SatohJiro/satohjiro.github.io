@@ -1,208 +1,155 @@
 "use client";
 
+/**
+ * ProjectsSection (Your Name theme) — 夢 dream.
+ * Featured project spread + card grid. No modal — highlights inline.
+ */
+
 import React, { useState } from "react";
+import { ExternalLink, Star } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { projectsData } from "@/data/portfolio-content";
 import { resolveLocale, resolveLocaleArray } from "@/lib/locale";
-import { ProjectItem } from "@/types";
-import { GlassCard } from "../glass/GlassCard";
-import { GlassBadge } from "../glass/GlassBadge";
-import { GlassButton } from "../glass/GlassButton";
-import { ProjectDetailModal } from "./ProjectDetailModal";
-import { ExternalLink } from "lucide-react";
 import { GithubIcon } from "../icons/BrandIcons";
-import { telemetry } from "@/lib/telemetry";
+import { SectionHeading } from "@/components/yourname/SectionHeading";
+import { Reveal } from "@/components/yourname/Reveal";
+import { BraidedCord } from "@/components/yourname/BraidedCord";
+
+const FILTERS = [
+  { id: "all", label: { en: "All", vi: "Tất cả" } },
+  { id: "web", label: { en: "Web", vi: "Web" } },
+  { id: "ai", label: { en: "AI", vi: "AI" } },
+  { id: "academic", label: { en: "Academic", vi: "Học thuật" } },
+] as const;
 
 export function ProjectsSection() {
-  const { isVi } = useLanguage();
+  const { isVi, t } = useLanguage();
   const [filter, setFilter] = useState<string>("all");
-  const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
 
-  const categories = [
-    { id: "all", label: { en: "All Projects", vi: "Tất Cả Dự Án" } },
-    { id: "web", label: { en: "Web Platforms", vi: "Dự Án Web" } },
-    { id: "ai", label: { en: "AI Tools", vi: "Ứng Dụng AI" } },
-    { id: "academic", label: { en: "Academic & Algorithms", vi: "Học Thuật & Thuật Toán" } },
-  ];
+  const visible = projectsData.filter((p) => filter === "all" || p.category === filter);
+  const featured = visible.find((p) => p.featured);
+  const rest = visible.filter((p) => p !== featured);
 
-  const filteredProjects = projectsData.filter((proj) => {
-    if (filter === "all") return true;
-    return proj.category === filter;
-  });
-
-  const handleFilterChange = (id: string) => {
-    setFilter(id);
-    telemetry.track("click", `filter_projects_${id}`);
-  };
-
-  const handleOpenProjectModal = (project: ProjectItem) => {
-    setActiveModalProject(project);
-    telemetry.track("click", `view_project_modal_${project.id}`, { name: project.name.en });
-  };
+  const renderCard = (p: (typeof projectsData)[number], large = false) => (
+    <article
+      key={p.id}
+      className={`yn-card yn-card-interactive flex h-full flex-col p-6 sm:p-7 ${large ? "lg:p-10" : ""}`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#f7b267]/80">
+            {resolveLocale(p.organization, isVi)} · {resolveLocale(p.year, isVi)}
+          </p>
+          <h3 className={`yn-display mt-2 text-[#fdf6ec] ${large ? "text-3xl sm:text-4xl" : "text-xl"}`}>
+            {resolveLocale(p.name, isVi)}
+          </h3>
+        </div>
+        {p.featured && (
+          <span className="yn-tag inline-flex shrink-0 items-center gap-1">
+            <Star className="h-3 w-3" aria-hidden="true" />
+            {t({ en: "Featured", vi: "Nổi bật" })}
+          </span>
+        )}
+      </div>
+      {p.badge && (
+        <p className="yn-tag mt-3 self-start">{resolveLocale(p.badge, isVi)}</p>
+      )}
+      <p className={`mt-4 leading-relaxed text-[#e8dcc8]/85 ${large ? "text-base" : "text-sm"}`}>
+        {resolveLocale(p.description, isVi)}
+      </p>
+      <ul className="mt-4 space-y-2">
+        {resolveLocaleArray(p.highlights, isVi).slice(0, large ? 6 : 3).map((hl, i) => (
+          <li key={i} className="flex gap-2 text-sm text-[#e8dcc8]/80">
+            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#d8364f]" aria-hidden="true" />
+            <span>{hl}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {p.technologies.slice(0, large ? 8 : 5).map((tech) => (
+          <span key={tech} className="yn-tag">
+            {tech}
+          </span>
+        ))}
+      </div>
+      <div className="mt-auto flex items-center gap-4 pt-6">
+        {p.githubUrl && (
+          <a
+            href={p.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t({ en: "Open GitHub repository", vi: "Mở kho GitHub" })}
+            className="text-[#e8dcc8]/70 transition-colors hover:text-[#f7b267]"
+          >
+            <GithubIcon className="h-5 w-5" />
+          </a>
+        )}
+        {p.liveUrl && (
+          <a
+            href={p.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t({ en: "Open live demo", vi: "Mở bản demo" })}
+            className="text-[#e8dcc8]/70 transition-colors hover:text-[#f7b267]"
+          >
+            <ExternalLink className="h-5 w-5" aria-hidden="true" />
+          </a>
+        )}
+      </div>
+    </article>
+  );
 
   return (
-    <section id="projects" className="relative py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <GlassBadge variant="emerald" size="md">
-            {isVi ? "Dự Án Tiêu Biểu" : "Featured Projects"}
-          </GlassBadge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {isVi ? (
-              <>
-                Dự Án Tiêu Biểu & <span className="text-gradient-emerald">Sản Phẩm Đã Làm</span>
-              </>
-            ) : (
-              <>
-                Featured Works & <span className="text-gradient-emerald">Projects Delivered</span>
-              </>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            {isVi
-              ? "Tổng hợp các dự án thực tế từ sản phẩm ứng dụng AI đến các nền tảng web và phần mềm học thuật."
-              : "Curated collection of production web platforms, AI tools, and algorithm research projects."}
-          </p>
-        </div>
+    <section id="projects" className="relative px-4 py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <SectionHeading
+            accent="夢"
+            accentReading="yume — dream"
+            eyebrow={t({ en: "chapter three", vi: "chương ba" })}
+            title={t({ en: "Projects", vi: "Dự án" })}
+            description={t({
+              en: "Things I built while chasing the light — from AI tools to web platforms.",
+              vi: "Những thứ tôi đã tạo ra khi đuổi theo ánh sáng — từ công cụ AI đến nền tảng web.",
+            })}
+          />
+        </Reveal>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {categories.map((cat) => {
-            const isSelected = filter === cat.id;
-            return (
+        <Reveal delay={60}>
+          <div className="mb-10 flex flex-wrap justify-center gap-2">
+            {FILTERS.map((f) => (
               <button
-                key={cat.id}
-                onClick={() => handleFilterChange(cat.id)}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? "bg-emerald-600 text-white shadow-xs border border-emerald-500/40"
-                    : "glass-button text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
+                key={f.id}
+                type="button"
+                onClick={() => setFilter(f.id)}
+                aria-pressed={filter === f.id}
+                className={`cursor-pointer rounded-full px-5 py-2 font-mono text-xs uppercase tracking-[0.15em] transition-all ${
+                  filter === f.id
+                    ? "bg-gradient-to-r from-[#d8364f] to-[#e0705a] text-white shadow-[0_8px_24px_-8px_rgba(216,54,79,0.7)]"
+                    : "border border-[#fdf6ec]/20 text-[#e8dcc8]/70 hover:border-[#f7b267]/60 hover:text-[#f7b267]"
                 }`}
               >
-                {cat.label[isVi ? "vi" : "en"]}
+                {t(f.label)}
               </button>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        </Reveal>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <GlassCard
-              key={project.id}
-              className="flex flex-col justify-between p-6 space-y-5 border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/70"
-              glowColor="none"
-            >
-              <div className="space-y-4">
-                {/* Top Badge & Year */}
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400">
-                    {resolveLocale(project.year, isVi)}
-                  </div>
-                  {project.badge && (
-                    <GlassBadge variant="blue" size="sm">
-                      {resolveLocale(project.badge, isVi)}
-                    </GlassBadge>
-                  )}
-                </div>
-
-                {/* Project Title */}
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    {resolveLocale(project.name, isVi)}
-                  </h3>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-medium">
-                    {resolveLocale(project.organization, isVi)}
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed line-clamp-3">
-                  {resolveLocale(project.description, isVi)}
-                </p>
-
-                {/* Highlights preview */}
-                <div className="space-y-1.5 pt-1">
-                  {resolveLocaleArray(project.highlights, isVi).slice(0, 2).map((h: string, hIdx: number) => (
-                    <div key={hIdx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold shrink-0 mt-0.5">—</span>
-                      <span className="line-clamp-1">{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Footer: Tech Stack & Actions */}
-              <div className="space-y-4 pt-4 border-t border-slate-200/80 dark:border-white/10">
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.slice(0, 4).map((tech, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-300 font-mono font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 font-mono font-medium">
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
-                </div>
-
-                {/* Buttons */}
-                <div className="flex items-center justify-between gap-2 pt-1">
-                  <GlassButton
-                    onClick={() => handleOpenProjectModal(project)}
-                    size="sm"
-                    variant="outline"
-                    className="w-full text-xs font-semibold text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white"
-                  >
-                    {isVi ? "Chi tiết Dự án" : "Details & Architecture"}
-                  </GlassButton>
-
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => telemetry.track("click", `project_github_${project.id}`)}
-                      className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-blue-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
-                      aria-label="GitHub Repository"
-                    >
-                      <GithubIcon className="w-4 h-4" />
-                    </a>
-                  )}
-
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => telemetry.track("click", `project_live_${project.id}`)}
-                      className="p-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-emerald-500/40 transition-all shrink-0 cursor-pointer shadow-xs"
-                      aria-label="Live Demo Link"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </GlassCard>
+        {featured && (
+          <Reveal delay={80}>
+            <div className="mb-6">{renderCard(featured, true)}</div>
+          </Reveal>
+        )}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {rest.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 3) * 80}>
+              {renderCard(p)}
+            </Reveal>
           ))}
         </div>
 
-        {/* Decoupled Project Detail Modal */}
-        <ProjectDetailModal
-          project={activeModalProject}
-          isOpen={!!activeModalProject}
-          onClose={() => setActiveModalProject(null)}
-          isVi={isVi}
-        />
+        <BraidedCord className="mt-16" />
       </div>
     </section>
   );
 }
-
