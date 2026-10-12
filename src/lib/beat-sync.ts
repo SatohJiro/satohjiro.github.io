@@ -280,7 +280,7 @@ export function useBeatSync(): BeatSyncApi {
       eng.audio.loop = true;
       eng.audio.preload = "auto";
       eng.audio.crossOrigin = "anonymous";
-      eng.audio.volume = 0.55;
+      eng.audio.volume = 0.45;
 
       eng.audio.addEventListener(
         "canplay",
