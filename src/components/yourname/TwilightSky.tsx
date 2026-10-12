@@ -21,7 +21,11 @@ import { useBeatSyncContext } from "./BeatSyncProvider";
 interface Star { x: number; y: number; r: number; phase: number; speed: number; bright: boolean }
 interface Mote { x: number; y: number; r: number; vy: number; phase: number }
 interface Cloud { x: number; y: number; w: number; h: number; v: number; a: number }
-interface Comet { active: boolean; x: number; y: number; vx: number; vy: number; life: number; grand: boolean }
+interface Comet {
+  active: boolean; x: number; y: number; vx: number; vy: number; life: number; grand: boolean;
+  // Tiamat split — a fragment that breaks off mid-flight
+  fsplit: boolean; fx: number; fy: number; fvx: number; fvy: number; flife: number;
+}
 interface Meteor { active: boolean; x: number; y: number; vx: number; vy: number; life: number }
 interface TownLight { x: number; y: number; r: number; phase: number }
 
@@ -53,7 +57,10 @@ export function TwilightSky() {
     let motes: Mote[] = [];
     let clouds: Cloud[] = [];
     let lights: TownLight[] = [];
-    const comet: Comet = { active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0, grand: false };
+    const comet: Comet = {
+      active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0, grand: false,
+      fsplit: false, fx: 0, fy: 0, fvx: 0, fvy: 0, flife: 0,
+    };
     const meteors: Meteor[] = Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0 }));
     let cometTimer = 5; // seconds until next comet
     let meteorTimer = 2;
@@ -119,6 +126,8 @@ export function TwilightSky() {
       const speed = (420 + rand() * 260 + energy * 200) * (comet.grand ? 0.55 : 1);
       comet.vx = fromLeft ? speed : -speed * 0.7;
       comet.vy = speed * (0.28 + rand() * 0.15);
+      comet.fsplit = false;
+      comet.flife = 0;
     };
 
     const spawnMeteor = () => {
@@ -277,45 +286,69 @@ export function TwilightSky() {
         spawnComet(energy);
         cometTimer = 11 + rand() * 9;
       }
-      if (comet.active) {
-        comet.x += comet.vx * dt;
-        comet.y += comet.vy * dt;
-        comet.life -= dt * (comet.grand ? 0.28 : 0.45);
-        const gs = comet.grand ? 2.4 : 1; // grandeur scale
+      const drawCometBody = (
+        x: number, y: number, vx: number, vy: number,
+        life: number, gs: number, pink: boolean,
+      ) => {
         const headR = (3 + pulse * 5) * gs;
         // volumetric tail: three layered strokes (core → mid → outer)
         const tailLen = (150 + pulse * 110) * gs;
-        const ang = Math.atan2(comet.vy, comet.vx);
-        const tx = comet.x - Math.cos(ang) * tailLen;
-        const ty = comet.y - Math.sin(ang) * tailLen;
-        const life = Math.max(0, comet.life);
+        const ang = Math.atan2(vy, vx);
+        const tx = x - Math.cos(ang) * tailLen;
+        const ty = y - Math.sin(ang) * tailLen;
+        const core = pink ? "255,196,224" : "255,242,224";
+        const mid = pink ? "255,138,205" : "255,186,155";
         const layers = [
-          { w: (7 + pulse * 5) * gs, a0: 0.28, a1: 0.10 },
-          { w: (3.6 + pulse * 2.6) * gs, a0: 0.55, a1: 0.20 },
-          { w: (1.6 + pulse * 1.2) * gs, a0: 0.95, a1: 0.40 },
+          { w: (7 + pulse * 5) * gs, a0: 0.28, a1: 0.1 },
+          { w: (3.6 + pulse * 2.6) * gs, a0: 0.55, a1: 0.2 },
+          { w: (1.6 + pulse * 1.2) * gs, a0: 0.95, a1: 0.4 },
         ];
         for (const L of layers) {
-          const tail = ctx.createLinearGradient(comet.x, comet.y, tx, ty);
-          tail.addColorStop(0, `rgba(255,242,224,${(L.a0 * life).toFixed(3)})`);
-          tail.addColorStop(0.45, `rgba(255,186,155,${(L.a1 * life).toFixed(3)})`);
-          tail.addColorStop(1, "rgba(255,186,155,0)");
+          const tail = ctx.createLinearGradient(x, y, tx, ty);
+          tail.addColorStop(0, `rgba(${core},${(L.a0 * life).toFixed(3)})`);
+          tail.addColorStop(0.45, `rgba(${mid},${(L.a1 * life).toFixed(3)})`);
+          tail.addColorStop(1, `rgba(${mid},0)`);
           ctx.strokeStyle = tail;
           ctx.lineWidth = L.w;
           ctx.lineCap = "round";
           ctx.beginPath();
-          ctx.moveTo(comet.x, comet.y);
+          ctx.moveTo(x, y);
           ctx.lineTo(tx, ty);
           ctx.stroke();
         }
         // head glow
-        const hg = ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, headR * 5);
+        const hg = ctx.createRadialGradient(x, y, 0, x, y, headR * 5);
         hg.addColorStop(0, `rgba(255,250,240,${(0.95 * life).toFixed(3)})`);
-        hg.addColorStop(0.35, `rgba(255,220,190,${(0.45 * life).toFixed(3)})`);
-        hg.addColorStop(1, "rgba(255,220,190,0)");
+        hg.addColorStop(0.35, `rgba(${mid},${(0.45 * life).toFixed(3)})`);
+        hg.addColorStop(1, `rgba(${mid},0)`);
         ctx.fillStyle = hg;
         ctx.beginPath();
-        ctx.arc(comet.x, comet.y, headR * 5, 0, Math.PI * 2);
+        ctx.arc(x, y, headR * 5, 0, Math.PI * 2);
         ctx.fill();
+      };
+      if (comet.active) {
+        comet.x += comet.vx * dt;
+        comet.y += comet.vy * dt;
+        comet.life -= dt * (comet.grand ? 0.28 : 0.45);
+        drawCometBody(comet.x, comet.y, comet.vx, comet.vy, Math.max(0, comet.life), comet.grand ? 2.4 : 1, false);
+        // Tiamat split — the grand comet breaks apart mid-flight
+        if (comet.grand && !comet.fsplit && comet.life < 0.55) {
+          comet.fsplit = true;
+          const base = Math.atan2(comet.vy, comet.vx);
+          const fa = base + 0.5;
+          const fs = Math.hypot(comet.vx, comet.vy) * 0.85;
+          comet.fx = comet.x;
+          comet.fy = comet.y;
+          comet.fvx = Math.cos(fa) * fs;
+          comet.fvy = Math.sin(fa) * fs;
+          comet.flife = 1;
+        }
+        if (comet.fsplit && comet.flife > 0) {
+          comet.fx += comet.fvx * dt;
+          comet.fy += comet.fvy * dt;
+          comet.flife -= dt * 0.5;
+          drawCometBody(comet.fx, comet.fy, comet.fvx, comet.fvy, Math.max(0, comet.flife), 1.15, true);
+        }
         if (comet.life <= 0 || comet.x > w + 240 || comet.x < -240 || comet.y > h * 0.9) {
           comet.active = false;
         }

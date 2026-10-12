@@ -73,6 +73,22 @@ export function EntryOverlay() {
       aria-label={t({ en: "Welcome", vi: "Chào mừng" })}
       onClick={() => dismiss(true)}
     >
+      {/*
+        Kataware-doki panorama — the film's most famous vista, reimagined as
+        an original painting, dimmed into the twilight grade. The doorway in.
+      */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/yourname/scenes/scene-kataware.jpg"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="absolute inset-0 h-full w-full object-cover opacity-45"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-[#12122e]/80 via-[#12122e]/25 to-[#12122e]/90"
+      />
       {stars.map((s, i) => (
         <span
           key={i}

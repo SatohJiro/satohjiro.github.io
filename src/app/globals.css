@@ -239,21 +239,6 @@
   50% { transform: translateY(-7px); }
 }
 
-/* ---------- cinematic scenes (ken burns) ---------- */
-.yn-scene-img {
-  animation: yn-kenburns 24s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-@keyframes yn-kenburns {
-  from { transform: scale(1.02); }
-  to { transform: scale(1.12); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .yn-scene-img { animation: none; }
-}
-
 /* ---------- entry overlay (autoplay gate) ---------- */
 .yn-entry {
   position: fixed;
