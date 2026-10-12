@@ -1,14 +1,16 @@
-# Thêm nhạc nền — sparkle.mp3
+# Nhạc nền — sparkle.mp3
 
 > Trang web đã có sẵn hệ thống **đồng bộ hình ảnh theo nhạc** (beat-sync).
-> Bạn chỉ cần tự thêm file nhạc của mình — repo này **không kèm** bất kỳ file
-> nhạc có bản quyền nào.
+> File `sparkle.mp3` đã được thêm vào repo. Các mốc chuyển đoạn trong
+> `src/config/music-sync.ts` đã được căn theo đúng file này
+> (phân tích năng lượng thực tế: intro 0:00 → verse 0:30 → build 1:24 →
+> chorus 2:04 → verse 3:34 → build 4:22 → chorus 5:02 → bridge 6:48 →
+> build 7:05 → chorus 7:51 → outro 8:40).
 
-## Cách thêm nhạc (2 bước)
+## Đổi sang file nhạc khác
 
-1. Chuẩn bị file nhạc của bạn (ví dụ bài *Sparkle* — bạn tự tải từ nguồn
-   hợp pháp mà bạn có quyền sử dụng).
-2. Đặt file vào đúng vị trí này và **giữ nguyên tên file**:
+1. Chuẩn bị file nhạc của bạn (từ nguồn hợp pháp mà bạn có quyền sử dụng).
+2. Ghi đè lên file tại đúng vị trí này, **giữ nguyên tên file**:
 
 ```
 public/audio/sparkle.mp3

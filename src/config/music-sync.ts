@@ -2,11 +2,9 @@
  * music-sync.ts — tunable music synchronization markers for the Your Name theme.
  *
  * HOW TO TUNE (for your own sparkle.mp3):
- *  1. Drop your audio file at `public/audio/sparkle.mp3` (see public/audio/README_VI.md).
- *  2. Play it and note the timestamps (in seconds) where the song changes mood:
- *     intro -> verse -> build -> chorus -> bridge -> outro.
- *  3. Update the `start` values below. They MUST stay sorted ascending.
- *  4. Optionally tweak `bpm` so the ambient pulse and beat detector feel right.
+ *  Markers below are tuned to the "Sparkle (Movie Version)" file the site
+ *  owner added (8:54, measured by energy analysis). If you swap in a
+ *  different recording, re-measure and update the `start` values below.
  *
  * If no audio file is present, the site runs in "ambient mode" (see `ambient`
  * below): visuals keep breathing gracefully on a slow cycle instead of beats.
@@ -29,24 +27,29 @@ export interface SectionMarker {
 }
 
 export const MUSIC_SYNC_CONFIG = {
-  /** relative URL of the user-supplied audio file (they add it themselves) */
+  /** relative URL of the audio file (public/audio/sparkle.mp3, supplied by site owner) */
   audioSrc: "/audio/sparkle.mp3",
 
   /** approximate tempo of the track — TUNE TO YOUR FILE (used for pulse feel) */
   bpm: 100,
 
   /**
-   * Section markers — PLACEHOLDER timestamps, TUNE TO YOUR FILE.
-   * Keep sorted by `start` ascending. The last marker runs to end of track.
+   * Section markers — tuned to "Sparkle (Movie Version)" (8:54) via energy
+   * analysis of the actual file. Keep sorted by `start` ascending.
+   * The last marker runs to end of track.
    */
   markers: [
     { id: "intro", start: 0, energy: 0.25 },
-    { id: "verse", start: 32, energy: 0.45 },
-    { id: "build", start: 78, energy: 0.7 },
-    { id: "chorus", start: 104, energy: 1.0 },
-    { id: "bridge", start: 168, energy: 0.55 },
-    { id: "chorus", start: 196, energy: 1.0 },
-    { id: "outro", start: 252, energy: 0.3 },
+    { id: "verse", start: 30, energy: 0.45 },
+    { id: "build", start: 84, energy: 0.7 },
+    { id: "chorus", start: 124, energy: 1.0 },
+    { id: "verse", start: 214, energy: 0.5 },
+    { id: "build", start: 262, energy: 0.75 },
+    { id: "chorus", start: 302, energy: 1.0 },
+    { id: "bridge", start: 408, energy: 0.3 },
+    { id: "build", start: 425, energy: 0.55 },
+    { id: "chorus", start: 471, energy: 1.0 },
+    { id: "outro", start: 520, energy: 0.25 },
   ] as SectionMarker[],
 
   /** beat detector tuning */
