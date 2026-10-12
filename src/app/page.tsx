@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { BeatSyncProvider } from "@/components/yourname/BeatSyncProvider";
 import { TwilightSky } from "@/components/yourname/TwilightSky";
 import { MusicControl } from "@/components/yourname/MusicControl";
+import { EntryOverlay } from "@/components/yourname/EntryOverlay";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -22,6 +23,7 @@ export default function HomePage() {
 
   return (
     <BeatSyncProvider>
+      <EntryOverlay />
       <div className="yn-grain relative min-h-screen">
         {/* Cinematic twilight sky canvas (fixed background) */}
         <TwilightSky />
