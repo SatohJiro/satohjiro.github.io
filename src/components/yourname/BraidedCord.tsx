@@ -10,13 +10,14 @@
 import React from "react";
 
 export function BraidedCord({ className = "" }: { className?: string }) {
-  // three sine strands interlaced — long, flowing waves
+  // three sine strands interlaced — long, flowing waves, slim cluster
   const PERIODS = 3.5;
-  const AMPLITUDE = 8;
+  const AMPLITUDE = 5.5;
+  const CENTER_Y = 12;
   const strands = [0, 1, 2].map((s) => {
     const pts: string[] = [];
     for (let x = 0; x <= 600; x += 10) {
-      const y = 15 + Math.sin((x / 600) * Math.PI * 2 * PERIODS + (s * Math.PI * 2) / 3) * AMPLITUDE;
+      const y = CENTER_Y + Math.sin((x / 600) * Math.PI * 2 * PERIODS + (s * Math.PI * 2) / 3) * AMPLITUDE;
       pts.push(`${x},${y.toFixed(1)}`);
     }
     return pts.join(" ");
@@ -26,7 +27,7 @@ export function BraidedCord({ className = "" }: { className?: string }) {
       .split(" ")
       .map((p) => {
         const [x, y] = p.split(",");
-        return `${x},${(parseFloat(y) + 1.5).toFixed(1)}`;
+        return `${x},${(parseFloat(y) + 1.2).toFixed(1)}`;
       })
       .join(" "),
   );
@@ -35,21 +36,14 @@ export function BraidedCord({ className = "" }: { className?: string }) {
     .split(" ")
     .map((p) => {
       const [x, y] = p.split(",");
-      return `${x},${(parseFloat(y) - 1.6).toFixed(1)}`;
+      return `${x},${(parseFloat(y) - 1.1).toFixed(1)}`;
     })
     .join(" ");
   const shades = ["#8f1f36", "#d8364f", "#f2698a"];
-  const widths = [3.4, 2.9, 2.4];
+  const widths = [2.6, 2.2, 1.8];
   return (
     <div className={`yn-cord flex items-center justify-center gap-4 ${className}`} aria-hidden="true">
-      <svg viewBox="0 0 600 34" className="h-7 w-full max-w-xl" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <radialGradient id="yn-cord-bead" cx="0.38" cy="0.32" r="0.9">
-            <stop offset="0" stopColor="#f2768a" />
-            <stop offset="0.55" stopColor="#d8364f" />
-            <stop offset="1" stopColor="#7d1a2e" />
-          </radialGradient>
-        </defs>
+      <svg viewBox="0 0 600 24" className="h-5 w-full max-w-xl" preserveAspectRatio="xMidYMid meet">
         {/* soft shadows under each strand */}
         {shadowPts.map((pts, i) => (
           <polyline
@@ -57,9 +51,9 @@ export function BraidedCord({ className = "" }: { className?: string }) {
             points={pts}
             fill="none"
             stroke="#2a0812"
-            strokeWidth={widths[i] + 0.7}
+            strokeWidth={widths[i] + 0.6}
             strokeLinecap="round"
-            opacity={0.3}
+            opacity={0.28}
           />
         ))}
         {strands.map((pts, i) => (
@@ -78,14 +72,10 @@ export function BraidedCord({ className = "" }: { className?: string }) {
           points={highlightPts}
           fill="none"
           stroke="#ffd9e2"
-          strokeWidth={1}
+          strokeWidth={0.9}
           strokeLinecap="round"
           opacity={0.5}
         />
-        {/* center bead knot */}
-        <circle cx={300} cy={16} r={8.5} fill="url(#yn-cord-bead)" />
-        <circle cx={300} cy={16} r={8.5} fill="none" stroke="#8f1f36" strokeWidth={1.4} opacity={0.7} />
-        <ellipse cx={297} cy={12.8} rx={2.6} ry={1.7} fill="#ffd9e2" opacity={0.55} />
       </svg>
     </div>
   );

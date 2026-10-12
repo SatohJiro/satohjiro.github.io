@@ -21,7 +21,8 @@ import { useBeatSyncContext } from "./BeatSyncProvider";
 interface Star { x: number; y: number; r: number; phase: number; speed: number; bright: boolean }
 interface Mote { x: number; y: number; r: number; vy: number; phase: number }
 interface Cloud { x: number; y: number; w: number; h: number; v: number; a: number }
-interface Comet { active: boolean; x: number; y: number; vx: number; vy: number; life: number }
+interface Comet { active: boolean; x: number; y: number; vx: number; vy: number; life: number; grand: boolean }
+interface Meteor { active: boolean; x: number; y: number; vx: number; vy: number; life: number }
 interface TownLight { x: number; y: number; r: number; phase: number }
 
 function mulberry(seed: number) {
@@ -52,8 +53,10 @@ export function TwilightSky() {
     let motes: Mote[] = [];
     let clouds: Cloud[] = [];
     let lights: TownLight[] = [];
-    const comet: Comet = { active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0 };
+    const comet: Comet = { active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0, grand: false };
+    const meteors: Meteor[] = Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, vx: 0, vy: 0, life: 0 }));
     let cometTimer = 5; // seconds until next comet
+    let meteorTimer = 2;
     let raf = 0;
     let last = performance.now();
 
@@ -84,11 +87,11 @@ export function TwilightSky() {
         vy: 6 + rand() * 14,
         phase: rand() * Math.PI * 2,
       }));
-      clouds = Array.from({ length: 6 }, (_, i) => ({
+      clouds = Array.from({ length: 9 }, (_, i) => ({
         x: rand() * w,
-        y: h * (0.18 + rand() * 0.5),
-        w: 180 + rand() * 260,
-        h: 26 + rand() * 40,
+        y: h * (0.14 + rand() * 0.52),
+        w: 220 + rand() * 340,
+        h: 30 + rand() * 52,
         v: (4 + rand() * 8) * (i % 2 === 0 ? 1 : -1),
         a: 0.10 + rand() * 0.12,
       }));
@@ -110,11 +113,25 @@ export function TwilightSky() {
       const fromLeft = rand() < 0.5;
       comet.active = true;
       comet.life = 1;
-      comet.x = fromLeft ? -60 : w * (0.3 + rand() * 0.6);
-      comet.y = h * (0.05 + rand() * 0.2);
-      const speed = 420 + rand() * 260 + energy * 200;
+      comet.grand = rand() < 0.22; // the Tiamat moment — a huge, slow comet
+      comet.x = fromLeft ? -80 : w * (0.3 + rand() * 0.6);
+      comet.y = h * (0.04 + rand() * 0.18);
+      const speed = (420 + rand() * 260 + energy * 200) * (comet.grand ? 0.55 : 1);
       comet.vx = fromLeft ? speed : -speed * 0.7;
       comet.vy = speed * (0.28 + rand() * 0.15);
+    };
+
+    const spawnMeteor = () => {
+      const m = meteors.find((k) => !k.active);
+      if (!m) return;
+      m.active = true;
+      m.life = 1;
+      const dir = rand() < 0.5 ? 1 : -1;
+      m.x = dir > 0 ? -40 : w + 40;
+      m.y = h * (0.03 + rand() * 0.25);
+      const speed = 700 + rand() * 500;
+      m.vx = dir * speed;
+      m.vy = speed * (0.22 + rand() * 0.18); // gentle downward streak
     };
 
     const draw = (now: number) => {
@@ -146,6 +163,63 @@ export function TwilightSky() {
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, w, h);
 
+      /* 1b — faint milky-way band, diagonal across the upper sky */
+      ctx.save();
+      ctx.translate(w * 0.5, h * 0.28);
+      ctx.rotate(-0.42);
+      const mw = ctx.createLinearGradient(0, -h * 0.22, 0, h * 0.22);
+      mw.addColorStop(0, "rgba(205,210,255,0)");
+      mw.addColorStop(0.5, `rgba(205,210,255,${0.055 + energy * 0.035})`);
+      mw.addColorStop(1, "rgba(205,210,255,0)");
+      ctx.fillStyle = mw;
+      ctx.fillRect(-w, -h * 0.22, w * 2, h * 0.44);
+      ctx.restore();
+
+      /* 1c — god rays fanning up from below the horizon */
+      {
+        const x0 = w * 0.5;
+        const y0 = h * 0.95;
+        for (let i = 0; i < 7; i++) {
+          const spread = (i / 6 - 0.5) * 1.15;
+          const sway = Math.sin(t * 0.07 + i * 1.7) * 0.035;
+          const ang = -Math.PI / 2 + spread + sway;
+          const len = h * 0.9;
+          const x1 = x0 + Math.cos(ang) * len;
+          const y1 = y0 + Math.sin(ang) * len;
+          const perp = ang + Math.PI / 2;
+          const half = 16 + i * 7;
+          const aMax = 0.045 + energy * 0.05;
+          const rg = ctx.createLinearGradient(x0, y0, x1, y1);
+          rg.addColorStop(0, `rgba(255,196,138,${aMax.toFixed(3)})`);
+          rg.addColorStop(1, "rgba(255,196,138,0)");
+          ctx.fillStyle = rg;
+          ctx.beginPath();
+          ctx.moveTo(x0, y0);
+          ctx.lineTo(x1 + Math.cos(perp) * half, y1 + Math.sin(perp) * half);
+          ctx.lineTo(x1 - Math.cos(perp) * half, y1 - Math.sin(perp) * half);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+
+      /* 1d — anamorphic lens flare along the horizon */
+      {
+        const flareA = 0.08 + energy * 0.1;
+        const fl = ctx.createLinearGradient(0, 0, w, 0);
+        fl.addColorStop(0, "rgba(255,170,120,0)");
+        fl.addColorStop(0.5, `rgba(255,196,150,${flareA.toFixed(3)})`);
+        fl.addColorStop(1, "rgba(255,170,120,0)");
+        ctx.fillStyle = fl;
+        ctx.fillRect(0, h * 0.815, w, 2.5);
+        const orb = ctx.createRadialGradient(w * 0.72, h * 0.7, 0, w * 0.72, h * 0.7, 26);
+        orb.addColorStop(0, `rgba(255,200,160,${(flareA * 0.8).toFixed(3)})`);
+        orb.addColorStop(1, "rgba(255,200,160,0)");
+        ctx.fillStyle = orb;
+        ctx.beginPath();
+        ctx.arc(w * 0.72, h * 0.7, 26, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       /* 2 — stars */
       for (const s of stars) {
         const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
@@ -165,7 +239,39 @@ export function TwilightSky() {
         }
       }
 
-      /* 3 — comet */
+      /* 2b — quick shooting stars */
+      meteorTimer -= dt;
+      if (meteorTimer <= 0) {
+        spawnMeteor();
+        meteorTimer = 4 + rand() * 6;
+      }
+      for (const m of meteors) {
+        if (!m.active) continue;
+        m.x += m.vx * dt;
+        m.y += m.vy * dt;
+        m.life -= dt * 1.4;
+        if (m.life <= 0 || m.x < -100 || m.x > w + 100) {
+          m.active = false;
+          continue;
+        }
+        const ang = Math.atan2(m.vy, m.vx);
+        const len = 90 * m.life;
+        const mg = ctx.createLinearGradient(
+          m.x, m.y,
+          m.x - Math.cos(ang) * len, m.y - Math.sin(ang) * len,
+        );
+        mg.addColorStop(0, `rgba(255,245,235,${0.9 * m.life})`);
+        mg.addColorStop(1, "rgba(255,245,235,0)");
+        ctx.strokeStyle = mg;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y);
+        ctx.lineTo(m.x - Math.cos(ang) * len, m.y - Math.sin(ang) * len);
+        ctx.stroke();
+      }
+
+      /* 3 — comet (occasionally a grand Tiamat-class one) */
       cometTimer -= dt * chorusBoost;
       if (!comet.active && cometTimer <= 0) {
         spawnComet(energy);
@@ -174,55 +280,72 @@ export function TwilightSky() {
       if (comet.active) {
         comet.x += comet.vx * dt;
         comet.y += comet.vy * dt;
-        comet.life -= dt * 0.45;
-        const headR = 3 + pulse * 5;
-        // tail
-        const tailLen = 130 + pulse * 90;
+        comet.life -= dt * (comet.grand ? 0.28 : 0.45);
+        const gs = comet.grand ? 2.4 : 1; // grandeur scale
+        const headR = (3 + pulse * 5) * gs;
+        // volumetric tail: three layered strokes (core → mid → outer)
+        const tailLen = (150 + pulse * 110) * gs;
         const ang = Math.atan2(comet.vy, comet.vx);
-        const tail = ctx.createLinearGradient(
-          comet.x, comet.y,
-          comet.x - Math.cos(ang) * tailLen, comet.y - Math.sin(ang) * tailLen,
-        );
-        tail.addColorStop(0, `rgba(255,240,220,${0.85 * Math.max(0, comet.life)})`);
-        tail.addColorStop(0.4, `rgba(255,180,150,${0.35 * Math.max(0, comet.life)})`);
-        tail.addColorStop(1, "rgba(255,180,150,0)");
-        ctx.strokeStyle = tail;
-        ctx.lineWidth = 2.5 + pulse * 2;
-        ctx.lineCap = "round";
-        ctx.beginPath();
-        ctx.moveTo(comet.x, comet.y);
-        ctx.lineTo(comet.x - Math.cos(ang) * tailLen, comet.y - Math.sin(ang) * tailLen);
-        ctx.stroke();
+        const tx = comet.x - Math.cos(ang) * tailLen;
+        const ty = comet.y - Math.sin(ang) * tailLen;
+        const life = Math.max(0, comet.life);
+        const layers = [
+          { w: (7 + pulse * 5) * gs, a0: 0.28, a1: 0.10 },
+          { w: (3.6 + pulse * 2.6) * gs, a0: 0.55, a1: 0.20 },
+          { w: (1.6 + pulse * 1.2) * gs, a0: 0.95, a1: 0.40 },
+        ];
+        for (const L of layers) {
+          const tail = ctx.createLinearGradient(comet.x, comet.y, tx, ty);
+          tail.addColorStop(0, `rgba(255,242,224,${(L.a0 * life).toFixed(3)})`);
+          tail.addColorStop(0.45, `rgba(255,186,155,${(L.a1 * life).toFixed(3)})`);
+          tail.addColorStop(1, "rgba(255,186,155,0)");
+          ctx.strokeStyle = tail;
+          ctx.lineWidth = L.w;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(comet.x, comet.y);
+          ctx.lineTo(tx, ty);
+          ctx.stroke();
+        }
         // head glow
-        const hg = ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, headR * 4);
-        hg.addColorStop(0, `rgba(255,250,240,${0.9 * Math.max(0, comet.life)})`);
-        hg.addColorStop(1, "rgba(255,250,240,0)");
+        const hg = ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, headR * 5);
+        hg.addColorStop(0, `rgba(255,250,240,${(0.95 * life).toFixed(3)})`);
+        hg.addColorStop(0.35, `rgba(255,220,190,${(0.45 * life).toFixed(3)})`);
+        hg.addColorStop(1, "rgba(255,220,190,0)");
         ctx.fillStyle = hg;
         ctx.beginPath();
-        ctx.arc(comet.x, comet.y, headR * 4, 0, Math.PI * 2);
+        ctx.arc(comet.x, comet.y, headR * 5, 0, Math.PI * 2);
         ctx.fill();
-        if (comet.life <= 0 || comet.x > w + 200 || comet.x < -200 || comet.y > h * 0.9) {
+        if (comet.life <= 0 || comet.x > w + 240 || comet.x < -240 || comet.y > h * 0.9) {
           comet.active = false;
         }
       }
 
-      /* 4 — clouds */
+      /* 4 — clouds: puffy clusters with sunset-lit top edges */
       for (const c of clouds) {
         c.x += c.v * dt;
         if (c.x - c.w > w) c.x = -c.w;
         if (c.x + c.w < 0) c.x = w + c.w;
-        const cg = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.w / 2);
         const tint = c.y > h * 0.55 ? "255,150,120" : "120,110,190";
-        cg.addColorStop(0, `rgba(${tint},${c.a})`);
-        cg.addColorStop(1, `rgba(${tint},0)`);
-        ctx.fillStyle = cg;
-        ctx.save();
-        ctx.translate(c.x, c.y);
-        ctx.scale(1, c.h / (c.w / 2));
+        const puffs = 5;
+        for (let p = 0; p < puffs; p++) {
+          const px = c.x + (p / (puffs - 1) - 0.5) * c.w * 0.8;
+          const py = c.y + Math.sin(p * 2.1 + c.x * 0.01) * c.h * 0.18;
+          const pr = c.w * (0.22 + 0.06 * Math.sin(p * 3.7));
+          const pg = ctx.createRadialGradient(px, py, 0, px, py, pr);
+          pg.addColorStop(0, `rgba(${tint},${(c.a * 1.7).toFixed(3)})`);
+          pg.addColorStop(1, `rgba(${tint},0)`);
+          ctx.fillStyle = pg;
+          ctx.beginPath();
+          ctx.arc(px, py, pr, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        // sunset-lit rim along the top — the anime silver lining
+        ctx.strokeStyle = `rgba(255,178,150,${Math.min(0.45, c.a * 2.2).toFixed(3)})`;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.arc(0, 0, c.w / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        ctx.ellipse(c.x, c.y - c.h * 0.08, c.w * 0.42, c.h * 0.4, 0, Math.PI * 1.12, Math.PI * 1.88);
+        ctx.stroke();
       }
 
       /* 5 — floating light motes */
