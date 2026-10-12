@@ -29,7 +29,7 @@ export function HeroSection() {
             label={t({ en: "City schoolboy gazing at the comet", vi: "Cậu học sinh thành phố ngắm sao băng" })}
           />
         </div>
-        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#e8dcc8]/60">
+        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#4a2438] drop-shadow-[0_1px_8px_rgba(255,240,220,0.9)]">
           {t({ en: "the city", vi: "thành phố" })}
         </p>
       </div>
@@ -42,7 +42,7 @@ export function HeroSection() {
           bounceKey={beatCount}
           label={t({ en: "Small-town schoolgirl gazing at the comet", vi: "Cô học sinh thị trấn nhỏ ngắm sao băng" })}
         />
-        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#e8dcc8]/60">
+        <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#4a2438] drop-shadow-[0_1px_8px_rgba(255,240,220,0.9)]">
           {t({ en: "the small town", vi: "thị trấn nhỏ" })}
         </p>
       </div>
