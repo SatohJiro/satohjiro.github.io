@@ -76,7 +76,7 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Nguyen Tran Anh - Software Engineer | Full-Stack & Frontend",
+        alt: "Nguyen Tran Anh - Software Engineer (Frontend)",
       },
     ],
   },

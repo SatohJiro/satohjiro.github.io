@@ -10,7 +10,6 @@ import {
   experienceData,
   projectsData,
   awardsData,
-  skillsData,
 } from "@/data/portfolio-content";
 import { Modal } from "../editorial/Modal";
 import {
@@ -28,7 +27,9 @@ interface ResumeModalProps {
 
 export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   const { isVi } = useLanguage();
-  const [resumeLang, setResumeLang] = useState<"en" | "vi">("en");
+  // Follows the site language until the visitor picks one explicitly.
+  const [pickedLang, setResumeLang] = useState<"en" | "vi" | null>(null);
+  const resumeLang = pickedLang ?? (isVi ? "vi" : "en");
 
   const handlePrint = () => {
     telemetry.track("download_cv", "print_button", { lang: resumeLang });
@@ -39,7 +40,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     telemetry.track("download_cv", "json_download");
     const exportData = {
       name: "NGUYEN TRAN ANH",
-      headline: resumeLang === "en" ? "Software Engineer | Full-Stack & Frontend Developer" : "Kỹ sư Phần mềm | Lập trình viên Full-Stack & Frontend",
+      headline: resumeLang === "en" ? "Software Engineer | Frontend Developer" : "Kỹ sư Phần mềm | Lập trình viên Frontend",
       education: {
         school: educationData.school[resumeLang],
         degree: educationData.degree[resumeLang],
@@ -183,8 +184,8 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             </h1>
             <div className="text-xs font-bold text-slate-800 uppercase tracking-wide">
               {resumeLang === "en"
-                ? "Software Engineer | Full-Stack & Frontend Developer"
-                : "Kỹ sư Phần mềm | Lập trình viên Full-Stack & Frontend"}
+                ? "Software Engineer | Frontend Developer"
+                : "Kỹ sư Phần mềm | Lập trình viên Frontend"}
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] text-slate-600 pt-1">
               <span>{contactData.location[resumeLang]}</span>

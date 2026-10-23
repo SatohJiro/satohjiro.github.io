@@ -5,11 +5,10 @@
 [![React 19](https://img.shields.io/badge/React-19.2-blue?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript 5](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind-v4.0-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Tests-11%20Passed-brightgreen?style=flat-square&logo=vitest)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Tests-Vitest-brightgreen?style=flat-square&logo=vitest)](https://vitest.dev/)
 [![Privacy: Zero Tracking](https://img.shields.io/badge/Privacy-Zero%20Tracking-emerald?style=flat-square)](https://satohjiro.github.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-slate?style=flat-square)](LICENSE)
 
-> Production-grade personal portfolio and engineering showcase designed for **Nguyen Tran Anh (SatohJiro)** — Software Engineer & Class Valedictorian of Nong Lam University (GPA 3.6/4.0). Built with strict performance, accessibility (WCAG AA), anti-slop design discipline, and zero-compromise information security.
+> Bilingual (EN/VI) personal portfolio of **Nguyen Tran Anh (SatohJiro)** — frontend-focused Software Engineer, Valedictorian of Nong Lam University (GPA 3.6/4.0). Statically exported Next.js site with an editorial layout, print-ready resume, and no third-party tracking.
 
 🌐 **Production Deployment:** [https://satohjiro.github.io/](https://satohjiro.github.io/)  
 🎮 **Alternative 8-Bit Pixel Edition:** [https://pixel-portfolio-swart.vercel.app/](https://pixel-portfolio-swart.vercel.app/)
@@ -20,10 +19,11 @@
 
 | Feature | Technical Implementation |
 | :--- | :--- |
-| **Glass Design Primitives** | Custom design tokens (`GlassCard`, `GlassBadge`, `GlassButton`, `GlassModal`) running on Tailwind CSS v4 without legacy config bloat. |
+| **Editorial Layout** | Numbered chapters (`ChapterHeader`), hairline grids, and a portal-based `Modal`, themed through `--ed-*` CSS variables on Tailwind CSS v4. |
 | **Anti-Slop Design Discipline** | Adheres to the **Lila Rule**: Slate neutral backdrop (`#090d16` / `#f8fafc`) paired with a single Electric Blue accent (`#2563eb`), strictly avoiding AI purple/cyan gradient slop. |
 | **ATS-Standard Resume Engine** | Dedicated standalone route (`/resume`) with CSS print-media queries, exact standard typography, and clean one-click PDF generation. |
-| **Interactive Terminal Sandbox** | In-browser command runner (`whoami`, `skills`, `experience`, `projects`, `awards`, `contact`, `hire`) using semantic text tags (`[Honor]`, `[Award]`, `[Priority]`) without emoji clutter. |
+| **Command Palette** | `⌘K` / `Ctrl+K` palette to jump between chapters, open the resume, switch theme/language, or copy the email. Filtering logic is pure and unit-tested (`src/lib/os-commands.ts`). |
+| **Build-time OG Image** | `src/app/og-image.png/route.tsx` renders the 1200×630 social preview with `next/og` during `next build`. |
 | **Bilingual Data Synchronization** | Seamless EN/VI localized state transitions backed by Vitest unit tests verifying bilingual schema symmetry. |
 | **Zero-Cookie Privacy Telemetry** | 100% client-side in-memory interaction inspector. Zero third-party trackers, no analytics pixels, no IP persistence, and no cookies. |
 | **Static-First Performance** | App Router with Turbopack static export (`output: 'export'`) resulting in zero cold starts and instant CDN delivery. |
@@ -58,6 +58,7 @@ satohjiro.github.io/
 │   │   ├── globals.css           # Tailwind v4 theme bindings & typography tokens
 │   │   ├── layout.tsx            # Root layout with Schema.org JSON-LD & meta
 │   │   ├── manifest.ts           # Dynamic PWA Web App Manifest (force-static)
+│   │   ├── og-image.png/route.tsx # Build-time Open Graph image (next/og)
 │   │   ├── page.tsx              # Main single-page portfolio layout
 │   │   ├── resume/
 │   │   │   └── page.tsx          # Standalone ATS print-optimized resume route
@@ -65,16 +66,18 @@ satohjiro.github.io/
 │   │   └── sitemap.ts            # Dynamic XML sitemap generator
 │   ├── components/
 │   │   ├── analytics/            # In-memory client-side telemetry inspector
-│   │   ├── glass/                # Reusable glassmorphic UI tokens
-│   │   ├── layout/               # Header, Footer, Theme & Language toggles
+│   │   ├── editorial/            # Header, hero, chapter header, modal, command palette
+│   │   ├── icons/                # Brand SVG icons (GitHub, LinkedIn)
+│   │   ├── layout/               # Footer, Theme & Language toggles
 │   │   ├── resume/               # ATS interactive resume modal
-│   │   └── sections/             # Domain sections (Hero, About, Projects, Experience, CLI)
+│   │   └── sections/             # About, Experience, Projects, Skills, Honors, Contact
 │   ├── config/
 │   │   ├── seo.ts                # JSON-LD Schema definitions (Person & WebSite)
 │   │   └── site.ts               # Site metadata, routes, and navigation items
 │   ├── data/
+│   │   ├── editorial-content.ts  # EN/VI UI copy (hero, chapters, palette)
 │   │   └── portfolio-content.ts  # Single source of truth for EN/VI portfolio data
-│   ├── hooks/                    # Custom hooks (Language, Telemetry, Responsive)
+│   ├── hooks/                    # Custom hooks (Language, Telemetry, Scroll spy, Palette)
 │   ├── lib/                      # Core utilities and telemetry handlers
 │   └── types/                    # TypeScript interfaces and domain schemas
 ├── CONTEXT.md                    # Project context & Architectural Decision Records (ADR)
@@ -126,9 +129,8 @@ npm run build
 
 This repository enforces strict security and data protection standards:
 
-1. **Anti-Scraping & PII Protection**:
-   - Personal phone numbers and home addresses are intentionally omitted from public git trees and Markdown documentation to prevent automated web crawlers, spam bots, telemarketing harvesters, and SIM-swapping threats.
-   - Contact requests are routed through verified professional endpoints (LinkedIn, professional email, or interactive portfolio form).
+1. **Contact Data**:
+   - The public business email and phone number are published intentionally on the site (`src/data/portfolio-content.ts`) for recruiters. No home address or other personal identifiers are stored.
 2. **Secret Hygiene**:
    - No production credentials, API secrets, private keys, or internal webhook URLs are stored in source code.
    - Repository builds are fully static and do not require runtime secrets.
@@ -156,9 +158,3 @@ If you identify any security issues, vulnerabilities, or unintentional credentia
 - **LinkedIn**: [linkedin.com/in/satohjiro](https://www.linkedin.com/in/satohjiro/)
 - **GitHub**: [github.com/SatohJiro](https://github.com/SatohJiro)
 - **Email**: [trananhq2345@gmail.com](mailto:trananhq2345@gmail.com)
-
----
-
-## 8. License
-
-This project is licensed under the [MIT License](LICENSE).

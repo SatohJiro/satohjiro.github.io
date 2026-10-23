@@ -1,9 +1,10 @@
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useHydrated } from "@/hooks/useHydrated";
 
 interface ModalProps {
   isOpen: boolean;
@@ -29,11 +30,7 @@ export function Modal({
   className,
   closeLabel = "Close",
 }: ModalProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

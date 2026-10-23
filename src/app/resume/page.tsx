@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -16,16 +16,11 @@ import { Printer, ArrowLeft, Info } from "lucide-react";
 
 function ResumeContent() {
   const searchParams = useSearchParams();
-  const initialLang = (searchParams.get("lang") as "en" | "vi") || "en";
-  const [lang, setLang] = useState<"en" | "vi">(initialLang);
+  const urlLang = searchParams.get("lang") === "vi" ? "vi" : "en";
+  // URL decides the language until the visitor toggles it on the page.
+  const [pickedLang, setLang] = useState<"en" | "vi" | null>(null);
+  const lang = pickedLang ?? urlLang;
   const isVi = lang === "vi";
-
-  useEffect(() => {
-    const urlLang = searchParams.get("lang") as "en" | "vi";
-    if (urlLang && (urlLang === "en" || urlLang === "vi")) {
-      setLang(urlLang);
-    }
-  }, [searchParams]);
 
   const handlePrint = () => {
     window.print();
@@ -93,8 +88,8 @@ function ResumeContent() {
           </h1>
           <div className="text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wide">
             {isVi
-              ? "Kỹ sư Phần mềm | Lập trình viên Full-Stack & Frontend"
-              : "Software Engineer | Full-Stack & Frontend Developer"}
+              ? "Kỹ sư Phần mềm | Lập trình viên Frontend"
+              : "Software Engineer | Frontend Developer"}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600">
             <span>{resolveLocale(contactData.location, isVi)}</span>

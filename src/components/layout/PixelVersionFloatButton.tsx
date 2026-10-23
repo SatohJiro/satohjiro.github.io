@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Gamepad2, Sparkles, ExternalLink } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";

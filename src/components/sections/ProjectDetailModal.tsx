@@ -4,6 +4,8 @@ import React from "react";
 import { ProjectItem } from "@/types";
 import { resolveLocale, resolveLocaleArray } from "@/lib/locale";
 import { Modal } from "../editorial/Modal";
+import { ExternalLink } from "lucide-react";
+import { GithubIcon } from "../icons/BrandIcons";
 
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
@@ -112,6 +114,34 @@ export function ProjectDetailModal({
             ))}
           </div>
         </div>
+
+        {/* Links */}
+        {(project.liveUrl || project.githubUrl) && (
+          <div className="flex flex-wrap gap-3 border-t border-[var(--ed-hairline)] pt-5">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--ed-ink)] px-5 py-2.5 text-sm font-semibold text-[var(--ed-paper)] transition-transform hover:-translate-y-0.5"
+              >
+                <ExternalLink className="h-4 w-4" />
+                {isVi ? "Xem trang thực tế" : "Visit live site"}
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--ed-hairline)] px-5 py-2.5 text-sm font-semibold text-[var(--ed-ink)] transition-colors hover:border-blue-500/60"
+              >
+                <GithubIcon className="h-4 w-4" />
+                {isVi ? "Mã nguồn" : "Source code"}
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </Modal>
   );

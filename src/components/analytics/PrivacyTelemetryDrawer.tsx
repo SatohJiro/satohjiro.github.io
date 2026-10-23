@@ -6,14 +6,11 @@ import { useTelemetry } from "@/hooks/useTelemetry";
 import { formatDate } from "@/lib/utils";
 import {
   ShieldCheck,
-  Activity,
   Trash2,
   Lock,
-  EyeOff,
   CheckCircle2,
   X,
   Clock,
-  Sparkles,
 } from "lucide-react";
 
 interface PrivacyTelemetryDrawerProps {
@@ -22,7 +19,7 @@ interface PrivacyTelemetryDrawerProps {
 }
 
 export function PrivacyTelemetryDrawer({ isOpen, onClose }: PrivacyTelemetryDrawerProps) {
-  const { isVi, isEn } = useLanguage();
+  const { isVi } = useLanguage();
   const { events, isOptedOut, toggleOptOut, clearEvents } = useTelemetry();
 
   if (!isOpen) return null;

@@ -132,7 +132,7 @@ function TechPills({ techs, max = 5 }: { techs: string[]; max?: number }) {
   );
 }
 
-function CardActions({ project }: { project: ProjectItem }) {
+function CardActions({ project, detailsLabel }: { project: ProjectItem; detailsLabel: string }) {
   return (
     <div className="flex items-center gap-2 border-t border-[var(--ed-hairline)] px-5 py-3">
       {project.githubUrl && (
@@ -165,8 +165,9 @@ function CardActions({ project }: { project: ProjectItem }) {
           <ExternalLink className="h-4 w-4" />
         </a>
       )}
-      <span className="ml-auto font-mono text-[11px] uppercase tracking-widest text-[var(--ed-muted)]">
-        {project.id}
+      <span className="ml-auto inline-flex items-center gap-1 py-2 text-sm font-semibold text-blue-600 dark:text-blue-400">
+        {detailsLabel}
+        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>
     </div>
   );
@@ -193,6 +194,22 @@ export function ProjectsSection() {
   };
 
   const detailsLabel = isVi ? "Chi tiết" : "Details";
+
+  // Cards are clickable containers that also hold links, so they can't be <button>s;
+  // expose them as buttons to keyboard and assistive tech instead.
+  const cardProps = (project: ProjectItem) => ({
+    role: "button",
+    tabIndex: 0,
+    "aria-label": `${resolveLocale(project.name, isVi)} — ${detailsLabel}`,
+    onClick: () => openModal(project),
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.target !== e.currentTarget) return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openModal(project);
+      }
+    },
+  });
 
   return (
     <section id="projects" className="scroll-mt-20 py-20 sm:py-28">
@@ -238,8 +255,8 @@ export function ProjectsSection() {
         {featured && (
           <Reveal delay={100}>
             <article
-              onClick={() => openModal(featured)}
-              className="group mt-10 grid cursor-pointer border border-[var(--ed-hairline)] bg-[var(--ed-paper)] transition-colors hover:border-blue-500/40 lg:grid-cols-12"
+              {...cardProps(featured)}
+              className="group mt-10 grid cursor-pointer border border-[var(--ed-hairline)] bg-[var(--ed-paper)] transition-colors hover:border-blue-500/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 lg:grid-cols-12"
             >
               <div className="relative aspect-[16/10] overflow-hidden lg:col-span-7 lg:aspect-auto lg:min-h-[320px]">
                 <ProjectCover project={featured} />
@@ -284,8 +301,8 @@ export function ProjectsSection() {
           {rest.map((project, i) => (
             <Reveal key={project.id} delay={Math.min(i, 3) * 60}>
               <article
-                onClick={() => openModal(project)}
-                className="group flex h-full cursor-pointer flex-col border border-[var(--ed-hairline)] bg-[var(--ed-paper)] transition-colors hover:border-blue-500/40"
+                {...cardProps(project)}
+                className="group flex h-full cursor-pointer flex-col border border-[var(--ed-hairline)] bg-[var(--ed-paper)] transition-colors hover:border-blue-500/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
               >
                 <div className="relative aspect-[16/9] overflow-hidden border-b border-[var(--ed-hairline)]">
                   <ProjectCover project={project} />
@@ -305,7 +322,7 @@ export function ProjectsSection() {
                     <TechPills techs={project.technologies} max={4} />
                   </div>
                 </div>
-                <CardActions project={project} />
+                <CardActions project={project} detailsLabel={detailsLabel} />
               </article>
             </Reveal>
           ))}

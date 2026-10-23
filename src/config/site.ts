@@ -1,10 +1,10 @@
 export const siteConfig = {
   name: "Nguyen Tran Anh (SatohJiro)",
   vietnameseName: "Nguyễn Trần Anh",
-  title: "Nguyen Tran Anh | Software Engineer (Full-Stack & Frontend)",
-  vietnameseTitle: "Nguyễn Trần Anh | Kỹ sư Phần mềm (Full-Stack & Frontend)",
-  description: "Portfolio of Nguyen Tran Anh (SatohJiro) - Software Engineer & Valedictorian of Class 2019 (Nong Lam University). 3+ years experience with ReactJS, Next.js, Vue.js, Spring Boot, FastAPI, and GPT-4 AI integration.",
-  vietnameseDescription: "Hồ sơ cá nhân của Nguyễn Trần Anh (SatohJiro) - Kỹ sư Phần mềm & Thủ khoa ĐH Nông Lâm TP.HCM. Hơn 3 năm kinh nghiệm thực tế với ReactJS, Next.js, Vue.js, Spring Boot, FastAPI và ứng dụng AI GPT-4.",
+  title: "Nguyen Tran Anh | Software Engineer (Frontend)",
+  vietnameseTitle: "Nguyễn Trần Anh | Kỹ sư Phần mềm (Frontend)",
+  description: "Portfolio of Nguyen Tran Anh (SatohJiro) - Frontend-focused Software Engineer with 3+ years of experience in ReactJS, Next.js, Vue.js, and TypeScript, plus Spring Boot, FastAPI, and GPT-4 integration. Valedictorian, Nong Lam University.",
+  vietnameseDescription: "Hồ sơ cá nhân của Nguyễn Trần Anh (SatohJiro) - Kỹ sư Phần mềm chuyên Frontend, hơn 3 năm kinh nghiệm với ReactJS, Next.js, Vue.js, TypeScript, cùng Spring Boot, FastAPI và tích hợp GPT-4. Thủ khoa ĐH Nông Lâm TP.HCM.",
   url: "https://satohjiro.github.io",
   ogImage: "https://satohjiro.github.io/og-image.png",
   links: {

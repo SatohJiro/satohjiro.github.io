@@ -22,14 +22,12 @@ export const contactData: ContactInfo = {
 
 export const summaryData: SummaryInfo = {
   en: [
-    "Software Engineer holding a Bachelor of Engineering Degree in Information Technology from Nong Lam University, graduating with an Excellent rating (GPA 3.6/4.0) as the Class Valedictorian.",
-    "Over 3 years of professional engineering experience in frontend and web application development. Proficient in ReactJS, Next.js, Vue.js, TypeScript, state management (Redux, Zustand), with practical project experience in micro-frontend architecture (ahamo NTT Docomo), backend APIs (Java Spring Boot, Python FastAPI), and AI integration (GPT-4).",
-    "Committed to clean architecture, measurable web performance optimization, and rigorous delivery standards. Constantly expanding domain expertise across scalable frontend platforms, modern cloud-native APIs, and AI-assisted engineering.",
+    "Software Engineer with 3+ years of experience building production web applications. Currently developing the frontend of ahamo, NTT Docomo's online mobile service, with Vue.js and ReactJS in a micro-frontend setup. Previously restructured state management on a ReactJS/TypeScript CRM platform and built a GPT-4 code-generation tool with Python FastAPI and RabbitMQ.",
+    "Engineer's Degree in Information Technology (Software Engineering) from Nong Lam University, Ho Chi Minh City — graduated with an Excellent rating (GPA 3.6/4.0) as Valedictorian of the 2019–2023 IT cohort.",
   ],
   vi: [
-    "Kỹ sư Công nghệ Thông tin tốt nghiệp loại Xuất sắc (GPA 3.6/4.0) và đạt danh hiệu Thủ khoa tốt nghiệp toàn khóa 2019 tại Trường Đại học Nông Lâm TP.HCM.",
-    "Hơn 3 năm kinh nghiệm thực tế phát triển giao diện và ứng dụng Web. Thế mạnh về ReactJS, Next.js, Vue.js, TypeScript, quản lý State (Redux, Zustand), cùng kinh nghiệm làm việc thực tế với kiến trúc Micro-frontend (dự án ahamo NTT Docomo), Backend APIs (Java Spring Boot, Python FastAPI) và ứng dụng AI (GPT-4).",
-    "Đề cao tư duy kiến trúc sạch (clean architecture), tối ưu hóa hiệu năng có thể đo lường và kỷ luật kiểm thử chất lượng cao. Định hướng phát triển chuyên sâu về các hệ thống web quy mô lớn và ứng dụng AI thực tiễn.",
+    "Kỹ sư phần mềm với hơn 3 năm kinh nghiệm phát triển ứng dụng web production. Hiện phát triển giao diện cho ahamo — dịch vụ di động trực tuyến của NTT Docomo — bằng Vue.js và ReactJS trên kiến trúc micro-frontend. Trước đó tái cấu trúc quản lý state cho nền tảng CRM (ReactJS/TypeScript) và xây dựng công cụ sinh mã bằng GPT-4 với Python FastAPI và RabbitMQ.",
+    "Kỹ sư Công nghệ Thông tin (chuyên ngành Kỹ thuật Phần mềm), Trường Đại học Nông Lâm TP.HCM — tốt nghiệp loại Xuất sắc (GPA 3.6/4.0), Thủ khoa khóa 2019–2023 ngành CNTT.",
   ],
 };
 
@@ -77,7 +75,7 @@ export const skillsData: StrengthCategory[] = [
         name: "Vue.js (Vue 2/3)",
         category: "frontend",
         highlight: true,
-        tag: { en: "Hands-on", vi: "Thực tế" },
+        tag: { en: "Production", vi: "Thực tế" },
         description: {
           en: "Composition API, Options API, Vuex, production integration for Japanese clients",
           vi: "Composition API, Vuex, triển khai trong các dự án đối tác Nhật Bản",
@@ -96,10 +94,19 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "HTML5 / CSS3 / SCSS / Tailwind",
         category: "frontend",
-        tag: { en: "Proficient", vi: "Thành thạo" },
+        tag: { en: "Core", vi: "Chính" },
         description: {
-          en: "Semantic markup, Flexbox/Grid layouts, Glassmorphism, animations, responsive design",
-          vi: "HTML ngữ nghĩa, layout linh hoạt, Glassmorphism, animation, chuẩn responsive",
+          en: "Semantic markup, Flexbox/Grid layouts, accessible animations, responsive design",
+          vi: "HTML ngữ nghĩa, layout Flexbox/Grid, animation, chuẩn responsive",
+        },
+      },
+      {
+        name: "Micro-Frontend Architecture",
+        category: "frontend",
+        tag: { en: "Production", vi: "Thực tế" },
+        description: {
+          en: "Independent UI feature modules integrated with CMS Webrelease (ahamo, NTT Docomo)",
+          vi: "Module giao diện độc lập tích hợp nền tảng CMS Webrelease (dự án ahamo, NTT Docomo)",
         },
       },
     ],
@@ -119,7 +126,7 @@ export const skillsData: StrengthCategory[] = [
         name: "Redux Toolkit & Zustand",
         category: "state",
         highlight: true,
-        tag: { en: "+30% Boost", vi: "+30% Tốc độ" },
+        tag: { en: "Production", vi: "Thực tế" },
         description: {
           en: "Normalized state, slice architecture, lightweight local store caching",
           vi: "Chuẩn hóa state, chia slice rõ ràng, kết hợp Zustand giảm re-render hiệu quả",
@@ -128,7 +135,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Context API & Custom Hooks",
         category: "state",
-        tag: { en: "Proficient", vi: "Thành thạo" },
+        tag: { en: "Core", vi: "Chính" },
         description: {
           en: "Scoped state sharing, separation of concerns, reusable UI & data logic hooks",
           vi: "Chia sẻ state cục bộ, phân tách logic nghiệp vụ và UI độc lập",
@@ -137,7 +144,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Web Performance Profiling",
         category: "state",
-        tag: { en: "Experience", vi: "Kinh nghiệm" },
+        tag: { en: "Production", vi: "Thực tế" },
         description: {
           en: "Chrome DevTools profiling, memoization (useMemo/useCallback), re-render reduction",
           vi: "Đo lường DevTools, chống re-render thừa, tối ưu trải nghiệm mượt mà",
@@ -148,23 +155,14 @@ export const skillsData: StrengthCategory[] = [
   {
     id: "backend",
     label: {
-      en: "Architecture & Backend (Applied Experience)",
-      vi: "Kiến Trúc & Backend (Đã Làm Việc Qua)",
+      en: "Backend (Applied Experience)",
+      vi: "Backend (Đã Áp Dụng)",
     },
     description: {
-      en: "Architectural patterns and backend services applied across software projects",
-      vi: "Các kiến trúc và dịch vụ backend đã trực tiếp áp dụng trong các dự án thực tế",
+      en: "Backend services built in company and academic projects",
+      vi: "Các dịch vụ backend đã trực tiếp xây dựng trong dự án công ty và học thuật",
     },
     skills: [
-      {
-        name: "Micro-Frontend Architecture",
-        category: "backend",
-        tag: { en: "ahamo NTT Docomo", vi: "Dự án ahamo" },
-        description: {
-          en: "Experience with modular UI feature separation and CMS Webrelease integration",
-          vi: "Kinh nghiệm phân rã module giao diện độc lập kết hợp nền tảng CMS Webrelease",
-        },
-      },
       {
         name: "Java Spring Boot",
         category: "backend",
@@ -177,7 +175,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Python (FastAPI)",
         category: "backend",
-        tag: { en: "AI Tools", vi: "Công cụ AI" },
+        tag: { en: "Projects", vi: "Dự án" },
         description: {
           en: "Asynchronous endpoints, Pydantic data schemas, background task orchestration",
           vi: "API bất đồng bộ, xử lý dữ liệu với Pydantic và điều phối tác vụ",
@@ -195,7 +193,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Firebase & Supabase",
         category: "backend",
-        tag: { en: "BaaS", vi: "BaaS" },
+        tag: { en: "Projects", vi: "Dự án" },
         description: {
           en: "Authentication, Firestore / Realtime DB, Cloud Storage, hosting services",
           vi: "Xác thực người dùng, CSDL thời gian thực, lưu trữ file và hosting",
@@ -218,16 +216,16 @@ export const skillsData: StrengthCategory[] = [
         name: "OpenAI GPT-4 API Integration",
         category: "ai",
         highlight: true,
-        tag: { en: "Award Winner", vi: "Đoạt giải" },
+        tag: { en: "Projects", vi: "Dự án" },
         description: {
-          en: "Prompt engineering, structured outputs, natural language to code transformation",
-          vi: "Thiết kế prompt tối ưu, xử lý output có cấu trúc, chuyển ngôn ngữ tự nhiên sang mã",
+          en: "Prompt templates and natural-language-to-code generation (3rd Place, AI Got Talent 2023)",
+          vi: "Thiết kế prompt, chuyển ngôn ngữ tự nhiên sang mã (Giải Ba AI Got Talent 2023)",
         },
       },
       {
         name: "RabbitMQ Message Queues",
         category: "ai",
-        tag: { en: "Applied", vi: "Thực tế" },
+        tag: { en: "Projects", vi: "Dự án" },
         description: {
           en: "Decoupled asynchronous worker queues for background AI tasks",
           vi: "Điều phối hàng đợi xử lý tác vụ nền bất đồng bộ, tránh nghẽn luồng HTTP",
@@ -258,7 +256,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "PostgreSQL, MySQL & MongoDB",
         category: "devops",
-        tag: { en: "Relational & NoSQL", vi: "SQL & NoSQL" },
+        tag: { en: "Projects", vi: "Dự án" },
         description: {
           en: "Relational schema design, queries, indexing, and NoSQL document storage",
           vi: "Thiết kế bảng quan hệ, tối ưu truy vấn, đánh chỉ mục và lưu trữ tài liệu",
@@ -267,7 +265,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Docker & Containerization",
         category: "devops",
-        tag: { en: "Containers", vi: "Containers" },
+        tag: { en: "Familiar", vi: "Cơ bản" },
         description: {
           en: "Containerizing web services, Dockerfiles, local development setup",
           vi: "Đóng gói ứng dụng web, viết Dockerfile và chuẩn hóa môi trường làm việc",
@@ -276,7 +274,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Git, GitHub & CMS Webrelease",
         category: "devops",
-        tag: { en: "Workflows", vi: "Quy trình" },
+        tag: { en: "Production", vi: "Thực tế" },
         description: {
           en: "Git branching workflows, pull request reviews, CMS release management",
           vi: "Quy trình nhánh Git, review code, quản lý phát hành nội dung CMS",
@@ -285,7 +283,7 @@ export const skillsData: StrengthCategory[] = [
       {
         name: "Figma & Adobe XD",
         category: "devops",
-        tag: { en: "UI Translation", vi: "Thiết kế UI" },
+        tag: { en: "Production", vi: "Thực tế" },
         description: {
           en: "Translating UI/UX design mockups into responsive web components",
           vi: "Chuyển đổi thiết kế từ mockup sang giao diện thực tế chuẩn responsive",
@@ -332,12 +330,12 @@ export const experienceData: WorkExperience[] = [
           en: [
             "Coordinated with Japanese partners to understand business requirements, scope tasks, and review technical feasibility.",
             "Developed and maintained responsive user interfaces using Vue.js (Vue 2/3), ReactJS, and CMS Webrelease within a modular micro-frontend architecture.",
-            "Authored test specifications and documentation, upholding code quality standards to ensure zero regression releases.",
+            "Authored test specifications and documentation following the client's quality standards to prevent regressions across releases.",
           ],
           vi: [
             "Trao đổi cùng đối tác Nhật Bản để làm rõ yêu cầu nghiệp vụ, ước tính thời gian và đánh giá giải pháp kỹ thuật.",
             "Xây dựng và tối ưu các thành phần giao diện responsive bằng Vue.js, ReactJS trên kiến trúc Micro-frontend kết hợp CMS Webrelease.",
-            "Soạn thảo tài liệu kiểm thử (test specs) và hướng dẫn vận hành, tuân thủ tiêu chuẩn chất lượng và đảm bảo release không lỗi hồi quy.",
+            "Soạn thảo tài liệu kiểm thử (test specs) và hướng dẫn vận hành theo tiêu chuẩn chất lượng của đối tác, ngăn lỗi hồi quy giữa các bản release.",
           ],
         },
         impacts: {
@@ -414,8 +412,8 @@ export const experienceData: WorkExperience[] = [
     },
     period: "01/2023 - 12/2023",
     title: {
-      en: "Fullstack Developer / Software Engineer",
-      vi: "Lập trình viên Fullstack / Kỹ sư Phần mềm",
+      en: "Software Engineer (Full-Stack)",
+      vi: "Kỹ sư Phần mềm (Full-Stack)",
     },
     duration: {
       en: "Jan 2023 - Dec 2023",
@@ -429,8 +427,8 @@ export const experienceData: WorkExperience[] = [
           vi: "Dự án ứng dụng AI hỗ trợ sinh mã nguồn website từ câu lệnh ngôn ngữ tự nhiên và xem thử trực tiếp.",
         },
         role: {
-          en: "Fullstack Developer & AI Researcher",
-          vi: "Lập trình viên Fullstack",
+          en: "Full-Stack Developer",
+          vi: "Lập trình viên Full-Stack",
         },
         responsibilities: {
           en: [
@@ -537,7 +535,6 @@ export const projectsData: ProjectItem[] = [
       vi: "Giao diện Next.js -> FastAPI Gateway -> Hàng đợi RabbitMQ -> Mô hình GPT-4 -> CSDL Firebase / Supabase",
     },
     technologies: ["Next.js", "Python", "FastAPI", "OpenAI GPT-4", "RabbitMQ", "Firebase", "Supabase", "TypeScript"],
-    githubUrl: "https://github.com/SatohJiro",
   },
   {
     id: "ahamo-docomo",
@@ -567,28 +564,28 @@ export const projectsData: ProjectItem[] = [
     challengesSolved: {
       en: [
         "Worked with modular UI feature components in a micro-frontend architecture combined with CMS Webrelease.",
-        "Followed Japanese test specifications and quality standards ensuring zero regression releases.",
+        "Wrote test specifications to the client's Japanese QA standards before each release.",
       ],
       vi: [
         "Làm việc với các module giao diện độc lập trong kiến trúc Micro-frontend kết hợp CMS Webrelease.",
-        "Tuân thủ quy trình kiểm thử và tiêu chuẩn chất lượng để đảm bảo release không phát sinh lỗi hồi quy.",
+        "Soạn test specs theo tiêu chuẩn QA của đối tác Nhật Bản trước mỗi lần release.",
       ],
     },
     highlights: {
       en: [
         "Micro-frontend component workflows with CMS Webrelease",
-        "Zero-regression quality standard compliance",
+        "Test specifications to Japanese QA standards",
         "Responsive Vue.js & ReactJS user interface",
       ],
       vi: [
         "Quy trình phát triển Micro-frontend trên CMS Webrelease",
-        "Đảm bảo tiêu chuẩn chất lượng không lỗi hồi quy",
+        "Tài liệu kiểm thử theo tiêu chuẩn QA Nhật Bản",
         "Giao diện responsive với Vue.js và ReactJS",
       ],
     },
     architecture: {
-      en: "Micro-frontend Shell -> Feature Modules (Vue.js / ReactJS) -> CMS Webrelease -> CDN Delivery",
-      vi: "Shell Micro-frontend -> Các module tính năng (Vue/React) -> CMS Webrelease -> Mạng phân phối CDN",
+      en: "Feature modules (Vue.js / ReactJS) -> Micro-frontend integration -> CMS Webrelease publishing",
+      vi: "Module tính năng (Vue.js / ReactJS) -> Tích hợp Micro-frontend -> Phát hành qua CMS Webrelease",
     },
     technologies: ["Vue.js", "ReactJS", "JavaScript", "Micro-frontend", "CMS Webrelease", "Responsive Design"],
     liveUrl: "https://ahamo.com",
@@ -643,7 +640,6 @@ export const projectsData: ProjectItem[] = [
       vi: "ReactJS + TypeScript -> Redux Toolkit / Zustand Stores -> API Gateway",
     },
     technologies: ["ReactJS", "TypeScript", "Redux Toolkit", "Zustand", "RESTful API", "SCSS"],
-    githubUrl: "https://github.com/SatohJiro",
   },
   {
     id: "thesis-management-system",
@@ -697,7 +693,6 @@ export const projectsData: ProjectItem[] = [
       vi: "Giao diện ReactJS -> API Java Spring Boot -> Service NLP Python -> CSDL MySQL",
     },
     technologies: ["ReactJS", "Java Spring Boot", "MySQL", "Doc2Vec NLP", "Python", "RESTful API"],
-    githubUrl: "https://github.com/SatohJiro",
   },
   {
     id: "genetic-sudoku-solver",
@@ -740,7 +735,6 @@ export const projectsData: ProjectItem[] = [
       ],
     },
     technologies: ["Java", "Genetic Algorithms", "OOP", "Data Structures"],
-    githubUrl: "https://github.com/SatohJiro",
   },
   {
     id: "graph-theory-suite",
@@ -783,7 +777,6 @@ export const projectsData: ProjectItem[] = [
       ],
     },
     technologies: ["Java", "Java Swing GUI", "Graph Algorithms", "Data Structures"],
-    githubUrl: "https://github.com/SatohJiro",
   },
 ];
 
@@ -791,8 +784,8 @@ export const awardsData: AwardItem[] = [
   {
     id: "valedictorian",
     title: {
-      en: "1st Place — Valedictorian of Class 2019",
-      vi: "Thủ Khoa Tốt Nghiệp Khóa 2019",
+      en: "Valedictorian — 2019–2023 IT Cohort",
+      vi: "Thủ Khoa Tốt Nghiệp Khóa 2019–2023",
     },
     organization: {
       en: "Nong Lam University, Ho Chi Minh City",
@@ -859,7 +852,7 @@ export const educationData: EducationItem = {
     vi: "Trường Đại học Nông Lâm TP. Hồ Chí Minh",
   },
   degree: {
-    en: "Degree of Engineer in Information Technology",
+    en: "Engineer's Degree in Information Technology",
     vi: "Bằng Kỹ sư Công nghệ Thông tin (Hệ chính quy)",
   },
   major: {
@@ -875,18 +868,18 @@ export const educationData: EducationItem = {
     vi: "3.6 / 4.0 (Xuất sắc)",
   },
   honors: {
-    en: "Class Valedictorian (Ranked 1st across IT Cohort)",
-    vi: "Thủ khoa tốt nghiệp Khóa 2019 (Xếp hạng 1 toàn khóa CNTT)",
+    en: "Valedictorian — ranked 1st in the 2019–2023 IT cohort",
+    vi: "Thủ khoa tốt nghiệp khóa 2019–2023 (hạng 1 ngành CNTT)",
   },
   highlights: {
     en: [
-      "Degree of Engineer with Excellent rating (GPA 3.6/4.0)",
-      "Ranked #1 out of IT cohort (Valedictorian)",
+      "Engineer's Degree with Excellent rating (GPA 3.6/4.0)",
+      "Ranked #1 in the IT cohort (Valedictorian)",
       "Certificate of Merit by University President (Decision No. 4478/QĐ-ĐHNL-CTSV)",
     ],
     vi: [
       "Bằng Kỹ sư Công nghệ Thông tin xếp loại Xuất sắc (GPA 3.6/4.0)",
-      "Thủ khoa tốt nghiệp toàn khóa 2019",
+      "Thủ khoa tốt nghiệp khóa 2019–2023 ngành CNTT",
       "Giấy khen của Hiệu trưởng Trường ĐH Nông Lâm TP.HCM (QĐ số 4478/QĐ-ĐHNL-CTSV)",
     ],
   },

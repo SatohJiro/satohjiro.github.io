@@ -41,6 +41,12 @@ describe("editorial-content bilingual parity", () => {
     }
   });
 
+  it("does not imply employment at Salesforce", () => {
+    const copy = JSON.stringify(editorialContent);
+    expect(copy).not.toMatch(/at [^"]*Salesforce/);
+    expect(copy).not.toMatch(/tại [^"]*Salesforce/);
+  });
+
   it("marquee lists at least 6 capabilities", () => {
     expect(editorialContent.hero.marquee.length).toBeGreaterThanOrEqual(6);
   });

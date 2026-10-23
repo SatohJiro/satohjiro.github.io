@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { telemetry } from "@/lib/telemetry";
+import { useHydrated } from "@/hooks/useHydrated";
 
 type DocumentWithViewTransition = Document & {
   startViewTransition?: (callback: () => Promise<void> | void) => {
@@ -24,13 +25,9 @@ interface RippleState {
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   const [ripples, setRipples] = useState<RippleState | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) {
     return (

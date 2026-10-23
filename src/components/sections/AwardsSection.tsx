@@ -1,20 +1,14 @@
 "use client";
 
 import React from "react";
-import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { awardsData } from "@/data/portfolio-content";
 import { resolveLocale } from "@/lib/locale";
 import { ChapterHeader } from "../editorial/ChapterHeader";
 import { Reveal } from "../editorial/Reveal";
-import { telemetry } from "@/lib/telemetry";
 
 export function AwardsSection() {
   const { isVi } = useLanguage();
-
-  const handleRowClick = (awardId: string) => {
-    telemetry.track("click", `award_row_${awardId}`);
-  };
 
   return (
     <section id="awards" className="relative scroll-mt-20 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
@@ -41,8 +35,7 @@ export function AwardsSection() {
               return (
                 <Reveal as="li" key={award.id} delay={Math.min(i, 2) * 70}>
                   <article
-                    onClick={() => handleRowClick(award.id)}
-                    className={`group grid cursor-default gap-3 border-b border-[var(--ed-hairline)] py-7 transition-colors hover:bg-blue-500/[0.04] md:grid-cols-[110px_1fr_auto] md:gap-8 md:py-8 ${
+                    className={`grid gap-3 border-b border-[var(--ed-hairline)] py-7 md:grid-cols-[110px_1fr_auto] md:gap-8 md:py-8 ${
                       isTop ? "border-l-2 border-l-blue-600 pl-4 md:pl-6" : ""
                     }`}
                   >
@@ -59,7 +52,7 @@ export function AwardsSection() {
                     {/* Honor */}
                     <div>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                        <h3 className="font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400 md:text-2xl">
+                        <h3 className="font-display text-xl font-bold tracking-tight text-[var(--ed-ink)] md:text-2xl">
                           {resolveLocale(award.title, isVi)}
                         </h3>
                         {isTop && (
@@ -77,11 +70,10 @@ export function AwardsSection() {
                     </div>
 
                     {/* Organization */}
-                    <div className="flex items-start justify-between gap-4 md:flex-col md:items-end md:justify-start md:text-right">
+                    <div className="md:text-right">
                       <span className="max-w-[220px] font-mono text-xs leading-relaxed text-[var(--ed-muted)]">
                         {resolveLocale(award.organization, isVi)}
                       </span>
-                      <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--ed-muted)] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:text-blue-600 group-hover:opacity-100" />
                     </div>
                   </article>
                 </Reveal>

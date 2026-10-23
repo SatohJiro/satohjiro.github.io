@@ -15,7 +15,7 @@ interface FooterProps {
 }
 
 export function Footer({ onOpenPrivacyDrawer, onOpenResumeModal }: FooterProps) {
-  const { isVi, isEn } = useLanguage();
+  const { isVi } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (

@@ -33,10 +33,7 @@ export function ExperienceSection() {
                   </div>
                   {exp.current && (
                     <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 font-mono text-[11px] text-emerald-700 dark:text-emerald-300">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                      </span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                       {isVi ? "Hiện tại" : "Current"}
                     </span>
                   )}

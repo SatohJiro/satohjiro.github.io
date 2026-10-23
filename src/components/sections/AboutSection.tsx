@@ -29,8 +29,8 @@ export function AboutSection() {
         vi: "Quản Lý State & Hiệu Năng",
       },
       desc: {
-        en: "Scalable store management with Redux Toolkit and Zustand, +30% boost.",
-        vi: "Tối ưu hóa state với Redux Toolkit và Zustand, tăng hơn 30% tốc độ.",
+        en: "Redux Toolkit and Zustand stores structured to cut unnecessary re-renders.",
+        vi: "Tổ chức store Redux Toolkit và Zustand, giảm re-render không cần thiết.",
       },
     },
     {
@@ -115,7 +115,7 @@ export function AboutSection() {
             <div className="mt-6 border-y border-[var(--ed-hairline)] py-5">
               <div className="flex items-baseline justify-between gap-3">
                 <span className="font-display text-base font-bold text-[var(--ed-ink)]">
-                  {isVi ? "Bằng Kỹ Sư Công Nghệ Thông Tin" : "Degree of Engineer in IT"}
+                  {resolveLocale(educationData.degree, isVi)}
                 </span>
                 <span className="shrink-0 font-mono text-sm font-bold text-blue-600 dark:text-blue-400">
                   GPA 3.6/4.0
@@ -125,10 +125,7 @@ export function AboutSection() {
                 {resolveLocale(educationData.major, isVi)} · {resolveLocale(educationData.duration, isVi)}
               </div>
               <div className="mt-2 flex items-center gap-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </span>
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
                 {resolveLocale(educationData.honors, isVi)}
               </div>
             </div>

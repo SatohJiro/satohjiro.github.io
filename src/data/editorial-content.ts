@@ -28,15 +28,15 @@ export const editorialContent = {
     nameLine1: "NGUYEN",
     nameLine2: "TRAN ANH",
     role: {
-      en: "Software Engineer — Full-Stack & Frontend",
-      vi: "Kỹ sư Phần mềm — Full-Stack & Frontend",
+      en: "Software Engineer — Frontend focus, full-stack experience",
+      vi: "Kỹ sư Phần mềm — Chuyên Frontend, có kinh nghiệm Full-Stack",
     },
     alias: "@SatohJiro",
     description: {
-      en: "Software Engineer with 3+ years building high-performance web apps, micro-frontends at NTT Docomo, and production AI tools.",
-      vi: "Kỹ sư phần mềm với hơn 3 năm kinh nghiệm phát triển web, micro-frontend NTT Docomo và tích hợp AI.",
+      en: "3+ years shipping production web apps. Currently building ahamo for NTT Docomo with Vue.js and React.",
+      vi: "Hơn 3 năm phát triển ứng dụng web production. Hiện xây dựng ahamo cho NTT Docomo bằng Vue.js và React.",
     },
-    ctaResume: { en: "Download CV", vi: "Tải CV" },
+    ctaResume: { en: "View resume", vi: "Xem CV" },
     ctaProjects: { en: "View projects", vi: "Xem dự án" },
     meta: {
       location: {
@@ -49,7 +49,7 @@ export const editorialContent = {
       },
       focus: {
         label: { en: "Focus", vi: "Chuyên sâu" },
-        value: { en: "Web platforms · AI", vi: "Nền tảng Web · AI" },
+        value: { en: "Frontend · Web platforms", vi: "Frontend · Nền tảng Web" },
       },
       education: {
         label: { en: "Education", vi: "Học vấn" },
@@ -74,29 +74,29 @@ export const editorialContent = {
     about: {
       title: { en: "About", vi: "Giới thiệu" },
       description: {
-        en: "Nong Lam University IT Valedictorian combined with 3+ years of hands-on web software engineering experience.",
-        vi: "Tốt nghiệp Thủ khoa ngành CNTT ĐH Nông Lâm TP.HCM kết hợp hơn 3 năm kinh nghiệm thực chiến phát triển ứng dụng Web.",
+        en: "Professional background, education, and the areas I work in day to day.",
+        vi: "Tóm tắt kinh nghiệm, học vấn và các mảng tôi làm việc hằng ngày.",
       },
     },
     experience: {
       title: { en: "Experience", vi: "Kinh nghiệm" },
       description: {
-        en: "Over 3 years of software development across enterprise Japanese clients, SaaS platforms, and AI tools.",
-        vi: "Hơn 3 năm kinh nghiệm lập trình thực tế qua các môi trường doanh nghiệp Nhật Bản, SaaS CRM và dự án AI.",
+        en: "Three companies — from an enterprise Japanese client to a CRM platform and AI tooling.",
+        vi: "Ba công ty — từ khách hàng doanh nghiệp Nhật Bản đến nền tảng CRM và công cụ AI.",
       },
     },
     projects: {
       title: { en: "Projects", vi: "Dự án" },
       description: {
-        en: "Selected work — production systems at NTT Docomo and Salesforce, AI tools, and academic research.",
-        vi: "Các dự án tiêu biểu — hệ thống production tại NTT Docomo và Salesforce, công cụ AI và nghiên cứu học thuật.",
+        en: "Selected work — client platforms (NTT Docomo, CRM), an award-winning AI tool, and academic projects.",
+        vi: "Dự án tiêu biểu — nền tảng cho khách hàng (NTT Docomo, CRM), công cụ AI đạt giải và dự án học thuật.",
       },
     },
     skills: {
       title: { en: "Skills", vi: "Kỹ năng" },
       description: {
-        en: "Core expertise in frontend engineering and performance optimization, backed by micro-frontends, backend APIs, and AI integrations.",
-        vi: "Thế mạnh nòng cốt về Frontend & tối ưu hiệu năng, kết hợp kinh nghiệm thực tế với các kiến trúc Micro-frontend, Backend APIs và tích hợp AI.",
+        en: "Frontend is the core strength; backend, AI, and tooling have been applied in real projects.",
+        vi: "Frontend là thế mạnh chính; backend, AI và công cụ đã được áp dụng trong dự án thực tế.",
       },
     },
     awards: {
@@ -124,7 +124,7 @@ export const editorialContent = {
     actionTheme: { en: "Toggle theme", vi: "Đổi giao diện" },
     actionLanguage: { en: "Switch language (EN/VI)", vi: "Đổi ngôn ngữ (EN/VI)" },
     actionCopyEmail: { en: "Copy email address", vi: "Sao chép địa chỉ email" },
-    actionHire: { en: "Hire me — fast track", vi: "Tuyển dụng — ưu tiên" },
+    actionHire: { en: "Contact for hiring", vi: "Liên hệ tuyển dụng" },
   },
 } as const;
 

@@ -23,8 +23,27 @@ describe("portfolio-content data integrity", () => {
   it("validates summaryData contains bilingual career highlights", () => {
     expect(summaryData.en.length).toBeGreaterThanOrEqual(2);
     expect(summaryData.vi.length).toBeGreaterThanOrEqual(2);
-    expect(summaryData.en[0]).toContain("Valedictorian");
-    expect(summaryData.vi[0]).toContain("Thủ khoa");
+    // Lead with professional experience; academic honors follow.
+    expect(summaryData.en[0]).toContain("3+ years");
+    expect(summaryData.vi[0]).toContain("3 năm");
+    expect(summaryData.en.join(" ")).toContain("Valedictorian");
+    expect(summaryData.vi.join(" ")).toContain("Thủ khoa");
+  });
+
+  it("never links a project to the bare GitHub profile as its source", () => {
+    projectsData.forEach((project) => {
+      expect(project.githubUrl, project.id).not.toBe(contactData.github);
+    });
+  });
+
+  it("does not describe the 2019-2023 cohort as 'Class 2019' (reads as graduating in 2019)", () => {
+    const englishCopy = JSON.stringify([summaryData.en, awardsData, educationData]);
+    expect(englishCopy).not.toMatch(/Class (of )?2019/);
+  });
+
+  it("files micro-frontend architecture under frontend skills", () => {
+    const frontend = skillsData.find((c) => c.id === "frontend");
+    expect(frontend?.skills.map((s) => s.name)).toContain("Micro-Frontend Architecture");
   });
 
   it("validates statsData metrics", () => {

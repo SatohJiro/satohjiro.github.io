@@ -7,10 +7,10 @@ export function generatePersonJsonLd(lang: 'en' | 'vi' = 'en') {
     "@type": "Person",
     "name": "Nguyen Tran Anh",
     "alternateName": ["Nguyễn Trần Anh", "SatohJiro"],
-    "jobTitle": isEn ? "Software Engineer (Full-Stack & Frontend)" : "Kỹ sư Phần mềm (Full-Stack & Frontend)",
+    "jobTitle": isEn ? "Software Engineer (Frontend)" : "Kỹ sư Phần mềm (Frontend)",
     "description": isEn ? siteConfig.description : siteConfig.vietnameseDescription,
     "url": siteConfig.url,
-    "image": `${siteConfig.url}/avatar.png`,
+    "image": siteConfig.ogImage,
     "sameAs": [
       siteConfig.links.github,
       siteConfig.links.linkedin,
@@ -24,7 +24,7 @@ export function generatePersonJsonLd(lang: 'en' | 'vi' = 'en') {
     "hasCredential": [
       {
         "@type": "EducationalOccupationalCredential",
-        "name": "Degree of Engineer in Information Technology (Excellent GPA 3.6/4.0)",
+        "name": "Engineer's Degree in Information Technology (Excellent, GPA 3.6/4.0)",
         "credentialCategory": "degree",
         "recognizedBy": {
           "@type": "EducationalOrganization",
@@ -33,7 +33,7 @@ export function generatePersonJsonLd(lang: 'en' | 'vi' = 'en') {
       },
       {
         "@type": "EducationalOccupationalCredential",
-        "name": "Valedictorian of Class 2019",
+        "name": "Valedictorian, 2019–2023 IT cohort",
         "credentialCategory": "honor"
       }
     ],

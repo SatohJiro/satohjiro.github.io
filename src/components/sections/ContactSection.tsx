@@ -21,8 +21,12 @@ export function ContactSection() {
   const { isVi } = useLanguage();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
+  const handleCopy = async (text: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      return; // clipboard unavailable (insecure context / permission denied)
+    }
     setCopiedKey(key);
     telemetry.track("click", `copy_${key}`);
     setTimeout(() => setCopiedKey(null), 2500);
@@ -165,7 +169,7 @@ export function ContactSection() {
               <p className="mt-4 text-sm leading-relaxed text-[var(--ed-muted)]">
                 {isVi
                   ? "Xem lịch sử nghề nghiệp chi tiết và các đóng góp mã nguồn mở."
-                  : "Explore career timeline and open-source software contributions."}
+                  : "Career timeline and public code."}
               </p>
             </div>
           </Reveal>
@@ -186,10 +190,7 @@ export function ContactSection() {
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[var(--ed-hairline)] pt-5 font-mono text-xs text-[var(--ed-muted)]">
                 <span className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  </span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                   {isVi ? "Sẵn sàng nhận việc" : "Available to join"}
                 </span>
                 <span>On-site / Hybrid / Remote</span>
